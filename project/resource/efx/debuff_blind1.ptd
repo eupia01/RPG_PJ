@@ -1,0 +1,198 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 0
+prof <- {"showbnd":[-0.049601,0.060142,0.0,2.592661,2.58212,1.68826],"maxbnd":[0.0,0.0,0.0,2.666925,2.666925,2.666925],"showtime":528,"wholebnd":[-0.085912,0.085912,0.0,2.752837,2.752837,2.666925]}
+groups <- [
+	with ParticleGroupData(){
+		name = "aura"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 3
+			start = 150, start_spr = 600
+			life = 1100, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":1.2,"h":1.2}
+		texture = "/resource/efx/tex/smoke2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 1
+		overlay = 0.5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[1414812758,1195853823,926299461,926299416,926299392],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[0.617647,1.235294,1.480769,1.538462],"classid":"ptcmod_scale"},
+		{"color":0,"scale":0.5,"classid":"ptcmod_rnd","b":10.0,"p":0.0,"h":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "smoke"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 10
+			start = 0, start_spr = 700
+			life = 500, life_spr = 0
+			posx = 0.0, posy = 2.2, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.785398
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"w":0.5,"h":0.5}
+		texture = "/resource/efx/tex/smoke2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 1
+		overlay = 0.5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":-0.5,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"color":[926299460,926299593,926299647,926299647,926299647,926299647,926299647,926299647],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[1.088235,2.0,1.794118,1.117647,0.647059,0.441176,0.323529],"classid":"ptcmod_scale"},
+		{"axisid":1,"classid":"ptcmod_acc","acc":-0.8,"coord":0,"acc_spr":0.0},
+		{"color":0,"scale":0.3,"classid":"ptcmod_rnd","b":10.0,"p":0.0,"h":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "smoke"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 10
+			start = 0, start_spr = 700
+			life = 500, life_spr = 0
+			posx = 0.0, posy = 2.2, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = -0.785398
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"w":0.5,"h":0.5}
+		texture = "/resource/efx/tex/smoke2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 1
+		overlay = 0.5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":-0.5,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"color":[926299460,926299593,926299647,926299647,926299647,926299647,926299647,926299647],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[1.088235,1.705882,1.470588,1.029412,0.764706,0.617647,0.558824],"classid":"ptcmod_scale"},
+		{"axisid":1,"classid":"ptcmod_acc","acc_spr":0.0,"coord":0,"acc":-0.8},
+		{"color":0,"scale":0.3,"classid":"ptcmod_rnd","b":10.0,"h":0.0,"p":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "smoke"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 10
+			start = 0, start_spr = 700
+			life = 500, life_spr = 0
+			posx = 0.0, posy = 2.2, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 2.356194
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"w":0.5,"h":0.5}
+		texture = "/resource/efx/tex/smoke2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 1
+		overlay = 0.48
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":-0.5,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"color":[926299460,926299593,926299647,926299647,926299647,926299647,926299647,926299647],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[1.088235,1.705882,1.470588,1.029412,0.764706,0.617647,0.558824],"classid":"ptcmod_scale"},
+		{"axisid":1,"classid":"ptcmod_acc","acc":-0.8,"coord":0,"acc_spr":0.0},
+		{"color":0,"scale":0.3,"classid":"ptcmod_rnd","b":10.0,"p":0.0,"h":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "smoke"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 10
+			start = 0, start_spr = 700
+			life = 500, life_spr = 0
+			posx = 0.0, posy = 2.2, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = -2.356194
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"w":0.5,"h":0.5}
+		texture = "/resource/efx/tex/smoke2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 1
+		overlay = 0.5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":-0.5,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"color":[926299460,926299593,926299647,926299647,926299647,926299647,926299647,926299647],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[1.088235,1.705882,1.470588,1.029412,0.764706,0.617647,0.558824],"classid":"ptcmod_scale"},
+		{"axisid":1,"classid":"ptcmod_acc","acc_spr":0.0,"coord":0,"acc":-0.8},
+		{"color":0,"scale":0.3,"classid":"ptcmod_rnd","b":10.0,"h":0.0,"p":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "aura"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 3
+			start = 450, start_spr = 500
+			life = 1100, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":1.2,"h":1.2}
+		texture = "/resource/efx/tex/glow_circle1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 1
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[-2088533162,926299505,926299412,926299402,926299392],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[0.617647,1.235294,1.480769,1.538462],"classid":"ptcmod_scale"},
+		{"color":0,"scale":0.5,"classid":"ptcmod_rnd","b":10.0,"h":0.0,"p":0.0},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0}
+]

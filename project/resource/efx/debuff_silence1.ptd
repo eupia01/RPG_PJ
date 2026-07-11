@@ -1,0 +1,98 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 0
+prof <- {"showbnd":[0.248661,0.919202,-0.612571,3.429828,3.312827,2.787904],"maxbnd":[0.295316,0.163588,0.961931,3.714026,3.751647,3.091272],"showtime":440,"wholebnd":[0.11054,-0.090197,0.165593,4.433363,4.895658,4.1816]}
+groups <- [
+	with ParticleGroupData(){
+		name = "aura"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 3
+			start = 0, start_spr = 600
+			life = 1100, life_spr = 0
+			posx = 0.0, posy = -0.3, posz = 0.0
+			pos_sprx = 0.05, pos_spry = 0.1, pos_sprz = 0.05
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.349066, dir_spry = 0.349066, dir_sprz = 0.349066
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":1.7,"h":1.9}
+		texture = "tex/glow1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 1
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[1801161983,1801161983],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[1.941176,1.794118,1.470588,0.823529],"classid":"ptcmod_scale"},
+		{"vel":1.0,"classid":"ptcmod_vel","vel_spr":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "ptc"
+		enabled = true
+		aimtype = 2
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 16
+			start = 0, start_spr = 1400
+			life = 400, life_spr = 100
+			posx = 0.0, posy = 4.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 3.141593, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"w":0.4,"h":0.04}
+		texture = "/resource/efx/tex/circle1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":-1.0,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"color":[2072491775,2072491775],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[1.323529,1.205882,0.911765,0.852941],"classid":"ptcmod_scale"},
+		{"axisid":1,"classid":"ptcmod_acc","acc":-1.0,"coord":0,"acc_spr":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "ring"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 10
+			start = 0, start_spr = 1000
+			life = 1100, life_spr = 0
+			posx = 0.0, posy = 0.5, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 3.141593
+			linearbits = 129
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":1.5,"h":1.5}
+		texture = "/resource/efx/tex/circle_charge1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 1
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[2072491520,2072491775,2072491775,2072491520],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[2.0,1.764706,1.205882,0.0],"classid":"ptcmod_scale"},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0}
+]

@@ -1,0 +1,787 @@
+{
+	"_meta":{"created":"1783740252","edited":"1780628823","method":"google","progress":0,"srclang":"ja","srcver":1},
+	"check":"",
+	"transdict":{
+		"armor":{
+			"A000":{"desc":"A crude wooden shield","name":"Wooden Shield"},
+			"A001":{"desc":"A crude wooden shield","name":"Shell Shield"},
+			"A002":{"desc":"A sturdy shield despite its low price.","name":"Iron Shield"},
+			"A003":{"desc":"Sturdy shield","name":"large shield"},
+			"A004":{"desc":"Reduces elemental attacks with mysterious power.","name":"Shield of Protection"},
+			"A005":{"desc":"A high-performance shield used by knights.","name":"Nightshield"},
+			"A006":{"desc":"A very heavy and sturdy shield","name":"Heavy Shield"},
+			"A007":{"desc":"A high-performance shield used by knights.","name":"Mirror Shield"},
+			"A008":{"desc":"A high-performance shield used by knights.","name":"Goddess's Shield"},
+			"A009":{"desc":"A high-performance shield used by knights.","name":"Hero's Shield"},
+			"A020":{"desc":"A jacket that can also be worn as everyday wear.","name":"Leather Vest"},
+			"A021":{"desc":"A robe made of thick cotton for strong protection.","name":"Cotton Robe"},
+			"A022":{"desc":"Lightweight and sturdy.","name":"Chainmail"},
+			"A023":{"desc":"Clothing for martial artists.","name":"Martial Arts Uniform"},
+			"A024":{"name":"monastic robe"},
+			"A025":{"desc":"Lightweight and sturdy.","name":"Ironmail"},
+			"A026":{"desc":"Lightweight and sturdy.","name":"Ninja attire"},
+			"A027":{"desc":"Lightweight and sturdy.","name":"Plate Armor"},
+			"A028":{"name":"Magical Garment"},
+			"A029":{"desc":"Lightweight and sturdy.","name":"Dragon Mail"},
+			"A030":{"name":"Tiger Best"},
+			"A040":{"desc":"Lightweight and sturdy.","name":"Leather hat"},
+			"A041":{"desc":"Lightweight and sturdy.","name":"Iron Helm"},
+			"A042":{"desc":"Lightweight and sturdy.","name":"Beret"},
+			"A043":{"desc":"Lightweight and sturdy.","name":"Nighthelm"},
+			"A044":{"desc":"Lightweight and sturdy.","name":"Magic Hat"},
+			"A045":{"desc":"Lightweight and sturdy.","name":"Diamond Helm"},
+			"A050":{"name":"Amulet Prayer Beads"},
+			"A051":{"name":"Demon-attracting rosary"},
+			"A052":{"name":"Pendant of Life"},
+			"A053":{"name":"Blessed Ring"},
+			"A054":{"name":"safety shoes"},
+			"A055":{"name":"Amulet"},
+			"A056":{"name":"Gauntlet"},
+			"A057":{"name":"Golden Hair Ornament"},
+			"A058":{"name":"Meikyo Shisui"},
+			"A059":{"name":"Seven-Colored Orb"},
+			"A060":{"name":"Wind Guardian"},
+			"A061":{"name":"Wind Guardian"},
+			"A062":{"name":"Wind Guardian"},
+			"A063":{"name":"Wind Guardian"},
+			"A064":{"name":"Warrior's Necklace"},
+			"A065":{"name":"Angel's Wings"},
+			"A066":{"name":"Demon God's Gauntlet"},
+			"A067":{"name":"Rubber band"},
+			"A068":{"name":"Glasses"},
+			"A069":{"name":"Soul Prayer Beads"},
+			"A070":{"name":"Demon's Horn"}
+		},
+		"cond":{
+			"K000":{"name":"Incapacitated"},
+			"K001":{"name":"poison"},
+			"K002":{"name":"Darkness"},
+			"K003":{"name":"Silence"},
+			"K004":{"name":"confusion"},
+			"K005":{"desc":"I'm so sleepy I can't do anything for a while.\nAwakens upon physical damage.","name":"sleep"},
+			"K006":{"name":"paralysis"},
+			"K007":{"name":"fear"},
+			"K008":{"name":"Enchantment"},
+			"K009":{"name":"technique"},
+			"K010":{"name":"Curse"},
+			"K011":{"name":"petrification"},
+			"K012":{"name":"Zombie"},
+			"K020":{"name":"Attack Up"},
+			"K021":{"name":"Attack Down"},
+			"K022":{"name":"Defense Up"},
+			"K023":{"name":"Defense Down"},
+			"K040":{"name":"Regene"},
+			"K041":{"name":"Berserk"},
+			"K042":{"name":"Automatic recovery"},
+			"K043":{"name":"magic reflection"}
+		},
+		"enemy":{
+			"E000":{
+				"desc":"It has almost no offensive capabilities, but possesses seemingly infinite durability.",
+				"name":"Shadow Man"
+			},
+			"E001":{
+				"desc":"Small demi-humans that live in groups in caves and abandoned villages. They have low intelligence and are weak, but are cunning and like to set traps and ambush their prey.",
+				"name":"Goblin"
+			},
+			"E002":{
+				"desc":"A gentle magical beast that lives in herds on grasslands. Normally it only eats grass, but when it senses danger, it imbues its fur with magic and emits an electric shock.",
+				"name":"Merry"
+			},
+			"E003":{
+				"desc":"A gigantic, ferocious bee. It builds its nests in forests and flower fields and is extremely territorial. Even adventurers can be in danger when attacked by a swarm.",
+				"name":"Killer Bee"
+			},
+			"E004":{
+				"desc":"A large bat that inhabits dark caves and ruins. It uses sound waves to probe its surroundings and confuse prey. It is generally timid, but becomes ferocious when hungry.",
+				"name":"Large bat"
+			},
+			"E005":{
+				"desc":"A giant, magically-powered frog that lives in wetlands. It catches prey by extending its tongue, and some individuals can also squirt poisonous mucus.",
+				"name":"Frog"
+			},
+			"E006":{
+				"desc":"Giant rats that inhabit urban sewers and ruins in large numbers. They have a high reproductive rate and live in groups. They are aggressive and often carry pathogens.",
+				"name":"Giant Rat"
+			},
+			"E007":{
+				"desc":"A semi-liquid creature that appears in swamps and caves. It looks harmless at first glance, but it envelops its prey in a slime that dissolves it. Physical attacks are ineffective against it.",
+				"name":"Slime"
+			},
+			"E008":{
+				"desc":"A giant spider that spins its web underground. It has a habit of ambushing its prey, immobilizing them with silk before killing them with its venomous fangs.",
+				"name":"Tsuchigumo (a type of spider)"
+			},
+			"E009":{
+				"desc":"A brutal beast-man that lives in forests and mountains. They are strong and live in settlements. They are warlike and will attack anyone they see who is weaker.",
+				"name":"Oak"
+			},
+			"E010":{
+				"desc":"A skeletal soldier powered by magic. It appears in cemeteries and ruins and faithfully follows orders. It has no emotions and feels no pain.",
+				"name":"Skeleton"
+			},
+			"E011":{
+				"desc":"A monstrous mushroom that grows in clusters in damp forests and caves. They are loosely connected to each other by spores, and when they sense danger, they scatter poisonous spores.",
+				"name":"Mash"
+			},
+			"E012":{
+				"desc":"Animals that live in herds in forests and mountainous areas. They possess high intelligence and teamwork, and hunt down prey under the command of their leader.",
+				"name":"Wolf"
+			},
+			"E013":{
+				"desc":"A giant turtle that inhabits wetlands and lakeshores. Its thick shell protects it from most attacks, and although it moves slowly, it shows no mercy to anyone who enters its territory.",
+				"name":"Tortoise"
+			},
+			"E014":{
+				"desc":"Spiritual beings that drift through cemeteries and ancient ruins. They have little emotion and simply wander aimlessly, but they have a tendency to be drawn to strong magical powers.",
+				"name":"Spirit"
+			},
+			"E015":{
+				"desc":"A being resurrected as a warrior, possessing the resentment left behind on the battlefield, which resides in his bones. He retains some of his combat skills from his life, and wields rusty swords and shields with skill.",
+				"name":"Skull Fighter"
+			},
+			"E016":{
+				"desc":"A carnivorous fish that lives in schools in tropical rivers and lakes. It moves at incredible speeds underwater and has a keen sense for the smell of blood. It attacks its prey in groups, biting and tearing off flesh in an instant.",
+				"name":"Piranha"
+			},
+			"E017":{
+				"desc":"A dog made from a corpse resurrected by magic or a curse. Despite its decaying body, it is agile and its ferocity has increased. Attacking in a pack is extremely dangerous.",
+				"name":"Zombie Dog"
+			},
+			"E018":{
+				"desc":"Human outlaws lurking in the wilderness and along the roads. They attack travelers for their money and valuables, but their combat ability varies greatly from person to person. They also possess a cowardly side, running away at the slightest sign of danger.",
+				"name":"Thief"
+			},
+			"E019":{
+				"desc":"A large snake that inhabits grasslands and wetlands. It lies silently in ambush of its prey and injects venom with a swift bite. It is sensitive to temperature changes and becomes sluggish at night.",
+				"name":"Snake"
+			},
+			"E020":{
+				"desc":"A lawless pirate who terrorizes the seas. Skilled in shipboard combat, he wields axes and firearms. He is brutal and greedy, but has a strong sense of camaraderie.",
+				"name":"Pirates"
+			},
+			"E021":{
+				"desc":"Small beastmen who live in mines and caves. They are skillful and good at making tools, so they often use traps and makeshift weapons. They suddenly become very aggressive when acting in groups.",
+				"name":"Kobold"
+			},
+			"E022":{
+				"desc":"A gigantic, bewitching flower that blooms in wetlands and dense jungles. It lures prey with its sweet scent and showers anyone who gets too close with poisonous pollen. A troublesome presence that dominates the surrounding ecosystem.",
+				"name":"Rafflesia"
+			},
+			"E023":{
+				"desc":"A being imbued with the vengeful spirit of a soldier who lost his life in war. It retains some of its combat skills from its lifetime and fights in a steady manner using a shield and sword.",
+				"name":"Soldier"
+			},
+			"E024":{
+				"desc":"Demons and magical creatures possessed by magic. They are highly intelligent and can fire magic projectiles and status-altering spells from long distances.",
+				"name":"Magician"
+			},
+			"E025":{
+				"desc":"These are moving corpses that appear in cemeteries and battlefields. They are slow-moving due to decay but are unusually resilient. They become a greater threat when they appear in groups.",
+				"name":"Zombie"
+			},
+			"E026":{
+				"desc":"A giant crab that inhabits coastlines and shallow waters. It repels physical attacks with its hard carapace and pinches its prey with its sharp claws. It is highly territorial and shows no mercy to those who approach.",
+				"name":"Club"
+			},
+			"E027":{
+				"desc":"A giant beast-man that inhabits mountains and wildernesses. It is particularly strong and durable. Although its intelligence is low, its charge when it is enraged possesses tremendous destructive power.",
+				"name":"Ogre"
+			},
+			"E028":{
+				"desc":"A giant frog resurrected by a curse. It oozes poisonous mucus from its decaying body, spreading pathogens, making close combat extremely dangerous.",
+				"name":"Evil Frog"
+			},
+			"E029":{
+				"desc":"A giant starfish-shaped monster lurking in the depths of the ocean. It possesses an inexhaustible life force that allows it to regenerate unless its core is destroyed. It sucks on its prey with its tentacle-like arms, absorbing their energy.",
+				"name":"Evil Star"
+			},
+			"E030":{
+				"desc":"A large magical beast that lives in herds on grasslands. It is generally docile, but will retaliate with a charge against anyone who enters its territory. Its charge is tremendous, powerful enough to shake the ground.",
+				"name":"Buffalo"
+			},
+			"E031":{
+				"desc":"A humanoid assassin monster that lives hidden in the shadows. It lurks in forests and abandoned temples, possessing the ability to completely erase its presence. Its personality is ruthless and it is loyal to its mission.",
+				"name":"Ninja"
+			},
+			"E032":{
+				"desc":"A reptilian demi-human that lives in wetlands and riverbanks. They form settlements and possess their own unique warrior culture. They are cold-blooded and their emotions are difficult to read, but they show no mercy to those who invade their territory.",
+				"name":"Lizardman"
+			},
+			"E033":{
+				"desc":"A giant bird of prey that inhabits mountainous regions. It has keen eyesight to spot prey from afar, then swoops down and kills it with its sharp talons. It has a proud temperament and a strong territorial instinct.",
+				"name":"Eagle"
+			},
+			"E034":{
+				"desc":"An intelligent slime that appears in areas with high magical energy. It possesses a brain-like organ and has strong mental manipulation abilities. It is cunning and disrupts the thoughts of its prey to cause confusion.",
+				"name":"Brain"
+			},
+			"E035":{
+				"desc":"An embodiment of death that appears in cemeteries and cursed lands. It has little physical form, and a single scythe strike can erode the very soul. It has no emotions, and is simply a being that brings death.",
+				"name":"Shinigami"
+			},
+			"E036":{
+				"desc":"A giant fish that inhabits the deep sea and lakes with strong magical energy. Its scales are as hard as a dragon's, and some individuals can spit high-pressure water jets or small sparks from their mouths.",
+				"name":"Dragonfish"
+			},
+			"E037":{
+				"desc":"A giant octopus that lurks in underwater caves. It possesses high intelligence and lies in wait for its prey, hiding in the shadows of rocks. It entangles its victims with suction cups and immobilizes them with a powerful grip.",
+				"name":"Octopus"
+			},
+			"E038":{
+				"desc":"A giant crocodile that inhabits wetlands and riverbanks. It moves at incredible speeds in water and is quick on land over short distances. It has a ferocious temperament.",
+				"name":"Crocodile"
+			},
+			"E039":{
+				"desc":"A giant made of wood, born as the guardian of an ancient forest. It moves using magic and has almost no emotions, but it has a strong instinct to protect the forest.",
+				"name":"Wood Golem"
+			},
+			"E040":{
+				"desc":"A singing monster that appears on the sea. It lures sailors into the ocean with its beautiful songs. It has a capricious personality and only targets those that pique its interest.",
+				"name":"Siren"
+			},
+			"E041":{
+				"desc":"Stone statue monsters that lurk in ancient ruins and castle roofs. They are completely petrified and immobile during the day, but become active at night using magic.",
+				"name":"Gargoyle"
+			},
+			"E042":{
+				"desc":"A giant bear that inhabits deep forests. It is usually gentle, but shows fierce anger towards anyone who enters its territory. It becomes especially ferocious before hibernation.",
+				"name":"Grizzly"
+			},
+			"E043":{
+				"desc":"A giant insect-like monster that moves by swimming through the desert earth. It is sensitive to vibrations and attacks anyone walking on the surface, recognizing them as prey.",
+				"name":"Worm"
+			},
+			"E044":{
+				"desc":"A mystical beast that lives in the sacred forest. It only reveals itself to those with pure hearts and possesses the power to heal the wounded. Its character is noble and proud.",
+				"name":"Unicorn"
+			},
+			"E045":{
+				"desc":"A giant tree born as a guardian of an ancient forest. It moves slowly, but when angered, it possesses the power to shake the earth.",
+				"name":"Torrent"
+			},
+			"E046":{
+				"desc":"A type of slime, a jelly-like organism with superior flexibility and jumping ability. Its properties vary depending on its color, and some individuals possess attributes such as acidity, electricity, or cold.",
+				"name":"Jerry"
+			},
+			"E047":{
+				"desc":"A hybrid creature of a lion and an eagle that makes its nest in mountainous regions. Proud and merciless to those who enter its territory. Some individuals can even control the wind.",
+				"name":"Griffin"
+			},
+			"E048":{
+				"desc":"A cursed tiger-man who transforms on the night of the full moon. He usually maintains his rationality, but when transformed he becomes ferocious and brutal. He is characterized by his swift movements and rapid attacks with his sharp claws.",
+				"name":"War Tiger"
+			},
+			"E049":{
+				"desc":"A cursed demon with snake-like hair. They live in caves and ruined temples, hunting intruders with their petrifying gaze. They are solitary and vengeful.",
+				"name":"Medusa"
+			},
+			"E050":{
+				"desc":"A guardian of a giant rock, moved by magic. It has no emotions and silently guards the area it is commanded to protect. It is extremely resistant to physical attacks.",
+				"name":"Stone Golem"
+			},
+			"E051":{
+				"desc":"A mounted magic-armored soldier. It appears in wastelands and ancient battlefields, charging forward with lightning speed. Its personality is cold and ruthless, and it is loyal to its orders.",
+				"name":"Horse Knight"
+			},
+			"E052":{
+				"desc":"A lion-like magical beast that reigns supreme over the grasslands. The individual at the top of the pack is particularly strong, intimidating surrounding enemies with its roar. It has a proud temperament and rarely targets the weak.",
+				"name":"Leo"
+			},
+			"E053":{
+				"desc":"A giant with a bull's head that inhabits labyrinths and underground ruins. It possesses immense strength and durability, and will charge through even narrow passages. It has a brutal temperament and becomes enraged when it finds an intruder.",
+				"name":"Minotaur"
+			},
+			"E054":{
+				"desc":"A multi-headed dragon that lurks in swamps and lakes. It possesses the vitality to regenerate even if its head is cut off. It has a ferocious temperament and mercilessly attacks anyone who enters its territory.",
+				"name":"Hydra"
+			},
+			"E055":{
+				"desc":"A gigantic sea monster lurking in the deep sea. It possesses enormous tentacles capable of sinking ships and has the power to control ocean currents. It has a cruel personality and is sensitive to vibrations on the surface of the sea.",
+				"name":"Kraken"
+			},
+			"E056":{
+				"desc":"A vampire demon that lurks in castles and abandoned buildings at night. It possesses high intelligence and the power of charm, and moves like a shadow. Its personality is calm and cunning. It has a variety of attack methods.",
+				"name":"Vampire"
+			},
+			"E057":{
+				"desc":"A legendary monster that inhabits mountains and volcanoes. Possessing tough scales and massive wings, it is one of the strongest creatures, with claws, a tail, and breath attacks all in one. It has a proud personality and shows no mercy to intruders.",
+				"name":"Dragon"
+			},
+			"E058":{
+				"desc":"A spirit sealed within an ancient magical artifact. It appears when the lamp is rubbed and wields immense magical power. Its personality is capricious, and it sometimes acts in a way that tests humans.",
+				"name":"Demon"
+			},
+			"E059":{
+				"desc":"An ancient species far surpassing ordinary dragons. It possesses power capable of shaking continents, and can cause storms simply by flying. Its personality is arrogant, almost godlike.",
+				"name":"Great Dragon"
+			},
+			"E060":{
+				"desc":"A monster close to a deity of the deep sea. It takes the form of a giant fish-man and rules over the underwater city. It has a cruel personality and sees humans only as prey.",
+				"name":"Dagon"
+			}
+		},
+		"gvar":{
+			"G000":{"name":"global000"},
+			"G001":{"name":"Global001"}
+		},
+		"item":{
+			"I000":{"desc":"A useless item.","name":"Koishi"},
+			"I001":{"desc":"HP recovery","name":"Medicinal herb"},
+			"I004":{
+				"desc":"Rest overnight to restore HP and MP for all allies.\nIt cannot be used in dangerous places.",
+				"name":"tent"
+			},
+			"I010":{"desc":"HP recovery","name":"Potion"},
+			"I011":{"desc":"HP recovery","name":"High Potion"},
+			"I016":{"desc":"HP recovery","name":"Resuscitation drug"},
+			"I018":{"desc":"to cure poison","name":"Antidote"},
+			"I019":{"desc":"Cures poison, paralysis, blindness, and seals.","name":"Panacea"},
+			"I020":{"desc":"Cures sleep, confusion, and enchantment.","name":"Alarm Bell"}
+		},
+		"job":{
+			"J000":{
+				"desc":"A profession that requires no special skills. However, if you master it, you can acquire various useful abilities.",
+				"name":"Villager"
+			},
+			"J001":{"desc":"A special occupation that only selected individuals can attain.","name":"Hero"},
+			"J100":{"name":"Sense of justice"},
+			"J101":{
+				"desc":"Possesses an iron will that remains unshaken in any situation.\nYou gain resistance to mental status ailments.",
+				"name":"Iron Heart"
+			},
+			"J102":{"desc":"To defend a weakened ally.","name":"chivalry"},
+			"J103":{"name":"The Secrets of Stealing"},
+			"J104":{"desc":"Dodges enemy attacks with light, nimble steps.","name":"Mikawashi no Step"},
+			"J105":{"desc":"Attack power increases at the start of battle.","name":"first move wins"}
+		},
+		"macro":{
+			"X000":{"name":"Do nothing"},
+			"X002":{"name":"Game Over"},
+			"X003":{"name":"Group Encounter"},
+			"X004":{
+				"cmdblock":{
+					"#0#":{
+						"cmdblocks":{
+							"#0#":{
+								"#0#":{"text":"I couldn't escape!"}
+							}
+						}
+					}
+				},
+				"name":"Escape Skill"
+			},
+			"X011":{"name":"Open the treasure chest"},
+			"X012":{"name":"Talking to a villager"},
+			"X013":{
+				"cmdblock":{
+					"#3#":{"text":"Welcome! We have a great selection of items!"},
+					"#6#":{"text":"Come again!"}
+				},
+				"name":"shop clerk"
+			},
+			"X014":{
+				"cmdblock":{
+					"#3#":{"text":"Welcome to the inn! Would you like to stay for one[b]for $W$T.money?"},
+					"#4#":{
+						"cmdblocks":{
+							"#0#":{
+								"#1#":{"text":"Well then, please have a good rest."},
+								"#15#":{"text":"Good morning. Please come again soon."}
+							}
+						}
+					}
+				},
+				"name":"Innkeeper"
+			},
+			"X015":{
+				"cmdblock":{
+					"#1#":{"text":"Okay, next person please.\nLet's see, let me take a look at how it's doing."},
+					"#5#":{
+						"cmdblocks":{
+							"#0#":{
+								"#0#":{"text":"There's nothing wrong with.\nTake care!"}
+							}
+						}
+					},
+					"#6#":{"text":"I'll take a total of$X$T.money."},
+					"#7#":{
+						"cmdblocks":{
+							"#1#":{
+								"#0#":{"text":"Don't push yourself too hard."}
+							}
+						}
+					}
+				},
+				"name":"Doctor"
+			},
+			"X017":{
+				"cmdblock":{
+					"#1#":{"text0":"Rest in a tent","text1":"Back"},
+					"#4#":{"text":"INFO..."},
+					"#16#":{"text":"I rested comfortably in the tent.)"}
+				},
+				"name":"Tent use"
+			}
+		},
+		"map":{
+			"M000":{
+				"event":{
+					"#1000001#":{
+						"page":{
+							"#0#":{
+								"cmdblock":{
+									"#14#":{
+										"cmdblocks":{
+											"#0#":{
+												"#1#":{
+													"cmdblocks":{
+														"#0#":{
+															"#0#":{"desc":"PRINT WX"}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"name":"Title Screen Map"
+			},
+			"M001":{
+				"encount":{
+					"#0#":{"name":"Group 01"}
+				},
+				"event":{
+					"#1000002#":{"msg":"Welcome to RPG-Cobo!\nI'm a villager 💕"},
+					"#1000007#":{
+						"page":{
+							"#0#":{
+								"cmdblock":{
+									"#2#":{"text":"We can even create horror-themed scenes~~~"}
+								}
+							}
+						}
+					},
+					"#1000009#":{
+						"page":{
+							"#0#":{
+								"cmdblock":{
+									"#1#":{"text":"The enemy ahead is strong. I'll lend you my strength!"},
+									"#2#":{
+										"cmdblocks":{
+											"#0#":{
+												"#0#":{"text":"[B][+4] Leave it to me!"}
+											},
+											"#1#":{
+												"#0#":{"text":"Stop doing reckless things!"}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"name":"First Map"
+			},
+			"M002":{"name":"Grassland 1"},
+			"M003":{
+				"event":{
+					"#1000001#":{"msg":"MESSAGE"},
+					"#1000002#":{"msg":"MESSAGE"},
+					"#1000003#":{"msg":"MESSAGE"},
+					"#1000004#":{"msg":"MESSAGE"},
+					"#1000005#":{"msg":"You've finally arrived, I've been waiting forever."},
+					"#1000006#":{"msg":"MESSAGE"}
+				},
+				"name":"city 1"
+			},
+			"M004":{"name":"Map M004"},
+			"M005":{"name":"Map M005"},
+			"M006":{
+				"event":{
+					"#1000002#":{"msg":"MESSAGE"},
+					"#1000004#":{"msg":"MESSAGE"}
+				},
+				"name":"Room"
+			},
+			"M007":{"name":"Rakugaki Map"},
+			"M008":{
+				"encount":{
+					"#0#":{"name":"Group 01"}
+				},
+				"event":{
+					"#1000002#":{"msg":"MESSAGE"},
+					"#1000003#":{"msg":"MESSAGE"},
+					"#1000004#":{"msg":"MESSAGE"},
+					"#1000005#":{"msg":"MESSAGE"},
+					"#1000007#":{"msg":"MESSAGE"},
+					"#1000009#":{"msg":"MESSAGE"},
+					"#1000010#":{"msg":"MESSAGE"},
+					"#1000011#":{"msg":"MESSAGE"},
+					"#1000014#":{"msg":"MESSAGE"}
+				},
+				"name":"For Web"
+			},
+			"M800":{"name":"Grassland Battle"},
+			"M801":{"name":"Street Battle"},
+			"M802":{"name":"Mori Battle"},
+			"M803":{"name":"Temple Battle"},
+			"M804":{"name":"Cave Battle 1"},
+			"M805":{"name":"Indoor Battle"},
+			"M980":{"name":"Flat template"},
+			"M981":{"name":"Grassland template"},
+			"M982":{"name":"City template"},
+			"M983":{"name":"Dungeon Template 1"},
+			"M984":{"name":"Dungeon Template 2"},
+			"M985":{"name":"Wilderness Template"},
+			"M995":{"name":"Battle Template"}
+		},
+		"player":{
+			"P000":{
+				"desc":"A kind-hearted young man who grew up in a small, remote village. Having saved his village from monsters when he was a child, he vows to become strong.",
+				"name":"Shiren"
+			},
+			"P001":{
+				"desc":"The young head of a prestigious noble family. Possessing both elegance and a strong sense of responsibility, he aspires to reform the corrupt aristocratic society. He is calm but also has a passionate side.",
+				"name":"Ashley"
+			},
+			"P002":{
+				"desc":"Born into a prestigious family of lancers in the royal army, he left home to work as a mercenary and bodyguard.",
+				"name":"Kiji"
+			},
+			"P003":{
+				"desc":"A genius magician born in a forest dense with magical energy. From a young age, her magical power tended to run wild, and she has a delicate constitution where her emotions are directly linked to her power.",
+				"name":"Mireille"
+			},
+			"P004":{
+				"desc":"A righteous outlaw who grew up in the slums and has survived since childhood through agility and quick thinking.",
+				"name":"Kai"
+			},
+			"P005":{
+				"desc":"A long-lived elf girl who lives in a deep forest. She possesses the ability to hear the voices of nature and spirits, and was raised as a guardian of the forest.",
+				"name":"Leafa"
+			},
+			"P006":{
+				"desc":"A troubadour who weaves stories while traveling. Raised in a port town tavern, he has learned songs and folklore from all over the world.",
+				"name":"Rude"
+			},
+			"P007":{
+				"desc":"A dancer born in a desert oasis city. Since childhood, she has captivated travelers with her dance and song.",
+				"name":"Fiona"
+			},
+			"P008":{
+				"desc":"An orphan raised in a desolate arena. With the teachings of his adoptive master in his heart, he continues his journey in search of true strength.",
+				"name":"Ranga"
+			},
+			"P009":{
+				"desc":"Born into a clan of ninjas who live hidden away in a misty mountain village. He will throw himself into any danger for the sake of his mission, and will even break the rules to protect his comrades.",
+				"name":"Shigure"
+			},
+			"P010":{
+				"desc":"An elite born into a family of royal guards protecting the kingdom. He has a strict personality, but is kinder to the weak than anyone else.",
+				"name":"Clarice"
+			},
+			"P011":{
+				"desc":"Born into a family of traveling merchants, he is an experienced merchant who has traveled to various places since childhood. He values not only profit but also human connections and conducts business honestly with everyone.",
+				"name":"Roche"
+			},
+			"P012":{
+				"desc":"A young man from the Koropokkuru, a small race that lives in the northern forests. They are a people who live in harmony with nature and possess the ability to communicate with plants and animals.",
+				"name":"Pokkle"
+			}
+		},
+		"setting":{"title":"Sample Quest"},
+		"skill":{
+			"S000":{"name":"Do nothing"},
+			"S001":{"name":"defense"},
+			"S002":{"name":"Run away"},
+			"S003":{"desc":"Normal attack when nothing is equipped","name":"batting"},
+			"S010":{"name":"Slashing attack"},
+			"S011":{"name":"Slashing attack (Greatsword, Axe)"},
+			"S012":{"name":"Thrust Attack"},
+			"S013":{"name":"Slam attack"},
+			"S014":{"name":"Shooting Attack"},
+			"S020":{"name":"scratch"},
+			"S027":{"name":"Vampire"},
+			"S035":{"desc":"Restores a small amount of HP to an ally.","name":"Heel A"},
+			"S036":{"desc":"Greatly restores the HP of allies.","name":"Heel B"},
+			"S038":{"desc":"Restores a small amount of HP to all allies.","name":"Heal All A"},
+			"S040":{"desc":"Removes poison, blindness, silence, and skill disablement from allies.","name":"Cure A"},
+			"S043":{"desc":"Revives an incapacitated ally.","name":"Rays"},
+			"S045":{"desc":"Temporarily increases the defense of allies.","name":"Guard Up"},
+			"S046":{"desc":"Temporarily increases the defense of allies.","name":"Guard Up All"},
+			"S047":{"name":"Attack Up"},
+			"S073":{"name":"Fire A"},
+			"S074":{"desc":"A mid-level fire magic spell.","name":"FireS"},
+			"S076":{"name":"Ice A"},
+			"S077":{"name":"Ice S"},
+			"S100":{"name":"Strong Attack"},
+			"S101":{"name":"Mineuchi"},
+			"S102":{"name":"counter"},
+			"S103":{"name":"Lightning Speed"},
+			"S104":{"name":"Kabutowari"},
+			"S105":{"name":"Yamikumo Ken"},
+			"S106":{"name":"Demon God Strike"},
+			"S107":{"name":"Blind Arrow"},
+			"S190":{"name":"Automatic recovery"}
+		},
+		"store":{
+			"R000":{"name":"Town Tool Shop"},
+			"R001":{"name":"white magic"},
+			"R034":{"name":"gggpp"}
+		},
+		"type":{
+			"dmgform":{
+				"#0#":{"name":"Physical Attack"},
+				"#1#":{"name":"Magic Attack"},
+				"#2#":{"name":"Healing Magic"},
+				"#3#":{"name":"Physical magic"},
+				"#4#":{"name":"Attack Item"},
+				"#5#":{"name":"Recovery Item"},
+				"#6#":{"name":"Debuff application"}
+			},
+			"elem":{
+				"#0#":{"name":"Zan"},
+				"#1#":{"name":"Tsu"},
+				"#2#":{"name":"hit"},
+				"#3#":{"name":"Fire"},
+				"#4#":{"name":"water"},
+				"#5#":{"name":"Kaze"},
+				"#6#":{"name":"Tsuchi"},
+				"#7#":{"name":"light"},
+				"#8#":{"name":"Darkness"},
+				"#9#":{"name":"grass"},
+				"#10#":{"name":"Lightning"},
+				"#11#":{"name":"Curse"}
+			},
+			"eqflag":{
+				"#0#":{"name":"Hero's Equipment"},
+				"#1#":{"name":"Female Equipment"},
+				"#2#":{"name":"Elf Equipment"},
+				"#3#":{"name":"Heavy Equipment"}
+			},
+			"eqslot":{
+				"#0#":{"name":"weapon"},
+				"#1#":{"name":"shield"},
+				"#2#":{"name":"head"},
+				"#3#":{"name":"body"},
+				"#4#":{"name":"Decoration"}
+			},
+			"eqtype":{
+				"#0#":{"name":"Bare Hands"},
+				"#1#":{"name":"Dagger"},
+				"#2#":{"name":"Sword"},
+				"#3#":{"name":"spear"},
+				"#4#":{"name":"Axe"},
+				"#5#":{"name":"Cane"},
+				"#6#":{"name":"Bow"},
+				"#7#":{"name":"mallet"},
+				"#8#":{"name":"light shield"},
+				"#9#":{"name":"heavy shield"},
+				"#10#":{"name":"hat"},
+				"#11#":{"name":"Kabuto"},
+				"#12#":{"name":"Hair ornament"},
+				"#13#":{"name":"clothing"},
+				"#14#":{"name":"light armor"},
+				"#15#":{"name":"heavy armor"},
+				"#16#":{"name":"Decoration"},
+				"#17#":{"name":"Decoration"}
+			},
+			"jobflag":{
+				"#0#":{"name":"Hero's Qualification"},
+				"#1#":{"name":"Royal bloodline"}
+			},
+			"jobslot":{
+				"#0#":{"name":"Occupation"},
+				"#1#":{"name":"characteristic"}
+			},
+			"resistg":{
+				"#0#":{"name":"Death resistance"},
+				"#1#":{"name":"Poison Resistance"},
+				"#2#":{"name":"Sleep Tolerance"},
+				"#3#":{"name":"Paralysis Resistance"},
+				"#4#":{"name":"mental resistance"},
+				"#5#":{"name":"Curse Resistance"},
+				"#6#":{"name":"Collapse Tolerance"},
+				"#7#":{"name":"Concentration resistance"}
+			},
+			"tribe":{
+				"#0#":{"name":"Human"},
+				"#1#":{"name":"Male"},
+				"#2#":{"name":"female"},
+				"#3#":{"name":"Flight"},
+				"#4#":{"name":"machine"},
+				"#5#":{"name":"immortality"},
+				"#6#":{"name":"insect"},
+				"#7#":{"name":"Demon"},
+				"#8#":{"name":"Beast"},
+				"#9#":{"name":"Fairy"},
+				"#10#":{"name":"Ryu"},
+				"#11#":{"name":"Aquatic"}
+			}
+		},
+		"weapon":{
+			"W000":{"desc":"A fruit knife. It can also be used for self-defense.","name":"Knife"},
+			"W001":{"desc":"A fruit knife. It can also be used for self-defense.","name":"Dagger"},
+			"W002":{"desc":"A fruit knife. It can also be used for self-defense.","name":"Hunter Knife"},
+			"W003":{"desc":"A fruit knife. It can also be used for self-defense.","name":"Damascus"},
+			"W004":{"desc":"A fruit knife. It can also be used for self-defense.","name":"Poison Dagger"},
+			"W005":{"desc":"A fruit knife. It can also be used for self-defense.","name":"Assassin Dagger"},
+			"W006":{"desc":"A fruit knife. It can also be used for self-defense.","name":"Orichalcum"},
+			"W010":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Short Sword"},
+			"W011":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Longsword"},
+			"W012":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Saber"},
+			"W013":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Broadsword"},
+			"W014":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Cross Sword"},
+			"W015":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Dark Sword"},
+			"W016":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Falchion"},
+			"W017":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Thunder Sword"},
+			"W018":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Claymore"},
+			"W019":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Rune Sword"},
+			"W020":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Bastard Sword"},
+			"W021":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Dragon Slayer"},
+			"W022":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Master Sword"},
+			"W023":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Soul Eater"},
+			"W024":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Zanbato"},
+			"W025":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Force Blade"},
+			"W030":{"name":"bamboo spear"},
+			"W031":{"name":"Soldier's Spear"},
+			"W032":{"name":"Long Spear"},
+			"W033":{"name":"Halberd"},
+			"W034":{"name":"Silver Lance"},
+			"W035":{"name":"Wraith Brave"},
+			"W036":{"name":"Trident"},
+			"W037":{"name":"Longinus"},
+			"W040":{"name":"Woodcutter's Axe"},
+			"W041":{"name":"Broadaxe"},
+			"W042":{"name":"Tomahawk"},
+			"W043":{"name":"Viking Axe"},
+			"W044":{"name":"Battle Axe"},
+			"W045":{"name":"Dwarf Axe"},
+			"W046":{"name":"Deathbringer"},
+			"W047":{"name":"Giant's Axe"},
+			"W050":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Oak Staff"},
+			"W051":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Mace"},
+			"W052":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Flame Staff"},
+			"W053":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Ice Staff"},
+			"W054":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Thunder Staff"},
+			"W055":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Sleeping Wand"},
+			"W056":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Sorcerer's Staff"},
+			"W057":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"Rune Staff"},
+			"W058":{"desc":"An easy-to-handle sword sold to the general public for self-defense.","name":"World Tree Staff"},
+			"W060":{"name":"Wooden Bow"},
+			"W061":{"name":"Iron Bow"},
+			"W062":{"name":"Silver Bow"},
+			"W063":{"name":"Shadow-Stitching Bow"},
+			"W064":{"name":"Elf Bow"},
+			"W065":{"name":"Windbow"},
+			"W066":{"name":"Magic bow"},
+			"W067":{"name":"Angel's Bow"}
+		}
+	}
+}

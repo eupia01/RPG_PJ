@@ -1,0 +1,74 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 0
+prof <- {"showbnd":[0.024662,1.190189,-0.277018,1.676826,2.043673,1.5969],"maxbnd":[0.427706,0.862308,-0.001894,1.932133,2.04626,1.709179],"showtime":936,"wholebnd":[0.270555,0.995861,-0.078923,2.089284,2.281363,1.989725]}
+groups <- [
+	with ParticleGroupData(){
+		name = "fire"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 2
+			start = 0, start_spr = 200
+			life = 600, life_spr = 200
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.5, pos_spry = 0.3, pos_sprz = 0.5
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.8,"h":0.8}
+		texture = "/resource/efx/tex/fire1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		tec = "decal.softptc"
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"xyz":7,"scale":[0.470588,0.705882,0.764706,1.0],"classid":"ptcmod_scale"},
+		{"color":[-76,-1780993,-3759640,-5672705,-10092298,-11724801,-939524046,-1778384896],"classid":"ptcmod_color"},
+		{"vel":0.5,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"classid":"ptcmod_texanime","frame":[0.0,10.0]},
+		]
+	},
+	with ParticleGroupData(){
+		name = "spark"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 2
+			start = 0, start_spr = 0
+			life = 700, life_spr = 500
+			posx = 0.0, posy = 1.0, posz = 0.0
+			pos_sprx = 0.5, pos_spry = 0.5, pos_sprz = 0.5
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 0.523599, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"w":0.04,"h":0.04}
+		texture = "/resource/efx/tex/circle1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"xyz":7,"scale":[0.470588,0.705882,0.764706,0.882353,0.911765,1.147059],"classid":"ptcmod_scale"},
+		{"color":[-13238092,-10944257,-14081,-3644161,-10210561,-2144725249,1377179186,1293293056],"classid":"ptcmod_color"},
+		{"classid":"ptcmod_texanime","frame":[0,10.0]},
+		{"vel":0.7,"classid":"ptcmod_vel","vel_spr":0.3},
+		{"color":0,"scale":1.0,"classid":"ptcmod_rnd","b":0.0,"h":0.0,"p":0.0},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0},
+	{"acttype":"loop","cnt":999,"lt":0,"time":200}
+]

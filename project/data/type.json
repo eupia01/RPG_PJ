@@ -1,0 +1,99 @@
+{
+	"_meta":{"version":1},
+	"dmgform":[
+		{
+			"formula":"atk:@() src.PATK*rnd(2.0,2.2)\ndef:@() dst.PDEF\nhit:@() src.PHIT-dst.PEVA\ncri:@() src.CRI-dst.CEVA",
+			"icon":"",
+			"name":"Physical Attack"
+		},
+		{"formula":"atk:@() src.MATK+pow\ndef:@() dst.MDEF","icon":"","name":"Magic Attack"},
+		{"formula":"atk:@() src.MATK+pow\ndef:@() dst.MDEF/16\neva:@() 1.0","icon":"","name":"Healing Magic"},
+		{"formula":"atk:@() src.MATK+pow\ndef:@() dst.PDEF","icon":"","name":"Physical magic"},
+		{"formula":"atk:@() 100\ndef:@() (dst.PDEF+dst.MDEF)/4","icon":"","name":"Attack Item"},
+		{"formula":"atk:@() 100","icon":"","name":"Recovery Item"},
+		{
+			"formula":"hit:@() { return debuffRate( dst, skill.putconds, skill.hitrate); }",
+			"icon":"",
+			"name":"Debuff application"
+		}
+	],
+	"elem":[
+		{"icon":"","name":"Zan"},
+		{"icon":"","name":"Tsu"},
+		{"icon":"","name":"hit"},
+		{"icon":"","name":"Fire"},
+		{"icon":"","name":"water"},
+		{"icon":"","name":"Kaze"},
+		{"icon":"","name":"Tsuchi"},
+		{"icon":"","name":"light"},
+		{"icon":"","name":"Darkness"},
+		{"icon":"","name":"grass"},
+		{"icon":"","name":"Lightning"},
+		{"icon":"","name":"Curse"}
+	],
+	"eqflag":[
+		{"icon":"","name":"Hero's Equipment"},
+		{"icon":"","name":"Female Equipment"},
+		{"icon":"","name":"Elf Equipment"},
+		{"icon":"","name":"Heavy Equipment"}
+	],
+	"eqslot":[
+		{"eqtypebits":255,"icon":"","name":"weapon"},
+		{"eqtypebits":768,"icon":"","name":"shield"},
+		{"eqtypebits":3072,"icon":"","name":"head"},
+		{"eqtypebits":57344,"icon":"","name":"body"},
+		{"eqtypebits":196608,"icon":"","name":"Decoration"}
+	],
+	"eqtype":[
+		{"eqctg":0,"icon":"","name":"Bare Hands"},
+		{"eqctg":0,"icon":"","name":"Dagger"},
+		{"eqctg":0,"icon":"","name":"Sword"},
+		{"eqctg":0,"icon":"","name":"spear"},
+		{"eqctg":0,"icon":"","name":"Axe"},
+		{"eqctg":0,"icon":"","name":"Cane"},
+		{"eqctg":0,"icon":"","name":"Bow"},
+		{"eqctg":0,"icon":"","name":"mallet"},
+		{"eqctg":1,"icon":"","name":"light shield"},
+		{"eqctg":1,"icon":"","name":"heavy shield"},
+		{"eqctg":2,"icon":"","name":"hat"},
+		{"eqctg":2,"icon":"","name":"Kabuto"},
+		{"eqctg":2,"icon":"","name":"Hair ornament"},
+		{"eqctg":2,"icon":"","name":"clothing"},
+		{"eqctg":2,"icon":"","name":"light armor"},
+		{"eqctg":2,"icon":"","name":"heavy armor"},
+		{"eqctg":2,"icon":"","name":"Decoration"},
+		{"eqctg":2,"icon":"","name":"Decoration"}
+	],
+	"jobflag":[
+		{"icon":"","name":"Hero's Qualification"},
+		{"icon":"","name":"Royal bloodline"}
+	],
+	"jobslot":[
+		{"icon":"","lock":1,"name":"Occupation"},
+		{"icon":"","lock":0,"name":"characteristic"}
+	],
+	"resistg":[
+		{"icon":"","name":"Death resistance"},
+		{"icon":"","name":"Poison Resistance"},
+		{"icon":"","name":"Sleep Tolerance"},
+		{"icon":"","name":"Paralysis Resistance"},
+		{"icon":"","name":"mental resistance"},
+		{"icon":"","name":"Curse Resistance"},
+		{"icon":"","name":"Collapse Tolerance"},
+		{"icon":"","name":"Concentration resistance"}
+	],
+	"tribe":[
+		{"icon":"","name":"Human"},
+		{"icon":"","name":"Male"},
+		{"icon":"","name":"female"},
+		{"icon":"","name":"Flight"},
+		{"icon":"","name":"machine"},
+		{"icon":"","name":"immortality"},
+		{"icon":"","name":"insect"},
+		{"icon":"","name":"Demon"},
+		{"icon":"","name":"Beast"},
+		{"icon":"","name":"Fairy"},
+		{"icon":"","name":"Ryu"},
+		{"icon":"","name":"Aquatic"}
+	]
+}

@@ -1,0 +1,161 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 0
+prof <- {"showbnd":[0.0,0.5,0.0,1.0,1.5,1.0],"maxbnd":[0.0,0.5,0.0,1.0,1.5,1.0],"showtime":728,"wholebnd":[0.0,0.5,0.0,1.0,1.5,1.0]}
+groups <- [
+	with ParticleGroupData(){
+		name = "aura_1"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 5
+			start = 0, start_spr = 800
+			life = 1000, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 2
+		shapedata = {"r":0.8,"segh":20,"segw":20}
+		texture = ""
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		tec = "decal.softptc"
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[-889204224,-2046858080,603927848,114441216],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[0.711538,1.673077,2.0],"classid":"ptcmod_scale"},
+		]
+	},
+	with ParticleGroupData(){
+		name = "star1"
+		enabled = true
+		aimtype = 1
+		localcoord = false
+		emitter = with ParticleEmitter(){
+			num = 20
+			start = 100, start_spr = 400
+			life = 200, life_spr = 0
+			posx = 1.4, posy = -0.6, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 1.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 41
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.08,"h":0.08}
+		texture = "tex/square2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[-1,1526661375,-262145,16711680],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[0.0,1.961538,0.0,1.961538],"classid":"ptcmod_scale"},
+		{"scale":3.1416,"classid":"ptcmod_rot","rot":[-1.0,1.0],"axisid":2},
+		{"vel":0.0,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"color":0,"scale":3.5,"classid":"ptcmod_rnd","b":0.0,"h":0.0,"p":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "star2"
+		enabled = true
+		aimtype = 1
+		localcoord = false
+		emitter = with ParticleEmitter(){
+			num = 20
+			start = 400, start_spr = 400
+			life = 200, life_spr = 0
+			posx = 1.6, posy = 0.1, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 1.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 41
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.08,"h":0.08}
+		texture = "tex/square2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[-1,1526661375,-262145,16711680],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[0.0,1.961538,0.0,1.961538],"classid":"ptcmod_scale"},
+		{"scale":3.1416,"classid":"ptcmod_rot","rot":[-1.0,1.0],"axisid":2},
+		{"vel":0.0,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"color":0,"scale":3.5,"classid":"ptcmod_rnd","b":0.0,"h":0.0,"p":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "star"
+		enabled = true
+		aimtype = 1
+		localcoord = false
+		emitter = with ParticleEmitter(){
+			num = 30
+			start = 0, start_spr = 1000
+			life = 500, life_spr = 0
+			posx = 0.0, posy = 0.6, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 0.0, dir_sprz = 3.141593
+			linearbits = 128
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.08,"h":0.08}
+		texture = "tex/square2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[-1,1526661375,-262145,16711680,-1,16711680],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[0.0,1.961538,0.0,1.961538,0.0,1.961538],"classid":"ptcmod_scale"},
+		{"scale":3.1416,"classid":"ptcmod_rot","rot":[-1.0,1.0],"axisid":2},
+		{"vel":2.0,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"color":0,"scale":3.0,"classid":"ptcmod_rnd","b":0.0,"p":0.0,"h":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "glow"
+		enabled = true
+		aimtype = 1
+		localcoord = false
+		emitter = with ParticleEmitter(){
+			num = 5
+			start = 0, start_spr = 800
+			life = 1000, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"w":2.0,"h":2.0}
+		texture = "/resource/efx/tex/glow2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"xyz":7,"scale":[0.735294,1.235294,1.441176],"classid":"ptcmod_scale"},
+		{"color":[882180096,1509884004,1526661180,1526661150,1526661150,1526661145,1526661140,1526661120],"classid":"ptcmod_color"},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0}
+]

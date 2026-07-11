@@ -1,0 +1,263 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 1
+prof <- {"showbnd":[0.000151,0.5,0.051985,2.315014,2.015966,2.067952],"maxbnd":[0.0,0.5,0.0,2.675328,2.675328,2.675328],"showtime":240,"wholebnd":[-0.539347,0.547366,0.291566,3.478071,2.722694,3.004572]}
+groups <- [
+	with ParticleGroupData(){
+		name = "shockwave"
+		enabled = true
+		aimtype = 2
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 1
+			start = 0, start_spr = 0
+			life = 700, life_spr = 0
+			posx = 0.0, posy = 0.5, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":1.6,"h":1.6}
+		texture = "/resource/efx/tex/shockwave2.webp"
+		color = 0xffffff32
+		blendmode = 5
+		blend = 5
+		overlay = 0.32
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"xyz":7,"scale":[0.794118,1.382353,1.617647],"classid":"ptcmod_scale"},
+		{"color":[-256,16777170,16743986,-1761673216],"classid":"ptcmod_color"},
+		]
+	},
+	with ParticleGroupData(){
+		name = "line"
+		enabled = true
+		aimtype = 2
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 8
+			start = 0, start_spr = 0
+			life = 222, life_spr = 222
+			posx = 0.0, posy = 0.5, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 1.570796, dir_sprz = 1.570796
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.3,"h":0.3}
+		texture = "/resource/efx/tex/rectangle1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		tec = "decal.def"
+		overlay = 0.22
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":9.0,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"xyz":1,"scale":[0.0,1.0,0.538462,0.235294,0.0],"classid":"ptcmod_scale"},
+		{"xyz":6,"scale":[1.0,1.0,1.0,0.588235,0.0],"classid":"ptcmod_scale"},
+		{"color":[285155583,285155583,285155583,285155328],"classid":"ptcmod_color"},
+		{"axisid":1,"classid":"ptcmod_acc","acc_spr":0.0,"coord":0,"acc":-0.81},
+		]
+	},
+	with ParticleGroupData(){
+		name = "line"
+		enabled = true
+		aimtype = 2
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 8
+			start = 0, start_spr = 0
+			life = 222, life_spr = 222
+			posx = 0.0, posy = 0.5, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 1.570796, dir_sprz = 1.570796
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.3,"h":0.3}
+		texture = "/resource/efx/tex/rectangle1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		tec = "decal.def"
+		overlay = 0.2
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":9.0,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"xyz":1,"scale":[0.0,1.0,0.538462,0.235294,0.0],"classid":"ptcmod_scale"},
+		{"xyz":6,"scale":[1.0,1.0,1.0,0.588235,0.0],"classid":"ptcmod_scale"},
+		{"color":[-1291845633,-2130706433,11730943,0],"classid":"ptcmod_color"},
+		{"axisid":1,"classid":"ptcmod_acc","acc":-0.81,"coord":0,"acc_spr":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "gravel"
+		enabled = true
+		aimtype = 2
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 16
+			start = 0, start_spr = 1100
+			life = 444, life_spr = 666
+			posx = 1.0, posy = 0.2, posz = 1.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 0.523599, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.12,"w":0.12,"h":0.12}
+		texture = "/resource/efx/tex/square2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 1
+		tec = "decal.def"
+		overlay = 0.3
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":2.7,"classid":"ptcmod_vel","vel_spr":0.36},
+		{"xyz":7,"scale":[1.0,1.653846,1.307692],"classid":"ptcmod_scale"},
+		{"axisid":1,"classid":"ptcmod_acc","acc":-0.05,"coord":1,"acc_spr":0.0},
+		{"color":[-1291859713,-1291859713,-2130720513,1090504704],"classid":"ptcmod_color"},
+		{"axisid":2,"classid":"ptcmod_rot","rot":[-1.0,0.153846],"scale":3.141593},
+		]
+	},
+	with ParticleGroupData(){
+		name = "gravel2"
+		enabled = true
+		aimtype = 2
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 8
+			start = 0, start_spr = 1100
+			life = 444, life_spr = 888
+			posx = 0.0, posy = 0.5, posz = -0.3
+			pos_sprx = 0.3, pos_spry = 0.5, pos_sprz = 0.3
+			dirx = 0.0, diry = 1.570796, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 3.141593
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.1,"w":0.1,"h":0.1}
+		texture = "/resource/efx/tex/square2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		tec = "decal.def"
+		overlay = 0.3
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":2.7,"classid":"ptcmod_vel","vel_spr":0.36},
+		{"xyz":7,"scale":[1.0,1.653846,1.307692],"classid":"ptcmod_scale"},
+		{"axisid":1,"classid":"ptcmod_acc","acc":0.243,"coord":1,"acc_spr":0.0},
+		{"color":[-1297678081,-1297678081,-1297678081,-1719074816],"classid":"ptcmod_color"},
+		{"axisid":2,"classid":"ptcmod_rot","rot":[-1.0,0.153846],"scale":3.141593},
+		]
+	},
+	with ParticleGroupData(){
+		name = "glow"
+		enabled = true
+		aimtype = 2
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 3
+			start = 0, start_spr = 1000
+			life = 700, life_spr = 0
+			posx = 0.0, posy = 0.5, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":1.0,"h":1.0}
+		texture = "tex/glow1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		overlay = 0.5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"xyz":7,"scale":[0.307692,1.461538,1.865385,2.0],"classid":"ptcmod_scale"},
+		{"color":[16777050,16777180,16777166,16776960],"classid":"ptcmod_color"},
+		]
+	},
+	with ParticleGroupData(){
+		name = "shockwave"
+		enabled = true
+		aimtype = 2
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 4
+			start = 0, start_spr = 1000
+			life = 700, life_spr = 0
+			posx = 0.0, posy = 0.5, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.9,"h":0.9}
+		texture = "/resource/efx/tex/shockwave2.webp"
+		color = 0xffffff32
+		blendmode = 5
+		blend = 5
+		overlay = 0.61
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"xyz":7,"scale":[0.794118,1.382353,1.617647],"classid":"ptcmod_scale"},
+		{"color":[-256,16777170,16743986,-1761673216],"classid":"ptcmod_color"},
+		]
+	},
+	with ParticleGroupData(){
+		name = "gravel"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 15
+			start = 0, start_spr = 200
+			life = 600, life_spr = 200
+			posx = 0.0, posy = 0.8, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 0.0, dir_sprz = 2.094395
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.12,"h":0.12}
+		texture = "/resource/efx/tex/square2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		tec = "decal.def"
+		overlay = 0.47
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":1.2,"classid":"ptcmod_vel","vel_spr":0.5},
+		{"xyz":7,"scale":[1.0,1.653846,1.307692],"classid":"ptcmod_scale"},
+		{"axisid":1,"classid":"ptcmod_acc","acc_spr":0.0,"coord":1,"acc":0.03},
+		{"color":[-1291859713,-1291859713,-2130720513,1090504704],"classid":"ptcmod_color"},
+		{"scale":3.141593,"classid":"ptcmod_rot","rot":[-1.0,-1.0],"axisid":2},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0}
+]

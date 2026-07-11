@@ -1,0 +1,6 @@
+{
+	"N000":{"icon":"","name":"$T.money","stacknum":100000000},
+	"N001":{"icon":"","name":"$T.EXP","stacknum":100000000},
+	"N002":{"icon":"","name":"$T.JXP","stacknum":100000000},
+	"_meta":{"comment":"Do not modify this file.","version":1}
+}

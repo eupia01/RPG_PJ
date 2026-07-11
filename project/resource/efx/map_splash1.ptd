@@ -1,0 +1,73 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 0
+prof <- {"showbnd":[-0.009773,1.163394,-0.003386,1.46855,1.322354,1.452713],"maxbnd":[-0.068308,0.905022,0.014532,1.383441,1.740755,1.4495],"showtime":3016,"wholebnd":[0.009095,0.942155,0.02107,1.460844,1.777889,1.456038]}
+groups <- [
+	with ParticleGroupData(){
+		name = "splash"
+		enabled = true
+		aimtype = 1
+		localcoord = false
+		emitter = with ParticleEmitter(){
+			num = 12
+			start = 0, start_spr = 500
+			life = 800, life_spr = 500
+			posx = 0.25, posy = 0.0, posz = 0.0
+			pos_sprx = 0.25, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.3,"h":0.3}
+		texture = "/resource/efx/tex/splash1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 1
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":1.0,"classid":"ptcmod_vel","vel_spr":0.5},
+		{"xyz":7,"scale":[0.617647,2.0],"classid":"ptcmod_scale"},
+		{"color":[1889126434,-1024917700,1889126415,1889126407,1889126400],"classid":"ptcmod_color"},
+		{"axisid":1,"classid":"ptcmod_acc","acc":-0.1,"coord":0,"acc_spr":0.0},
+		{"axisid":2,"classid":"ptcmod_rot","rot":[0.205882,0.0],"scale":0.872665},
+		]
+	},
+	with ParticleGroupData(){
+		name = "smoke"
+		enabled = true
+		aimtype = 1
+		localcoord = false
+		emitter = with ParticleEmitter(){
+			num = 4
+			start = 0, start_spr = 500
+			life = 800, life_spr = 500
+			posx = 0.25, posy = 0.0, posz = 0.0
+			pos_sprx = 0.25, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.4,"h":0.4}
+		texture = "/resource/efx/tex/smoke2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 1
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":0.9,"classid":"ptcmod_vel","vel_spr":0.7},
+		{"xyz":7,"scale":[0.617647,2.0],"classid":"ptcmod_scale"},
+		{"color":[-1463425230,-1463425230,-1463425260,-1463425270,-1463425280],"classid":"ptcmod_color"},
+		{"axisid":1,"classid":"ptcmod_acc","acc_spr":0.0,"coord":0,"acc":-0.08},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0},
+	{"acttype":"loop","cnt":999,"lt":0,"time":400}
+]

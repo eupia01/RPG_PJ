@@ -1,0 +1,102 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 0
+prof <- {"showbnd":[-0.044164,0.872108,0.815284,1.165961,1.137403,1.815284],"maxbnd":[-0.012242,1.112239,1.439181,1.349036,1.413828,2.439181],"showtime":16,"wholebnd":[-0.00144,1.129113,1.620918,1.359838,1.430702,2.620918]}
+groups <- [
+	with ParticleGroupData(){
+		name = "stab"
+		enabled = true
+		aimtype = 0
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 1
+			start = 0, start_spr = 0
+			life = 300, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 4
+		shapedata = {"usemtl":false,"d":0.1,"w":0.07,"path":"/resource/efx/mdl/swish_stab1.pm","h":0.07}
+		texture = "/resource/efx/mdl/tex/swish_stab1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		tec = "decal.def"
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"scale":1.0,"classid":"ptcmod_uv2","scroll":[1.0,0.058824],"uv":2},
+		{"color":[2127364095,10223360],"classid":"ptcmod_color"},
+		{"color":0,"scale":0.0,"classid":"ptcmod_rnd","b":10.0,"p":0.0,"h":0.0},
+		{"classid":"ptcmod_offs","y":0.0,"z":-2.0,"x":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "ptc"
+		enabled = true
+		aimtype = 2
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 8
+			start = 0, start_spr = 50
+			life = 110, life_spr = 100
+			posx = 0.0, posy = 1.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 1.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 1.570796, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.20944, dir_sprz = 0.20944
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"w":0.15,"h":0.1}
+		texture = "/resource/efx/tex/rectangle1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":9.0,"classid":"ptcmod_vel","vel_spr":3.0},
+		{"color":[-1,10223488],"classid":"ptcmod_color"},
+		{"classid":"ptcmod_offs","y":0.0,"z":-2.0,"x":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "stab"
+		enabled = true
+		aimtype = 0
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 1
+			start = 0, start_spr = 0
+			life = 300, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 4
+		shapedata = {"usemtl":false,"d":0.1,"path":"/resource/efx/mdl/swish_stab1.pm","w":0.05,"h":0.05}
+		texture = "/resource/efx/mdl/tex/swish_stab2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		tec = "decal.def"
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"scale":1.0,"classid":"ptcmod_uv2","scroll":[1.0,0.058824],"uv":2},
+		{"color":[2127364095,10223360],"classid":"ptcmod_color"},
+		{"color":0,"scale":0.0,"classid":"ptcmod_rnd","b":10.0,"h":0.0,"p":0.0},
+		{"classid":"ptcmod_offs","y":0.0,"z":-2.0,"x":0.0},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0}
+]

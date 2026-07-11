@@ -1,0 +1,117 @@
+{
+	"J000":{
+		"MAXLV":10,
+		"desc":"A profession that requires no special skills. However, if you master it, you can acquire various useful abilities.",
+		"expcurv":[10,20],
+		"icon":"",
+		"jobflag":-1,
+		"jobslotbits":1,
+		"learn":[],
+		"lvoption":[],
+		"name":"Villager",
+		"option":[
+			{"CDR.0":10,"CDR.1":0,"CDR.2":0,"CDR.3":0,"opttype":"opt_conddef"}
+		]
+	},
+	"J001":{
+		"MAXLV":10,
+		"desc":"A special occupation that only selected individuals can attain.",
+		"expcurv":[10,20],
+		"icon":"",
+		"jobflag":0,
+		"jobslotbits":1,
+		"lvoption":[],
+		"name":"Hero",
+		"option":[
+			{"opttype":"opt_status","propid":"PATK","val":10,"valtype":"baserate"},
+			{"opttype":"opt_status","propid":"MAXHP","val":20,"valtype":"baserate"},
+			{"eqflag":0,"opttype":"opt_eqflag"},
+			{"CDR.0":0,"CDR.1":0,"CDR.2":0,"CDR.3":0,"CDR.4":30,"CDR.5":0,"CDR.6":0,"CDR.7":0,"opttype":"opt_conddef"}
+		]
+	},
+	"J100":{
+		"MAXLV":1,
+		"desc":"",
+		"expcurv":[10,20],
+		"icon":"",
+		"jobflag":-1,
+		"jobslotbits":2,
+		"lvoption":[],
+		"name":"Sense of justice",
+		"option":[
+			{"condid":"K040","opttype":"opt_autocond","req":"hp25"}
+		]
+	},
+	"J101":{
+		"MAXLV":1,
+		"desc":"Possesses an iron will that remains unshaken in any situation.\nYou gain resistance to mental status ailments.",
+		"expcurv":[10,20],
+		"icon":"",
+		"jobflag":-1,
+		"jobslotbits":2,
+		"lvoption":[],
+		"name":"Iron Heart",
+		"option":[
+			{"CDR.0":0,"CDR.1":0,"CDR.2":30,"CDR.3":0,"CDR.4":30,"CDR.5":0,"CDR.6":0,"CDR.7":30,"opttype":"opt_conddef"}
+		]
+	},
+	"J102":{
+		"MAXLV":1,
+		"desc":"To defend a weakened ally.",
+		"expcurv":[10,20],
+		"icon":"",
+		"jobflag":-1,
+		"jobslotbits":2,
+		"lvoption":[],
+		"name":"chivalry",
+		"option":[
+			{"CDR.0":0,"CDR.1":0,"CDR.2":30,"CDR.3":0,"CDR.4":30,"CDR.5":0,"CDR.6":0,"CDR.7":30,"opttype":"opt_conddef"}
+		]
+	},
+	"J103":{
+		"MAXLV":1,
+		"desc":"",
+		"expcurv":[10,20],
+		"icon":"",
+		"jobflag":-1,
+		"jobslotbits":2,
+		"lvoption":[],
+		"name":"The Secrets of Stealing",
+		"option":[
+			{"opttype":"opt_status","propid":"STL","val":30,"valtype":"baserate"}
+		]
+	},
+	"J104":{
+		"MAXLV":1,
+		"desc":"Dodges enemy attacks with light, nimble steps.",
+		"expcurv":[10,20],
+		"icon":"",
+		"jobflag":-1,
+		"jobslotbits":2,
+		"lvoption":[],
+		"name":"Mikawashi no Step",
+		"option":[
+			{
+				"elembits":7,
+				"formbits":1,
+				"hitact":{"hitani":null,"hitefx":null,"hitsnd":null},
+				"opttype":"opt_parry",
+				"successrate":0.15
+			}
+		]
+	},
+	"J105":{
+		"MAXLV":1,
+		"desc":"Attack power increases at the start of battle.",
+		"expcurv":[10,20],
+		"icon":"",
+		"jobflag":-1,
+		"jobslotbits":2,
+		"lvoption":[],
+		"name":"first move wins",
+		"option":[
+			{"condid":"K020","opttype":"opt_autocond","req":"turn1"}
+		]
+	},
+	"_meta":{"caps":200,"version":1}
+}

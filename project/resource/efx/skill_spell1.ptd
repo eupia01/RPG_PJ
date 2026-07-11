@@ -1,0 +1,70 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 0
+prof <- {"showbnd":[0.0,1.012288,0.0,0.664706,0.664706,0.664706],"maxbnd":[0.0,1.096871,0.0,1.01442,1.01442,1.01442],"showtime":240,"wholebnd":[0.0,1.096821,0.0,1.01442,1.014471,1.01442]}
+groups <- [
+	with ParticleGroupData(){
+		name = "square"
+		enabled = true
+		aimtype = 1
+		localcoord = false
+		emitter = with ParticleEmitter(){
+			num = 8
+			start = 0, start_spr = 200
+			life = 700, life_spr = 0
+			posx = 0.4, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 1.570796, dirz = 0.0
+			dir_sprx = 2.722714, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 33
+		},
+		shapetype = 0
+		shapedata = {"d":null,"axis":0,"r":0.0,"w":0.15,"h":0.15}
+		texture = "/resource/efx/tex/circle1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":0.0,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"color":[-256,1323565055,1323565055,1323564870,1323565055,1323564870,1323564960,1323564800],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[1.058824,1.058824,1.058824,1.0,0.823529,0.647059,0.441176],"classid":"ptcmod_scale"},
+		{"axisid":1,"classid":"ptcmod_acc","acc":0.03,"coord":1,"acc_spr":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "shockwave1"
+		enabled = true
+		aimtype = 0
+		localcoord = false
+		emitter = with ParticleEmitter(){
+			num = 1
+			start = 0, start_spr = 0
+			life = 700, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"d":null,"axis":1,"r":0.0,"w":0.8,"h":0.8}
+		texture = "/resource/efx/tex/glow_circle1.webp"
+		color = 0xffffffff
+		blendmode = 2
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[-183,-1561264208,1323564820,1323564810,1323564800],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[0.0,1.029412,1.147059],"classid":"ptcmod_scale"},
+		{"axisid":1,"classid":"ptcmod_acc","acc_spr":0.0,"coord":0,"acc":0.02},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0}
+]

@@ -1,0 +1,43 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 0
+prof <- {"showbnd":[-0.001396,1.026929,0.004484,1.000757,1.046605,1.032624],"maxbnd":[0.000879,1.134361,-0.005792,1.024671,1.149837,1.058551],"showtime":3016,"wholebnd":[-0.005125,1.148317,0.002792,1.04693,1.193752,1.067135]}
+groups <- [
+	with ParticleGroupData(){
+		name = "fire"
+		enabled = true
+		aimtype = 1
+		localcoord = false
+		emitter = with ParticleEmitter(){
+			num = 3
+			start = 0, start_spr = 800
+			life = 600, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.05, pos_spry = 0.05, pos_sprz = 0.05
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.087266, dir_spry = 0.087266, dir_sprz = 0.087266
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.4,"h":0.4}
+		texture = "/resource/efx/tex/fire1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		tec = "decal.softptc"
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"xyz":7,"scale":[0.470588,0.764706,0.794118,0.970588,0.941176,1.147059],"classid":"ptcmod_scale"},
+		{"color":[-76,-1,-14081,-3644161,-10210561,-13500161,-939524046,-1778384896],"classid":"ptcmod_color"},
+		{"classid":"ptcmod_texanime","frame":[0.0,6.666666]},
+		{"vel":0.5,"classid":"ptcmod_vel","vel_spr":0.0},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0},
+	{"acttype":"loop","cnt":999,"lt":0,"time":1000}
+]

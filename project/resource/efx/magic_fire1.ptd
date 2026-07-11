@@ -1,0 +1,130 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 2
+prof <- {"showbnd":[-0.070427,0.360141,-0.042823,1.389018,1.654477,1.27733],"maxbnd":[-0.264345,0.790467,0.200362,1.971724,2.357439,2.038218],"showtime":200,"wholebnd":[-0.152253,0.785074,0.124839,2.091105,2.518915,2.11374]}
+groups <- [
+	with ParticleGroupData(){
+		name = "spark"
+		enabled = true
+		aimtype = 2
+		localcoord = false
+		emitter = with ParticleEmitter(){
+			num = 15
+			start = 0, start_spr = 500
+			life = 300, life_spr = 200
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.5, pos_spry = 0.5, pos_sprz = 0.5
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 3.141593, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.15,"h":0.15}
+		texture = "tex/square2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":5.0,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"axisid":1,"classid":"ptcmod_acc","acc_spr":0.0,"coord":0,"acc":-0.5},
+		{"color":[-5308161,-13500161,-4980481,-939523841,-4980481,-13500161,-6946561,-1778384641],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[0.519231,1.480769,0.192308,0.692308,0.173077,0.923077,0.0],"classid":"ptcmod_scale"},
+		{"scale":3.1416,"classid":"ptcmod_rot","rot":[-1.0,1.0],"axisid":2},
+		]
+	},
+	with ParticleGroupData(){
+		name = "shockwave"
+		enabled = true
+		aimtype = 1
+		localcoord = false
+		emitter = with ParticleEmitter(){
+			num = 1
+			start = 50, start_spr = 0
+			life = 700, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":1.3,"h":1.3}
+		texture = "/resource/efx/tex/shockwave4.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"xyz":7,"scale":[0.326923,1.529412,1.852941,1.970588,2.0],"classid":"ptcmod_scale"},
+		{"color":[-8388480,-12582902,-14680064],"classid":"ptcmod_color"},
+		]
+	},
+	with ParticleGroupData(){
+		name = "glow"
+		enabled = true
+		aimtype = 1
+		localcoord = false
+		emitter = with ParticleEmitter(){
+			num = 3
+			start = 0, start_spr = 300
+			life = 400, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.6,"h":0.6}
+		texture = "tex/glow1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 1
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"xyz":7,"scale":[1.0,1.735294,2.0],"classid":"ptcmod_scale"},
+		{"color":[-8388418,-8126400,-14680034,-8126404,-14680054,-14680064],"classid":"ptcmod_color"},
+		{"color":3289600,"scale":0.5,"classid":"ptcmod_rnd","b":0.0,"h":0.0,"p":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "fire"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 10
+			start = 0, start_spr = 400
+			life = 500, life_spr = 300
+			posx = 0.0, posy = 0.2, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 3.141593, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.4,"h":0.4}
+		texture = "/resource/efx/tex/fire1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":0.8,"classid":"ptcmod_vel","vel_spr":0.3},
+		{"xyz":7,"scale":[0.846154,1.846154,1.557692,1.057692,0.923077],"classid":"ptcmod_scale"},
+		{"color":[-65416,-5111553,-8388353,-10485505,-12582867,-16777216],"classid":"ptcmod_color"},
+		{"classid":"ptcmod_texanime","frame":[0,10.0]},
+		{"color":6579200,"scale":0.3,"classid":"ptcmod_rnd","b":0.0,"h":0.0,"p":0.0},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0}
+]

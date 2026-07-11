@@ -1,0 +1,38 @@
+{
+	"R000":{
+		"desc":"",
+		"icon":"",
+		"items":[
+			{"dataid":"W001","price":null,"reqfail":0,"reqs":null},
+			{"dataid":"W010","price":null,"reqfail":0,"reqs":null},
+			{"dataid":"W030","price":null,"reqfail":0,"reqs":null},
+			{"dataid":"A000","price":null,"reqfail":0,"reqs":null},
+			{"dataid":"I010","price":null,"reqfail":0,"reqs":null},
+			{"dataid":"I018","price":null,"reqfail":0,"reqs":null},
+			{"dataid":"I019","price":null,"reqfail":0,"reqs":null},
+			{"dataid":"I016","price":null,"reqfail":0,"reqs":null},
+			{"dataid":"I004","price":null,"reqfail":0,"reqs":null}
+		],
+		"name":"Town Tool Shop",
+		"type":0
+	},
+	"R001":{
+		"desc":"",
+		"icon":"",
+		"items":[
+			{"dataid":"S002","needown":true,"reqfail":1,"reqs":null}
+		],
+		"name":"white magic",
+		"type":1
+	},
+	"R034":{
+		"desc":"",
+		"icon":"",
+		"items":[
+			{"dataid":"S000","needown":true,"reqfail":1,"reqs":null}
+		],
+		"name":"gggpp",
+		"type":1
+	},
+	"_meta":{"caps":100,"version":1}
+}

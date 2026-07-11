@@ -1,0 +1,71 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 0
+prof <- {"showbnd":[0.0,0.0,0.0,1.631459,1.631459,1.631459],"maxbnd":[0.0,0.0,0.0,1.748447,1.748447,1.748447],"showtime":528,"wholebnd":[0.0,0.0,0.0,1.748447,1.748447,1.748447]}
+groups <- [
+	with ParticleGroupData(){
+		name = "star"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 14
+			start = 0, start_spr = 800
+			life = 200, life_spr = 0
+			posx = 0.0, posy = 0.3, posz = 0.0
+			pos_sprx = 0.7, pos_spry = 0.7, pos_sprz = 0.7
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.06,"h":0.06}
+		texture = "/resource/efx/tex/square2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		overlay = 0.61
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":1.0,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"color":[-1,1526661375,-262145,16711680],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[0.0,1.961538,0.0,1.961538],"classid":"ptcmod_scale"},
+		{"color":0,"scale":5.0,"classid":"ptcmod_rnd","b":0.0,"p":0.0,"h":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "glow"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 1
+			start = 0, start_spr = 0
+			life = 1000, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"w":1.1,"h":1.1}
+		texture = "/resource/efx/tex/glow1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		overlay = 0.6
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"xyz":7,"scale":[1.117647,1.323529,1.441176,1.5],"classid":"ptcmod_scale"},
+		{"color":[882180096,1509884159,1526661271,1526661160,1526661150,1526661145,1526661140,1526661120],"classid":"ptcmod_color"},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0}
+]

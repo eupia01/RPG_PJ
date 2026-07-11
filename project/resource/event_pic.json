@@ -1,0 +1,13 @@
+{
+	"PC000":{
+		"animap":[],
+		"aniuv":[1,1],
+		"blend":2,
+		"cntpos":[0.5,0.5],
+		"memo":"",
+		"name":{"ja":"rpgcobo-icon"},
+		"pic":"/resource/event_pic/rpgcobo-icon.webp",
+		"scale":0.5
+	},
+	"_meta":{"caps":100}
+}

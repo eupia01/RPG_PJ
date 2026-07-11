@@ -1,0 +1,226 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 7
+prof <- {"showbnd":[0.066807,0.467639,-0.030746,1.979524,2.358722,1.857297],"maxbnd":[-0.026624,-0.218457,-0.216285,2.232277,2.435669,2.409174],"showtime":1280,"wholebnd":[-0.0641,-0.188532,-0.291621,2.563504,2.604346,2.489095]}
+groups <- [
+	with ParticleGroupData(){
+		name = "charge_icemark1"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 10
+			start = 0, start_spr = 300
+			life = 400, life_spr = 0
+			posx = 0.0, posy = -2.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 3.141593, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.1,"h":0.1}
+		texture = "/resource/efx/tex/icemark1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		overlay = 0.28
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"xyz":7,"scale":[1.558824,2.0,1.294118,1.264706,0.676471,0.676471,0.235294],"classid":"ptcmod_scale"},
+		{"color":[3315250,-1,3315300,-1,3315300,-1,3315201],"classid":"ptcmod_color"},
+		{"vel":-1.0,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"axisid":1,"classid":"ptcmod_acc","acc":0.2,"coord":0,"acc_spr":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "glow"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 5
+			start = 800, start_spr = 300
+			life = 250, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.6,"h":0.6}
+		texture = "/resource/efx/tex/glow1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		overlay = 0.52
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"xyz":7,"scale":[0.470588,1.264706,1.735294,1.882353,1.941176,2.0,2.0,2.0],"classid":"ptcmod_scale"},
+		{"color":[-1,4325171,11010043,4325185,4325154,4325136,4325120],"classid":"ptcmod_color"},
+		]
+	},
+	with ParticleGroupData(){
+		name = "kirakira"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 8
+			start = 800, start_spr = 500
+			life = 500, life_spr = 200
+			posx = 0.0, posy = 2.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.8, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 1.570796, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.1,"h":0.1}
+		texture = "tex/star1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":0.5,"classid":"ptcmod_vel","vel_spr":0.2},
+		{"xyz":7,"scale":[0.884615,1.615385,1.176471,1.117647,0.826923,0.941176,0.705882,0.705882,0.538462],"classid":"ptcmod_scale"},
+		{"color":[916652031,3315455,916652031,3315455,916652031,3315200],"classid":"ptcmod_color"},
+		{"axisid":1,"classid":"ptcmod_acc","acc":-0.05,"coord":0,"acc_spr":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "smoke"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 20
+			start = 800, start_spr = 300
+			life = 500, life_spr = 300
+			posx = 0.0, posy = 0.3, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 3.141593, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.4,"h":0.4}
+		texture = "/resource/efx/tex/ice_smoke1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		overlay = 0.07
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":0.2,"classid":"ptcmod_vel","vel_spr":0.1},
+		{"xyz":7,"scale":[0.794118,1.029412,1.117647],"classid":"ptcmod_scale"},
+		{"color":[2095382527,3315455,950271999,3315455,2060189695,3116800],"classid":"ptcmod_color"},
+		{"color":0,"scale":1.0,"classid":"ptcmod_rnd","b":10.0,"p":0.0,"h":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "sw"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 5
+			start = 800, start_spr = 300
+			life = 400, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.2, pos_spry = 0.2, pos_sprz = 0.2
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.8,"h":0.8}
+		texture = "/resource/efx/tex/shockwave1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		overlay = 0.13
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"xyz":7,"scale":[0.5,1.735294,1.941176,2.0],"classid":"ptcmod_scale"},
+		{"color":[-1,16777010,9830154,5504778,2752266,65285],"classid":"ptcmod_color"},
+		]
+	},
+	with ParticleGroupData(){
+		name = "icemark"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 16
+			start = 800, start_spr = 500
+			life = 500, life_spr = 200
+			posx = 0.0, posy = 1.5, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.2, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 3.141593, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.1,"h":0.1}
+		texture = "/resource/efx/tex/icemark1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		tec = "decal.def"
+		overlay = 0.28
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":0.8,"classid":"ptcmod_vel","vel_spr":0.2},
+		{"xyz":7,"scale":[0.884615,1.615385,1.176471,1.117647,0.826923,0.941176,0.705882,0.705882,0.538462],"classid":"ptcmod_scale"},
+		{"color":[-1,3315455,-1,3315455,-1,3315200],"classid":"ptcmod_color"},
+		{"axisid":1,"classid":"ptcmod_acc","acc":-0.05,"coord":0,"acc_spr":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "ice"
+		enabled = true
+		aimtype = 2
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 7
+			start = 300, start_spr = 300
+			life = 520, life_spr = 0
+			posx = 0.0, posy = -2.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 3.141593, dir_sprz = 0.0
+			linearbits = 32
+		},
+		shapetype = 4
+		shapedata = {"usemtl":false,"d":0.025,"path":"/resource/efx/mdl/ice1.pm","w":0.025,"h":0.025}
+		texture = ""
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		tec = "decal.def"
+		overlay = 0.26
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"xyz":7,"scale":[0.0,1.647059,1.235294,1.0,0.882353,0.882353],"classid":"ptcmod_scale"},
+		{"color":0,"scale":0.0,"classid":"ptcmod_rnd","b":0.0,"h":0.0,"p":0.0},
+		{"color":[-1,-1192886273,-1,-1192886273,-50,-1192886528],"classid":"ptcmod_color"},
+		{"axisid":1,"classid":"ptcmod_acc","acc_spr":0.0,"coord":0,"acc":1.5},
+		{"vel":-4.0,"classid":"ptcmod_vel","vel_spr":0.0},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0}
+]

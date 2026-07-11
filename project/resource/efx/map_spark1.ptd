@@ -1,0 +1,41 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 6
+prof <- {"showbnd":[0.003643,-0.015241,-0.006784,1.0,1.0,1.0],"maxbnd":[-0.069553,-0.133316,0.012195,1.028236,1.013203,1.02121],"showtime":376,"wholebnd":[-0.034791,-0.046406,-0.057519,1.062997,1.100114,1.090924]}
+groups <- [
+	with ParticleGroupData(){
+		name = "fire1"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 3
+			start = 0, start_spr = 1500
+			life = 400, life_spr = 100
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.2, pos_spry = 0.2, pos_sprz = 0.2
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.5,"h":0.5}
+		texture = "/resource/efx/tex/elec1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[-579073,13369343,-655105,-2227969,-655105,15335406,-655105],"classid":"ptcmod_color"},
+		{"classid":"ptcmod_texanime","frame":[0,10.0]},
+		{"xyz":7,"scale":[0.970588,0.911765,1.323529,1.205882,1.529412,1.352941,1.647059],"classid":"ptcmod_scale"},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0},
+	{"acttype":"loop","cnt":999,"lt":0,"time":2000}
+]

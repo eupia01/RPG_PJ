@@ -1,0 +1,43 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 0
+prof <- {"showbnd":[0.00615,0.01518,0.077367,1.472615,1.439995,1.325394],"maxbnd":[0.044348,0.002798,-0.059661,1.650871,1.341893,1.514481],"showtime":1928,"wholebnd":[0.044348,0.023803,-0.030727,1.650871,1.598679,1.587795]}
+groups <- [
+	with ParticleGroupData(){
+		name = "smoke"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 8
+			start = 0, start_spr = 1800
+			life = 1500, life_spr = 750
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.5, pos_spry = 0.5, pos_sprz = 0.5
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 3.141593, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.5,"w":0.5,"h":0.5}
+		texture = "/resource/efx/tex/smoke2.webp"
+		color = 0xffffffff
+		blendmode = 2
+		blend = 1
+		tec = "pbr.basic"
+		Ka = 0x333333ff
+		Ks = 0x000000ff
+		mod = [
+		{"vel":0.05,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"xyz":7,"scale":[1.058824,1.176471,1.441176],"classid":"ptcmod_scale"},
+		{"color":[-256,-173,-236,-256],"classid":"ptcmod_color"},
+		{"classid":"ptcmod_texanime","frame":[0.0,10.0]},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0},
+	{"acttype":"loop","cnt":999,"lt":0,"time":1500}
+]

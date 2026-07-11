@@ -1,0 +1,103 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 5
+prof <- {"showbnd":[-0.220699,0.396899,0.010704,1.671812,1.396899,1.501699],"maxbnd":[0.025492,0.015868,0.047028,1.706633,1.622107,1.819748],"showtime":200,"wholebnd":[0.025492,0.081867,0.047028,1.706633,1.888681,1.819748]}
+groups <- [
+	with ParticleGroupData(){
+		name = "wave"
+		enabled = true
+		aimtype = 0
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 3
+			start = 0, start_spr = 500
+			life = 800, life_spr = 0
+			posx = 0.0, posy = -0.4, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 3.141593, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 4
+		shapedata = {"usemtl":false,"d":0.1,"w":0.1,"path":"/resource/efx/mdl/wave_cylinder1.pm","h":0.1}
+		texture = ""
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		tec = "decal.softptc"
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[2030045952,1627392511,1627401010,1627400960],"classid":"ptcmod_color"},
+		{"vel":0.5,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"axisid":1,"classid":"ptcmod_rot","rot":[1.0,-1.0],"scale":0.698132},
+		{"xyz":2,"scale":[0.5,0.647059,1.176471,2.0],"classid":"ptcmod_scale"},
+		{"xyz":5,"scale":[1.117647,0.970588],"classid":"ptcmod_scale"},
+		{"vel":0.5,"classid":"ptcmod_vel","vel_spr":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "glow"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 3
+			start = 0, start_spr = 500
+			life = 700, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 3.141593, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":1.0,"h":1.0}
+		texture = "tex/glow1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[1627392256,1627392511,1627392256],"classid":"ptcmod_color"},
+		{"xyz":3,"scale":[2.0,0.382353],"classid":"ptcmod_scale"},
+		]
+	},
+	with ParticleGroupData(){
+		name = "spark"
+		enabled = true
+		aimtype = 2
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 30
+			start = 0, start_spr = 500
+			life = 500, life_spr = 200
+			posx = 0.0, posy = 0.5, posz = 0.0
+			pos_sprx = 1.0, pos_spry = 0.5, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.04,"h":0.04}
+		texture = "/resource/efx/tex/circle2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		tec = "decal.def"
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":-1.0,"classid":"ptcmod_vel","vel_spr":0.5},
+		{"color":[2030045952,1627392511,1627401010,1627400960],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[1.0,0.442308],"classid":"ptcmod_scale"},
+		{"color":20480,"scale":0.5,"classid":"ptcmod_rnd","b":0.0,"h":0.0,"p":0.0},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0}
+]

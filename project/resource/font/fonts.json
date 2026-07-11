@@ -1,0 +1,8 @@
+﻿[
+	{
+		"name":"ui",
+		"path":"/resource/font/SourceHanSans-Normal.ttc",
+		"lbl":"UI Gothic",
+		"facemap":{"kr":1,"zh-CN":2,"zh-TW":3,"zh-HK":4}
+	}
+]

@@ -1,0 +1,133 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 5
+prof <- {"showbnd":[0.0,0.033038,0.0,1.813886,2.346924,1.813886],"maxbnd":[0.0,-0.001491,0.0,1.891994,2.390503,1.891994],"showtime":816,"wholebnd":[0.0,0.04104,0.0,1.891994,2.433035,1.891994]}
+groups <- [
+	with ParticleGroupData(){
+		name = "glow"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 3
+			start = 0, start_spr = 500
+			life = 700, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 3.141593, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":1.0,"h":1.0}
+		texture = "tex/glow1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		overlay = -0.2
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[16736306,16736511,16736356,16736256],"classid":"ptcmod_color"},
+		{"xyz":3,"scale":[0.423077,0.576923,0.911765,1.529412],"classid":"ptcmod_scale"},
+		]
+	},
+	with ParticleGroupData(){
+		name = "spark"
+		enabled = true
+		aimtype = 2
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 30
+			start = 0, start_spr = 500
+			life = 200, life_spr = 100
+			posx = 0.0, posy = -0.5, posz = 0.0
+			pos_sprx = 1.0, pos_spry = 0.2, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.2,"h":0.15}
+		texture = "/resource/efx/tex/rectangle1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		tec = "decal.def"
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":3.0,"classid":"ptcmod_vel","vel_spr":1.0},
+		{"color":[16736306,16736511,16736356,16736256],"classid":"ptcmod_color"},
+		{"color":6579200,"scale":0.5,"classid":"ptcmod_rnd","b":0.0,"p":0.0,"h":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "shockwave"
+		enabled = true
+		aimtype = 0
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 4
+			start = 0, start_spr = 600
+			life = 500, life_spr = 0
+			posx = 0.0, posy = -0.5, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":1,"r":0.0,"w":0.7,"h":0.7}
+		texture = "/resource/efx/tex/shockwave1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[16736306,16736511,16736296,16736286,16736276,16736266,16736256],"classid":"ptcmod_color"},
+		{"xyz":3,"scale":[1.088235,1.705882,1.911765,1.970588,2.0],"classid":"ptcmod_scale"},
+		{"color":0,"scale":0.5,"classid":"ptcmod_rnd","b":0.0,"p":0.0,"h":0.0},
+		]
+	},
+	with ParticleGroupData(){
+		name = "star"
+		enabled = true
+		aimtype = 1
+		localcoord = false
+		emitter = with ParticleEmitter(){
+			num = 15
+			start = 280, start_spr = 40
+			life = 833, life_spr = 0
+			posx = 0.0, posy = 0.5, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 2.094395, dir_sprz = 0.0
+			linearbits = 0
+			seed = 77268
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.04,"h":0.04}
+		texture = "/resource/efx/tex/star1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		overlay = 0.57
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[-1,13762815,-83952897,11599872],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[0.0,1.961538,0.0,1.961538,0.0,0.653846,0.0],"classid":"ptcmod_scale"},
+		{"scale":3.1416,"classid":"ptcmod_rot","rot":[-1.0,1.0],"axisid":2},
+		{"vel":2.34,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"color":0,"scale":2.0,"classid":"ptcmod_rnd","b":0.0,"h":0.0,"p":0.0},
+		{"axisid":1,"classid":"ptcmod_acc","acc":-0.15,"coord":0,"acc_spr":0.0},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0}
+]

@@ -1,0 +1,72 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 0
+prof <- {"showbnd":[0.0,0.0,0.0,0.944236,0.944236,0.944236],"maxbnd":[0.0,0.106949,0.0,0.925412,1.032361,0.925412],"showtime":1488,"wholebnd":[0.0,0.104155,0.0,0.944236,1.04839,0.944236]}
+groups <- [
+	with ParticleGroupData(){
+		name = "aura"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 3
+			start = 0, start_spr = 800
+			life = 1500, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.6,"h":0.6}
+		texture = "/resource/efx/tex/shockwave2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 1
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[-1207976177,-1207975992,-1207976165,-1207976092,-1207976192],"classid":"ptcmod_color"},
+		{"xyz":1,"scale":[0.205882,0.676471,0.794118,1.264706,1.411765],"classid":"ptcmod_scale"},
+		{"xyz":2,"scale":[0.235294,0.470588,0.911765,1.029412,1.558824],"classid":"ptcmod_scale"},
+		{"color":0,"scale":0.0,"classid":"ptcmod_rnd","b":10.0,"p":0.0,"h":0.0},
+		{"axisid":2,"classid":"ptcmod_rot","rot":[0.852941,-0.294118],"scale":3.490659},
+		]
+	},
+	with ParticleGroupData(){
+		name = "ptc"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 8
+			start = 0, start_spr = 1500
+			life = 500, life_spr = 300
+			posx = 0.0, posy = 0.35, posz = 0.0
+			pos_sprx = 0.25, pos_spry = 0.0, pos_sprz = 0.25
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 3.141593, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"d":null,"axis":0,"r":0.0,"w":0.15,"h":0.15}
+		texture = "/resource/efx/tex/bubble1.webp"
+		color = 0xb7ffbfff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"vel":0.5,"classid":"ptcmod_vel","vel_spr":0.1},
+		{"color":[-1207976042,-1207976042,1811905686,1069501957],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[0.970588,1.205882,1.676471],"classid":"ptcmod_scale"},
+		{"classid":"ptcmod_texanime","frame":[0.0,10.0]},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0}
+]

@@ -1,0 +1,5 @@
+{
+	"G000":{"defval":false,"name":"global000","type":1},
+	"G001":{"defval":0,"name":"Global001","type":2},
+	"_meta":{"caps":200,"version":1}
+}

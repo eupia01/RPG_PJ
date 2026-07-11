@@ -1,0 +1,39 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 0
+prof <- {"showbnd":[0.0,0.0,0.0,0.395312,0.395312,0.395312],"maxbnd":[0.0,0.0,0.0,0.395312,0.395312,0.395312],"showtime":10,"wholebnd":[0.0,0.0,0.0,0.395312,0.395312,0.395312]}
+groups <- [
+	with ParticleGroupData(){
+		name = "GROUP1"
+		enabled = true
+		aimtype = 0
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 1
+			start = 0, start_spr = 0
+			life = 1000, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 4
+		shapedata = {"usemtl":true,"d":0.063,"path":"/resource/vox/efx/arrow1.vox","w":0.063,"h":0.063}
+		texture = "/resource/efx/mdl/tex/swish_cut.webp"
+		color = 0xffffffff
+		blendmode = 0
+		blend = 0
+		tec = "pbr.basic"
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[-1,-128,128],"classid":"ptcmod_color"},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0}
+]

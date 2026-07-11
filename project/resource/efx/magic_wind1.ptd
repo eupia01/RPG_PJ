@@ -1,0 +1,72 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 0
+prof <- {"showbnd":[-0.057287,0.019998,-0.176712,1.8664,1.326978,1.176712],"maxbnd":[-0.013357,0.14799,0.13492,1.839361,1.422457,1.563176],"showtime":568,"wholebnd":[0.019535,0.008392,0.041973,1.899156,1.562055,1.905861]}
+groups <- [
+	with ParticleGroupData(){
+		name = "cut"
+		enabled = true
+		aimtype = 0
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 4
+			start = 0, start_spr = 800
+			life = 800, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 1.884956, dir_spry = 3.141593, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":1,"r":0.0,"w":0.4,"h":0.4}
+		texture = "/resource/efx/tex/crescent1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[-256,16760831,14690836,79888384],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[0.558824,1.441176,1.852941,2.0],"classid":"ptcmod_scale"},
+		{"scale":12.566371,"classid":"ptcmod_rot","rot":[-1.0,1.0],"axisid":2},
+		{"color":0,"scale":1.0,"classid":"ptcmod_rnd","b":0.0,"h":0.7,"p":0.7},
+		]
+	},
+	with ParticleGroupData(){
+		name = "ptc"
+		enabled = true
+		aimtype = 1
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 12
+			start = 100, start_spr = 800
+			life = 300, life_spr = 0
+			posx = 0.0, posy = 0.2, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 1.570796, dirz = 0.0
+			dir_sprx = 6.283185, dir_spry = 0.698132, dir_sprz = 0.0
+			linearbits = 1
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.02,"h":0.02}
+		texture = "/resource/efx/tex/circle2.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[-256,16760831,14690910,79888384],"classid":"ptcmod_color"},
+		{"xyz":7,"scale":[0.211538,1.25,1.75,1.884615,2.0],"classid":"ptcmod_scale"},
+		{"color":0,"scale":0.5,"classid":"ptcmod_rnd","b":0.0,"p":0.0,"h":0.0},
+		{"vel":5.0,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"axisid":1,"classid":"ptcmod_acc","acc_spr":0.0,"coord":0,"acc":-0.7},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0}
+]

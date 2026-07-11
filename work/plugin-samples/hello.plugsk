@@ -1,0 +1,19 @@
+////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//	hello.plugsk : The simplest plugin example.
+//	
+
+pluginfo <- {
+	name : { "ja":"こんにちはプラグイン","en":"Hello Plugin"}
+	auther : "djkotori"
+	ver : "0.0.1"
+	desc : { "ja":"最も簡単なプラグインの例です。","en":"The simplest plugin example."}
+	props : [
+		{ pid:"message", lbl:"Hello message", type:PropertyType.STRING, defval="RPG-Cobo" }
+	]
+}
+
+function loadPlugin( args, opt){
+	printf( "--------------- Hello %S! ---------------\n", opt.message);
+	return true;
+}

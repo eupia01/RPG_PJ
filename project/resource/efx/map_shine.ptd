@@ -1,0 +1,44 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 0
+prof <- {"showbnd":[-0.190205,1.281381,0.08647,0.553333,0.427086,0.427086],"maxbnd":[0.015428,1.273208,-0.043887,0.602859,0.495647,0.747101],"showtime":2416,"wholebnd":[-0.003585,1.275641,0.006515,0.783743,0.49808,0.797503]}
+groups <- [
+	with ParticleGroupData(){
+		name = "star"
+		enabled = true
+		aimtype = 1
+		localcoord = false
+		emitter = with ParticleEmitter(){
+			num = 3
+			start = 0, start_spr = 1000
+			life = 700, life_spr = 100
+			posx = 0.0, posy = 0.25, posz = 0.0
+			pos_sprx = 0.35, pos_spry = 0.05, pos_sprz = 0.35
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 0
+		shapedata = {"axis":0,"r":0.0,"w":0.18,"h":0.18}
+		texture = "/resource/efx/tex/star1.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		overlay = 0.2
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[-1,-33587201,-262259,-360704],"classid":"ptcmod_color"},
+		{"axisid":2,"classid":"ptcmod_rot","rot":[-1.0,-0.205882],"scale":3.141593},
+		{"color":0,"scale":2.0,"classid":"ptcmod_rnd","b":2.0,"p":0.0,"h":0.0},
+		{"vel":0.1,"classid":"ptcmod_vel","vel_spr":0.0},
+		{"xyz":7,"scale":[0.470588,2.0,1.147059,0.558824,0.352941],"classid":"ptcmod_scale"},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0},
+	{"acttype":"loop","cnt":999,"lt":0,"time":1000}
+]

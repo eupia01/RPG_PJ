@@ -1,0 +1,32 @@
+
+pluginfo <- {
+	name : { "ja":"ランダムコマンド","en":"Random Command"}
+	auther : "djkotori"
+	ver : "0.0.1"
+	desc : { "ja":"このコマンド以下のどれか一つのコマンドを実行","en":"Execute one of the following commands."}
+	props : []
+}
+
+function loadPlugin( args, opt){
+	RPGSystem.eventcmd .. {
+		category = 0
+		key = "excmd_randomcmd"
+		name = { "ja":"ランダムコマンド","en":"Random Command"}
+		tips = { "ja":"中にあるコマンドのいずれか1つをランダムで実行します。","en":"Randomly executes one of the commands inside."}
+		icon = "\ue043"
+		color = (0x00A3D9ff, 0x73DCFFff)
+		subblocks = true
+		props = []
+		defval = { cmdblocks = [[]] }
+		
+		parsecode = @( cmd){
+			local n = length( cmd["cmdblocks"][0]);
+			push( "{ local rndi = rnd( %d);" % n).indent( 1).lf(); 
+			foreach( i, cb in cmd["cmdblocks"][0]){
+				push( "if( rndi==%d)" % i); parseblock( [cb], false);
+			}
+			indent( -1).push( "}").lf();
+		}
+	}
+	return true;
+}

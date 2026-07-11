@@ -1,0 +1,40 @@
+////////////////////////////////////////////////////////
+//   ParticleData
+////////////////////////////////////////////////////////
+parentcoord <- false
+currentgroup <- 0
+prof <- {"showbnd":[0.0,0.0,0.0,1.982275,1.982275,1.982275],"maxbnd":[0.0,0.0,0.0,1.982275,1.982275,1.982275],"showtime":10,"wholebnd":[0.0,0.0,0.0,1.982275,1.982275,1.982275]}
+groups <- [
+	with ParticleGroupData(){
+		name = "GROUP1"
+		enabled = true
+		aimtype = 0
+		localcoord = true
+		emitter = with ParticleEmitter(){
+			num = 1
+			start = 0, start_spr = 0
+			life = 130, life_spr = 0
+			posx = 0.0, posy = 0.0, posz = 0.0
+			pos_sprx = 0.0, pos_spry = 0.0, pos_sprz = 0.0
+			dirx = 0.0, diry = 0.0, dirz = 0.0
+			dir_sprx = 0.0, dir_spry = 0.0, dir_sprz = 0.0
+			linearbits = 0
+		},
+		shapetype = 4
+		shapedata = {"w":0.1,"usemtl":false,"d":0.1,"hpb":[0,180,0],"path":"/resource/efx/mdl/swish_cut2.pm","h":0.1}
+		texture = "/resource/efx/mdl/tex/swish_cut.webp"
+		color = 0xffffffff
+		blendmode = 5
+		blend = 5
+		tec = "decal.def"
+		Ka = 0x808080ff
+		Ks = 0x00000000
+		mod = [
+		{"color":[-1,-128,128],"classid":"ptcmod_color"},
+		{"axisid":1,"classid":"ptcmod_rot","rot":[-0.117647,0.117647],"scale":3.141593},
+		]
+	},
+]
+actions <- [
+	{"acttype":"emitall","time":0}
+]
