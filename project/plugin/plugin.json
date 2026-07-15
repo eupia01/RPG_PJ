@@ -3,5 +3,8 @@
 		"enable":true,
 		"lock":true,
 		"prop1":1234
+	},
+	"actionbattle":{
+		"enable":true
 	}
 }

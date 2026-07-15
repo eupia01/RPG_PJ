@@ -188,7 +188,8 @@
 		"encntrate":0.0,
 		"encount":[
 			{
-				"area":"GgAIAAj/AAAA/wAAAP8AAAD/AAAA/QAAAP8AAAD/AAAA/wAAAA==",
+				"area":"GgAIAAj/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAA==",
+				"battletype":-1,
 				"bgmid":"MU018",
 				"enemies":[
 					{"id":"E002","x":-0.872727,"z":1.527273},
@@ -217,13 +218,26 @@
 				"gid":2,
 				"mapid":"M804",
 				"rate":50
+			},
+			{
+				"area":"GgAIAAj/AAAA/wAAAP8AAAD5AAAA+QAAAPkAAAD/AAAA/wAAAA==",
+				"battletype":3,
+				"bgmid":"MU018",
+				"enemies":[
+					{"id":"E000","x":0.0,"z":-0.0}
+				],
+				"escape":true,
+				"filterbits":127,
+				"gid":3,
+				"mapid":"M900",
+				"rate":50
 			}
 		],
 		"event":{
 			"#1000001#":{
 				"col":0,
 				"flags":1,
-				"gid":1,
+				"gid":3,
 				"mdlid":"CV033",
 				"moveaction":"chase1",
 				"movespd":2,
@@ -1547,6 +1561,97 @@
 		"vs":63,
 		"weather":{"type":null}
 	},
+	"M900":{
+		"bg":{"type":"skybox"},
+		"bgmid":null,
+		"camwork":{"fovy":40,"hpb":[45,45,0],"viewport":6.0,"yoffs":1.5},
+		"encntrate":0.0,
+		"encount":null,
+		"event":{
+			"#1000005#":{
+				"col":5,
+				"flags":1,
+				"mdl":{"r":[0.0,0.5,0.0,0.5,0.5,0.5]},
+				"mdlid":"CE000",
+				"name":"*autoexec",
+				"page":[
+					{
+						"ani":{"id":"stand"},
+						"cmdblock":[
+							{
+								"cmd":"cmd_camwork",
+								"hpb":[0,0,0],
+								"mkid":2000001,
+								"motion":0,
+								"pos":[0,0,0],
+								"restore":0,
+								"target":0,
+								"trans":0,
+								"type":2,
+								"zoom":0
+							},
+							{
+								"cmd":"cmd_cammot",
+								"easing":1,
+								"hpb":[0,0,0],
+								"playtype":1,
+								"pos":[0.0,0.0,0.0],
+								"time":1000,
+								"type":2,
+								"zoom":-2.4
+							},
+							{"cmd":"cmd_stageset","pid":"menuopenable","val":false},
+							{"cmd":"cmd_stageset","pid":"ctrmode","val":0}
+						],
+						"memo":"",
+						"moveaction":"stop",
+						"movespd":4,
+						"pararun":false,
+						"reqs":null,
+						"trigger":6
+					}
+				],
+				"pos":[64,1,49,2],
+				"role":"custom",
+				"spawndist":5
+			}
+		},
+		"exitmap":{"dest":null},
+		"mapshot":{"crop":[0,0,0,0]},
+		"mapshotmode":0,
+		"marker":{
+			"#2000001#":{
+				"col":1,
+				"flags":1,
+				"fovy":25,
+				"hpb":[0,24,0],
+				"name":"*maincam",
+				"pos":[64,1,64,2],
+				"type":"camera",
+				"viewport":12.0,
+				"yoffs":-0.9
+			},
+			"#2000002#":{"col":0,"dir":-100,"flags":1,"icon":"","name":"*memberloc","pos":[75,1,64,2],"type":"route"},
+			"#2000003#":{"col":0,"dir":90,"flags":1,"name":"*enemyloc","pos":[57,1,64,2],"type":"route"},
+			"#2000004#":{
+				"col":0,
+				"flags":1,
+				"fovy":40,
+				"hpb":[75,12,0],
+				"name":"*victorycam",
+				"pos":[73,1,63,2],
+				"type":"camera",
+				"viewport":8.0,
+				"yoffs":1.0
+			}
+		},
+		"name":"マップ M900",
+		"reverbid":"plain",
+		"rsetid":"pbr_df-4-1-1",
+		"size":[128,64,128],
+		"vs":63,
+		"weather":{"type":null}
+	},
 	"M980":{
 		"bg":{"type":"skybox"},
 		"bgmid":null,
@@ -1761,7 +1866,7 @@
 				"icon":["",-4259585],
 				"id":-2,
 				"lock":true,
-				"maps":["M800","M801","M802","M803","M804","M805"],
+				"maps":["M800","M801","M802","M803","M804","M805","M900"],
 				"name":"$T.mapgroup_battle"
 			},
 			{"icon":["",-4259585],"id":-3,"lock":true,"maps":["M000","M007","M008"],"name":"$T.mapgroup_special"},

@@ -21,7 +21,10 @@ function bindMemberList( v){
 		_name = v.dataid,			//	_nameはSKView.nameに設定される
 		player = v,
 		mdl = v,					//	RPGPlayerを直接渡せる
-		name = v.name,
+		name = @(){
+			local leader = ::rpgstat.getPartyLeader();
+			return leader==v ? "★ "..v.name : v.name;
+		},
 		job = @() (v.jobs[0]?.iconname()) || "",
 		lv = @() v.LV,
 		hp = @() v.HP,
@@ -859,6 +862,31 @@ RPGSystem.ui ..
 	function uifunc( prms){
 		local p = ::rpgstat.playermap[prms.playerid];
 		p.formation = p.formation ? 0 : 1;
+		return true;
+	}
+}
+
+// パーティーリーダー変更。選択したキャラクターはフィールド状態を越えて保存され、
+// アクションバトル開始時の操作キャラクターになる。
+RPGSystem.ui ..
+{
+	key = "menu_leader"
+	lbl = "$T.party_leader"
+	type = "submenu"
+	nochange_menuui = true;
+	charasel = true
+	hide_presetui = true;
+	icon = "\ue7fd"
+
+	props = [],
+
+	function uifunc( prms){
+		local player = ::rpgstat.playermap[prms.playerid];
+		if( !::rpgstat.setPartyLeader( player)){
+			::playSound( "SE002");
+			return true;
+		}
+		::playSound( "SE003");
 		return true;
 	}
 }

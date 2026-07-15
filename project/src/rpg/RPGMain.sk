@@ -310,6 +310,9 @@ import GamepadStateID;
 	function createBattleRunner( type, st, opt){
 		switch( type){
 		case 2: return RealtimeBattleRunner( st, opt);
+		case 3:
+			if( ::["ActionBattleRunner"]) return ::ActionBattleRunner( st, opt);
+			break;
 		}
 		return TurnBattleRunner( st, opt);
 	}
@@ -337,7 +340,9 @@ import GamepadStateID;
 			dest = { mapid=cmd.mapid, pos=(8,null,8), },
 			//	以下バトル起動用の関数類。
 			startfunc = @( st, opt){	//	opt==cmd_自身
-				st.battle = RPGMain.createBattleRunner( ::conf.setting.battletype, st, opt);
+				local battletype = opt["battletype"];
+				if( battletype==null || battletype<0) battletype = ::conf.setting.battletype;
+				st.battle = RPGMain.createBattleRunner( battletype, st, opt);
 				st.battle.start( st);
 			},
 			//	バトル終了時のコールバック

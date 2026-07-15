@@ -15,6 +15,14 @@ local filterlist = [
 	{ icon="\uf149", lbl="${T.lbl_group}G", val=6, }
 ];
 
+// アクションバトル拡張用。追加メニューは日本語表記で統一する。
+local battletypeList = [
+	{ val=-1, lbl="プロジェクト設定に従う", },
+	{ val=0, lbl="ターン制", },
+	{ val=2, lbl="リアルタイム", },
+	{ val=3, lbl="アクションバトル", },
+];
+
 
 local initgroup = {
 	gid = 1,
@@ -25,6 +33,7 @@ local initgroup = {
 	bgmid = "MU018",
 	area = encodeBASE64( ObjectOutput.encode( Bitmap(8,8,1))),
 	escape = true,
+	battletype = -1,
 }
 
 class EncountDialog extends UndoableDialog
@@ -32,6 +41,7 @@ class EncountDialog extends UndoableDialog
 	static props = [
 		{ pid="filterbits", lbl="$T.lbl_filterg", type=CHECKBITS, list=filterlist, hidelisticon=true },
 		{ pid="rate", lbl="$T.lbl_encrate", type=SCALAR, range=(0,100), ui="bar" },
+		{ pid="battletype", lbl="バトルシステム", type=LIST, list=battletypeList, defval=-1 },
 		{ pid="mapid", lbl="$T.lbl_battlemap", type=DATAID, datatype=["map"], filter=@( v, i){
 			local g = ::conf.map._meta.groups.find( @( v) v["id"]==-2);
 			return g.maps.contains( i);

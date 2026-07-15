@@ -818,6 +818,8 @@
 	"setting_battletype0"				: {"ja":"ターン制", "en":"Turn-based"}
 	"setting_battletype1"				: {"ja":"行動順制", "en":"Action order-based"}
 	"setting_battletype2"				: {"ja":"リアルタイム", "en":"Real time"}
+	"setting_battletype3"				: {"ja":"アクションバトル", "en":"Action Battle"}
+	"party_leader"					: {"ja":"リーダー変更", "en":"Change Leader"}
 	"setting_maxmembers"				: {"ja":"最大パーティ人数", "en":"Maximum Members"}
 	"setting_jxptype"					: {"ja":"ジョブポイント加算", "en":"Job Point addition"}
 	"setting_hotelheal"					: {"ja":"宿屋の回復", "en":"Healing of the inn"}

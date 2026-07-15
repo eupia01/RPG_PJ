@@ -1,0 +1,332 @@
+// RPG-Cobo標準のバトル開始・終了処理にアクションバトルを接続するランナーです。
+
+import VirtualKeyCode;
+import ModifiersMask;
+
+// 操作キャラクターの位置を滑らかに追従するアクションバトル専用カメラ。
+class ActionBattleCamerawork extends RPGCamerawork
+{
+	target3D = null;
+	focus = null;
+	yaw = Math.PI * 0.25;
+	pitch = 35.0 * Math.DTOR;
+	lockPitch = 22.0 * Math.DTOR;
+	freeZoom = 8.0;
+	lockZoom = 7.2;
+	lockTarget3D = null;
+	lockTransitionTime = 320.0;
+	lockTransitionElapsed = 0.0;
+	lockStartYaw = 0.0;
+	lockStartPitch = 0.0;
+	lockStartZoom = 8.0;
+	lockStartFocus = null;
+	renderedPitch = 35.0 * Math.DTOR;
+
+	constructor(target){
+		target3D = target;
+		focus = Vector3D(target.pos).add(0.0, 1.0, 0.0);
+		yaw = target.dir;
+		hpb(yaw, pitch, 0.0);
+		fovy = 40.0;
+		zoom = freeZoom;
+		renderedPitch = pitch;
+		lockStartFocus = Vector3D(focus);
+	}
+
+	function updateBody(stage, dt){
+		if( !target3D) return;
+		local desired = Vector3D(target3D.pos).add(0.0, lockTarget3D ? 0.85 : 1.0, 0.0);
+		if( lockTarget3D && lockTransitionElapsed < lockTransitionTime){
+			lockTransitionElapsed = Math.min(lockTransitionElapsed + dt, lockTransitionTime);
+			local t = lockTransitionElapsed / lockTransitionTime;
+			local w = t*t*(3.0-2.0*t);
+			focus(lockStartFocus).add(Vector3D(desired).sub(lockStartFocus).scale(w));
+			yaw = unitdir(lockStartYaw + deltadir(lockStartYaw, target3D.dir) * w);
+			renderedPitch = Math.lerp(lockStartPitch, lockPitch, w);
+			zoom = Math.lerp(lockStartZoom, lockZoom, w);
+		}else{
+			local follow = Math.min(dt * 0.008, 1.0);
+			focus.add(Vector3D(desired).sub(focus).scale(follow));
+			// カメラの向きを操作キャラクターと一致させ、常に背後から映す。
+			yaw = target3D.dir;
+			renderedPitch = lockTarget3D ? lockPitch : pitch;
+			zoom = lockTarget3D ? lockZoom : freeZoom;
+		}
+		to(focus);
+		hpb(yaw, renderedPitch, 0.0);
+	}
+
+	function addPitch(delta){
+		pitch = Math.clamp(pitch + delta, 10.0 * Math.DTOR, 70.0 * Math.DTOR);
+	}
+
+	function setLockTarget(target){
+		if( target){
+			lockStartYaw = yaw;
+			lockStartPitch = renderedPitch;
+			lockStartZoom = zoom;
+			lockStartFocus = Vector3D(focus);
+			lockTransitionElapsed = 0.0;
+		}
+		lockTarget3D = target;
+		if( !target){
+			renderedPitch = pitch;
+			zoom = freeZoom;
+		}
+	}
+
+	function recover(stage){
+		if( target3D) focus(target3D.pos).add(0.0, 1.0, 0.0);
+		update(stage, 1);
+	}
+}
+
+class ActionBattleRunner extends BattleRunnerBase
+{
+	ended = false;
+	elapsed = 0.0;
+	minimumBattleTime = 1500.0;
+	moveSpeed = 4.0;
+	turnSpeed = 2.6;
+	controlledMember = null;
+	controlled3D = null;
+	controlledCoreId = 1;
+	isMoving = false;
+	followCamera = null;
+	cameraDragActive = false;
+	lastMouseY = 0;
+	lockedEnemy3D = null;
+	lockOrder = null;
+	lockIndex = -1;
+	lockIcons = null;
+
+	// 通常の2Dエネミーモデルの代わりにCV033ボクセルキャラクターを生成する。
+	function addBattleEnemy(ec){
+		local rp3d = RPG3DObject.create3DObject({mdlid="CV033"});
+		rp3d.rpgobj = ec;
+		rp3d.manuaction = ManualMoveAction(rp3d);
+		stage.scn.addObject(rp3d);
+		enemies .. ec;
+		charas .. ec;
+		chara3ds .. rp3d;
+
+		local tgtview = ::loadSKView("/resource/ui/parts/target.ui", RPG3DTargetView);
+		tgtview.name = "target"..ec;
+		tgtview.setTarget(rp3d);
+		tgtview.setVisible(false);
+		stage.view3d.addChild(tgtview);
+		rp3d.tgtview = tgtview;
+		rp3d.anime2({id="stand"});
+
+		// アクションバトルのロックオン専用アイコン。3Dモデル上端へ追従する。
+		local lockicon = ::loadSKView("/resource/ui/pop_search.ui", RPG3DPopupView);
+		lockicon.name = "actionbattle_lock_"..ec.dataid;
+		lockicon.setTarget(rp3d);
+		lockicon.setTargetPoint(0);
+		lockicon.setValue("lbl", RichText("[+12]\uf2c0[+0]"));
+		lockicon.toffs = Vector3D(0.0, -36.0, 0.0);
+		lockicon.setVisible(false);
+		stage.view3d.addChild(lockicon);
+		lockIcons .. { target=rp3d, icon=lockicon };
+		return rp3d;
+	}
+
+	function start(st){
+		super.start(st);
+		ended = false;
+		elapsed = 0.0;
+		lockIcons = [];
+		RPGMain.buttonhelp("battle");
+		setupCharas();
+
+		local enemyList = battledata["enemies"] || [];
+		local enemy = enemyList[0];
+		local enemyId = enemy?.id ?? "E000";
+		local partyLeader = ::rpgstat.getPartyLeader();
+		local leaderIndex = ::rpgstat.members.indexOf( partyLeader);
+		if( leaderIndex<0 || leaderIndex>=4) leaderIndex = 0;
+		local controlledPlayerId = leaderIndex + 1;
+		controlledMember = partyLeader;
+		controlled3D = getChara3D( partyLeader);
+		controlledCoreId = controlledPlayerId;
+		isMoving = false;
+		followCamera = ActionBattleCamerawork(controlled3D);
+		cameraDragActive = false;
+		lastMouseY = 0;
+		lockedEnemy3D = null;
+		lockOrder = [];
+		lockIndex = -1;
+		local totalEnemyHp = 0.0;
+		foreach(enemyInfo in enemyList){
+			local enemyData = ::conf.enemy[enemyInfo.id];
+			totalEnemyHp += enemyData?.MAXHP ?? 100.0;
+		}
+		if(totalEnemyHp <= 0.0) totalEnemyHp = 2000.0;
+		::ActionBattleManager.start({
+			enemyId = enemyId,
+			enemyHp = totalEnemyHp,
+			controlledPlayerId = controlledPlayerId,
+		}, false);
+		printf("[ActionBattle] Battle started. leader=%S slot=%d enemies=%d hp=%.1f\n",
+			partyLeader?.dataid ?? "", leaderIndex, length(enemyList), totalEnemyHp);
+	}
+
+	function ensureFollowCamera(){
+		if( !followCamera) return;
+		// バトルマップの自動イベントが固定カメラへ戻しても追従カメラを優先する。
+		if( stage.camwork != followCamera){
+			stage.camfade = null;
+			stage.camwork = followCamera;
+			followCamera.recover(stage);
+		}
+	}
+
+	// 右クリック中のマウス上下移動でカメラの高さ（ピッチ）を変更する。
+	function updateCameraPitch(){
+		if( !followCamera) return;
+		// ロックオン中はキャラクター中心後方の固定ピッチを使う。
+		if( lockedEnemy3D){
+			cameraDragActive = false;
+			return;
+		}
+		local mouse = ::rootview.mouses[0];
+		local rightButtonDown = !!(mouse.modifiers & BUTTON2_MASK);
+		if( !rightButtonDown){
+			cameraDragActive = false;
+			return;
+		}
+
+		if( !cameraDragActive){
+			cameraDragActive = true;
+			lastMouseY = mouse.mousey;
+			return;
+		}
+
+		local dy = mouse.mousey - lastMouseY;
+		lastMouseY = mouse.mousey;
+		// 上へドラッグすると俯角を大きくしてカメラ位置を高くする。
+		followCamera.addPitch(-dy * 0.005);
+	}
+
+	function getLockTargetsByDistance(){
+		local targets = chara3ds.filter(@( v){
+			return enemies.contains(v.rpgobj) && v.rpgobj && !v.rpgobj.isDead();
+		});
+		if( controlled3D){
+			targets.sort(@( v) controlled3D.pos.hypot(v.pos));
+		}
+		return targets;
+	}
+
+	function setTargetLock(target){
+		foreach( v in chara3ds){
+			if( enemies.contains(v.rpgobj)){
+				// 標準ターゲット枠は使わず、指定されたアイコンだけを表示する。
+				v.tgtview?.setVisible(false);
+			}
+		}
+		foreach( item in lockIcons) item.icon.setVisible(item.target==target);
+		lockedEnemy3D = target;
+		followCamera?.setLockTarget(target);
+		if( target){
+			// ロックオン補間中だけ弱いズームブラーを掛け、320msで解除する。
+			stage.screenfx.screenEffectOn({
+				sfxid="raster1", color=-1, num=1, pow=2.0, time=0, uv=(0.5,0.5)
+			});
+			stage.screenfx.screenEffectOff({sfxbits=2, time=320});
+		}
+		::ActionBattleCore.director.lockOnTargetId = target ? target.rpgobj.dataid : -1;
+		if( target){
+			printf("[ActionBattle] Target locked. enemy=%S index=%d\n",
+				target.rpgobj.dataid, lockIndex);
+		}else{
+			printf("[ActionBattle] Target lock released.\n");
+		}
+	}
+
+	// TAB: 距離の近い順に敵を切り替え、最後の次はロックを解除する。
+	function updateTargetLock(){
+		if( !::ActionBattleManager.isPressedOnce(VK_TAB)) return;
+
+		if( !lockedEnemy3D){
+			lockOrder = getLockTargetsByDistance();
+			if( !length(lockOrder)){
+				setTargetLock(null);
+				return;
+			}
+			lockIndex = 0;
+			setTargetLock(lockOrder[lockIndex]);
+			return;
+		}
+
+		++lockIndex;
+		if( lockIndex >= length(lockOrder)){
+			setTargetLock(null);
+			lockOrder = [];
+			lockIndex = -1;
+		}else{
+			setTargetLock(lockOrder[lockIndex]);
+		}
+	}
+
+	// 背後追従カメラ向け操作。W/Sで前後移動、A/Dでキャラクターを旋回する。
+	function updateControlledMovement(dt){
+		if( !controlled3D || ended) return;
+
+		local turn = (skIsKeyPressed(VK_D) ? 1.0 : 0.0) - (skIsKeyPressed(VK_A) ? 1.0 : 0.0);
+		local forward = (skIsKeyPressed(VK_W) ? 1.0 : 0.0) - (skIsKeyPressed(VK_S) ? 1.0 : 0.0);
+		local dtsec = dt * 0.001;
+		local movevec;
+
+		if( lockedEnemy3D){
+			// ロックオン中は敵を向いたまま、A/Dを左右ストレイフとして扱う。
+			controlled3D.dir = aimdir(controlled3D.pos, lockedEnemy3D.pos);
+			local len = Math.sqrt(turn*turn + forward*forward);
+			if( len > 0.0){
+				movevec = Vector3D(turn/len, 0.0, forward/len).rotate(controlled3D.dir, 0.0, 0.0);
+			}
+		}else{
+			if( turn != 0.0) controlled3D.dir += turn * turnSpeed * dtsec;
+			if( forward != 0.0)
+				movevec = Vector3D(0.0, 0.0, forward).rotate(controlled3D.dir, 0.0, 0.0);
+		}
+
+		if( !movevec){
+			if( isMoving) controlled3D.anime2({id="stand"});
+			isMoving = false;
+			return;
+		}
+
+		local oldx = controlled3D.pos.x, oldz = controlled3D.pos.z;
+		controlled3D.move(movevec.scale(moveSpeed), dt, -0.4);
+		controlled3D.anime2({id="dash"});
+		isMoving = true;
+
+		::ActionBattleCore.moveControlled(
+			controlled3D.pos.x - oldx,
+			controlled3D.pos.z - oldz);
+	}
+
+	function update(dt){
+		if(ended) return;
+		elapsed += dt;
+		updateCameraPitch();
+		ensureFollowCamera();
+		updateTargetLock();
+		local input = ::ActionBattleManager.processDebugInput();
+		// アクションバトルの操作対象は常にパーティーリーダーに固定する。
+		::ActionBattleCore.swapCharacter(controlledCoreId);
+		updateControlledMovement(dt);
+		local ret = ::ActionBattleManager.update(dt, input.dodge, input.burst);
+		// Sakana에서는 !ret?.field의 연산 우선순위가 의도와 다르게 해석될 수 있다.
+		if(!ret || !ret.isBattleFinished || elapsed < minimumBattleTime) return;
+
+		ended = true;
+		result = ret.hp > 0.0 ? 1 : -1;
+		setTargetLock(null);
+		printf("[ActionBattle] Battle ending. result=%d playerHp=%.1f enemyHp=%.1f elapsed=%.1fms\n",
+			result, ret.hp, ret.enemyHp, elapsed);
+		::ActionBattleManager.stop();
+		endfunc(this);
+	}
+}

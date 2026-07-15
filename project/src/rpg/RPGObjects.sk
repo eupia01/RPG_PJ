@@ -1215,6 +1215,7 @@ class RPGState extends Serializable
 		foreach( i, dataid in set.inimembers){
 			members[i] = dataid && playermap[dataid];
 		}
+		setPartyLeader( members.find( @( v) v));
 		//	初期システム状態
 		foreach( p in ::RPGSystem.settingprops){
 			if( p["proptype"] == "status"){
@@ -1252,6 +1253,7 @@ class RPGState extends Serializable
 
 	//	ロード完了時。
 	function serloaded(){
+		if( !etc) etc = {};
 		resizeItemList( items);
 		resizeItemList( weapons);
 		resizeItemList( armors);
@@ -1260,6 +1262,24 @@ class RPGState extends Serializable
 
 	///////////////////////////////////////////////////////////////////////////////////////
 	//	パーティー情報取得、更新
+
+	// 指定されたリーダーを返す。旧セーブなどに設定が無い場合は先頭の有効メンバーを使う。
+	function getPartyLeader(){
+		local leaderid = etc && etc["partyleader"];
+		local leader = leaderid && playermap[leaderid];
+		if( leader && members.contains( leader)) return leader;
+		return members.find( @( v) v);
+	}
+
+	// パーティーに参加しているプレイヤーだけをリーダーに設定できる。
+	function setPartyLeader( player){
+		if( typeof( player)==SS_STRING) player = playermap[player];
+		if( !player || !members.contains( player)) return false;
+		if( !etc) etc = {};
+		if( "partyleader" in etc) etc.partyleader = player.dataid;
+		else etc.partyleader <- player.dataid;
+		return true;
+	}
 
 	function itemlistOf( itemid){
 		switch( itemid[0]){

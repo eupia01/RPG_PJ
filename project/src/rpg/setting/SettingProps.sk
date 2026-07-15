@@ -15,6 +15,7 @@ local battletypelist = [
 	{ val=0, lbl="$T.setting_battletype0", },
 	{ val=1, lbl="$T.setting_battletype1", disable=true },	//	未実装・・・
 	{ val=2, lbl="$T.setting_battletype2", },
+	{ val=3, lbl="$T.setting_battletype3", },
 ];
 
 //////// basic - 基本システム
@@ -243,6 +244,16 @@ settingprops .. {
 	proptype = "status",
 	pid = "menu_formation",
 	lbl = @() (T.format_view % T.formation),
+	type = LIST,
+	list = RPGProperties.uivisiblelist,
+	defval = 3
+};
+
+settingprops .. {
+	part = "ui",
+	proptype = "status",
+	pid = "menu_leader",
+	lbl = @() (T.format_view % T.party_leader),
 	type = LIST,
 	list = RPGProperties.uivisiblelist,
 	defval = 3

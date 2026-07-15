@@ -1,0 +1,505 @@
+// ActionBattlePlugin.cpp의 전투 계산부를 Sakana 언어로 포팅한 파일입니다.
+// 엔진/UI 의존성을 갖지 않고 전투 상태와 프레임 결과만 관리합니다.
+
+enum ActionBattleCharacterClass
+{
+	GUARDIAN = 0
+	FIGHTER = 1
+	ARCHER = 2
+	ROGUE = 3
+	MAGICIAN = 4
+	CLERIC = 5
+}
+
+enum ActionBattleEffectType
+{
+	BUFF_ATK = 0
+	DEBUFF_DEF = 1
+	DOT_POISON = 2
+	HOT_REGEN = 3
+	STUN = 4
+}
+
+::ActionBattleCore <-
+{
+	director = {
+		isRunning = false,
+		isBattleFinished = false,
+		controlledPlayerId = 1,
+		party = [],
+		enemies = [],
+		earnedRewards = [],
+		frameEvents = [],
+		lockOnTargetId = -1,
+		partyBurstGauge = 0.0,
+		maxBurstGauge = 100.0,
+		isChainAttackMode = false,
+		chainStep = 0,
+		chainTimer = 0.0,
+	};
+
+	function createCharacter(id, charClass, x = 0.0, z = 0.0, aggro = 0.0){
+		return {
+			id = id,
+			charClass = charClass,
+			x = x, y = 0.0, z = z,
+			radius = 1.0,
+			speed = 4.0,
+			hp = 1000.0, maxHp = 1000.0,
+			baseAtk = 100.0, currentAtk = 100.0,
+			baseDef = 50.0, currentDef = 50.0,
+			aggroPoint = aggro, aggroPercent = 0.0,
+			currentStamina = 100.0, maxStamina = 100.0,
+			isDodging = false, isDefending = false,
+			dodgeTimer = 0.0,
+			actionCooldown = 0.0,
+			activeEffects = [],
+		};
+	}
+
+	function createEnemy(id, x = 0.0, z = 15.0, hp = 2000.0){
+		return {
+			id = id,
+			x = x, y = 0.0, z = z,
+			hp = hp,
+			radius = 1.5,
+			speed = 3.0,
+			attackCooldown = 0.0,
+			targetPlayerId = -1,
+			currentAttack = {
+				isActive = false,
+				x = 0.0, y = 0.0, z = 0.0,
+				radius = 1.5,
+				damage = 150.0,
+			},
+			dropItems = ["Ultimate_Weapon", "Gold_Coin_x1000"],
+		};
+	}
+
+	function getDistance3D(x1, y1, z1, x2, y2, z2){
+		local dx = x1 - x2, dy = y1 - y2, dz = z1 - z2;
+		return Math.sqrt(dx*dx + dy*dy + dz*dz);
+	}
+
+	// Sakana에는 C++의 float& 인자가 없으므로 entity 테이블을 직접 변경합니다.
+	function moveToMaintainDistance(entity, target, speed, dt, targetDist, isKite = false){
+		local dx = target.x - entity.x;
+		local dz = target.z - entity.z;
+		local dist = Math.sqrt(dx*dx + dz*dz);
+		if( dist <= 0.0) return;
+
+		if( isKite && dist < targetDist){
+			entity.x -= (dx/dist) * speed * dt;
+			entity.z -= (dz/dist) * speed * dt;
+		}else if( dist > targetDist){
+			entity.x += (dx/dist) * speed * dt;
+			entity.z += (dz/dist) * speed * dt;
+		}
+	}
+
+	function findPartyMember(id){
+		foreach( p in director.party){
+			if( p.id == id) return p;
+		}
+		return null;
+	}
+
+	function getControlledPlayer(){
+		return findPartyMember(director.controlledPlayerId);
+	}
+
+	function normalizeAggro(){
+		local totalAggro = 0.0;
+		foreach( p in director.party){
+			if( p.hp > 0.0) totalAggro += p.aggroPoint;
+		}
+		foreach( p in director.party){
+			p.aggroPercent = (p.hp > 0.0 && totalAggro > 0.0)
+				? (p.aggroPoint / totalAggro) * 100.0
+				: 0.0;
+		}
+	}
+
+	function addFrameEvent(sourceId, targetId, actionName){
+		director.frameEvents .. {
+			src = sourceId,
+			target = targetId,
+			action = actionName,
+		};
+	}
+
+	function updateEnemyAI(dt, enemy){
+		local highestAggro = -1.0;
+		local target = null;
+		foreach( p in director.party){
+			if( p.hp > 0.0 && p.aggroPercent > highestAggro){
+				highestAggro = p.aggroPercent;
+				enemy.targetPlayerId = p.id;
+				target = p;
+			}
+		}
+
+		if( target){
+			local dist = getDistance3D(enemy.x, enemy.y, enemy.z, target.x, target.y, target.z);
+			if( dist > enemy.radius + target.radius + 0.5){
+				moveToMaintainDistance(enemy, target, enemy.speed, dt, enemy.radius + target.radius);
+			}else if( !enemy.currentAttack.isActive && enemy.attackCooldown <= 0.0){
+				enemy.currentAttack.isActive = true;
+				enemy.currentAttack.x = target.x;
+				enemy.currentAttack.y = target.y;
+				enemy.currentAttack.z = target.z;
+				enemy.attackCooldown = 2.0;
+			}
+		}
+		if( enemy.attackCooldown > 0.0) enemy.attackCooldown -= dt;
+	}
+
+	function updatePartyAI(dt){
+		if( !length(director.enemies)) return;
+		local boss = director.enemies[0];
+		local maxPartyAggro = 0.0;
+		foreach( p in director.party){
+			if( p.hp > 0.0 && p.aggroPercent > maxPartyAggro) maxPartyAggro = p.aggroPercent;
+		}
+
+		foreach( p in director.party){
+			if( p.hp <= 0.0 || p.id == director.controlledPlayerId) continue;
+			p.isDefending = false;
+			if( p.actionCooldown > 0.0) p.actionCooldown -= dt;
+			local distToBoss = getDistance3D(p.x, p.y, p.z, boss.x, boss.y, boss.z);
+
+			switch( p.charClass){
+			case ActionBattleCharacterClass.GUARDIAN:
+				if( p.hp < p.maxHp * 0.3){
+					p.isDefending = true;
+				}else{
+					moveToMaintainDistance(p, boss, p.speed, dt, 2.0);
+					if( p.actionCooldown <= 0.0){
+						if( p.aggroPercent < maxPartyAggro){
+							p.aggroPoint += 50.0;
+							addFrameEvent(p.id, boss.id, "PROVOKE");
+							p.actionCooldown = 4.0;
+						}else if( distToBoss <= 2.5){
+							boss.hp -= p.currentAtk;
+							addFrameEvent(p.id, boss.id, "ATTACK_MELEE");
+							p.actionCooldown = 2.0;
+							director.partyBurstGauge += 2.0;
+						}
+					}
+				}
+				break;
+
+			case ActionBattleCharacterClass.FIGHTER:
+				moveToMaintainDistance(p, boss, p.speed, dt, 2.0);
+				if( p.actionCooldown <= 0.0 && distToBoss <= 2.5){
+					boss.hp -= p.currentAtk * 1.5;
+					addFrameEvent(p.id, boss.id, "ATTACK_MELEE");
+					p.actionCooldown = 1.5;
+					director.partyBurstGauge += 2.0;
+				}
+				break;
+
+			case ActionBattleCharacterClass.ARCHER:
+			case ActionBattleCharacterClass.MAGICIAN:
+				moveToMaintainDistance(p, boss, p.speed, dt, 8.0, true);
+				if( p.actionCooldown <= 0.0 && distToBoss <= 10.0){
+					boss.hp -= p.currentAtk;
+					addFrameEvent(p.id, boss.id,
+						p.charClass == ActionBattleCharacterClass.ARCHER ? "ATTACK_ARROW" : "ATTACK_MAGIC");
+					p.actionCooldown = 2.0;
+					director.partyBurstGauge += 2.0;
+				}
+				break;
+
+			case ActionBattleCharacterClass.CLERIC:
+				local lowestHpAlly = null, lowestHpRatio = 1.0;
+				foreach( ally in director.party){
+					local hpRatio = ally.hp / ally.maxHp;
+					if( ally.hp > 0.0 && hpRatio < lowestHpRatio){
+						lowestHpRatio = hpRatio;
+						lowestHpAlly = ally;
+					}
+				}
+				if( lowestHpAlly && lowestHpRatio < 0.6){
+					local distToAlly = getDistance3D(p.x, p.y, p.z,
+						lowestHpAlly.x, lowestHpAlly.y, lowestHpAlly.z);
+					moveToMaintainDistance(p, lowestHpAlly, p.speed, dt, 4.0);
+					if( p.actionCooldown <= 0.0 && distToAlly <= 5.0){
+						lowestHpAlly.hp += 300.0;
+						if( lowestHpAlly.hp > lowestHpAlly.maxHp) lowestHpAlly.hp = lowestHpAlly.maxHp;
+						addFrameEvent(p.id, lowestHpAlly.id, "HEAL_MAGIC");
+						p.actionCooldown = 4.0;
+					}
+				}else{
+					moveToMaintainDistance(p, boss, p.speed, dt, 8.0, true);
+					if( p.actionCooldown <= 0.0 && distToBoss <= 10.0){
+						boss.hp -= p.currentAtk;
+						addFrameEvent(p.id, boss.id, "ATTACK_MAGIC");
+						p.actionCooldown = 3.0;
+						director.partyBurstGauge += 2.0;
+					}
+				}
+				break;
+			}
+		}
+		normalizeAggro();
+	}
+
+	function processStatusEffects(dt, character){
+		local result = { poisonTick=false, regenTick=false };
+		character.currentAtk = character.baseAtk;
+		character.currentDef = character.baseDef;
+
+		foreach( effect in character.activeEffects){
+			effect.duration -= dt;
+			if( effect.type == ActionBattleEffectType.DOT_POISON ||
+				effect.type == ActionBattleEffectType.HOT_REGEN){
+				effect.tickTimer -= dt;
+				if( effect.tickTimer <= 0.0){
+					if( effect.type == ActionBattleEffectType.DOT_POISON){
+						character.hp -= effect.value;
+						result.poisonTick = true;
+					}else{
+						character.hp += effect.value;
+						if( character.hp > character.maxHp) character.hp = character.maxHp;
+						result.regenTick = true;
+					}
+					effect.tickTimer = effect.tickInterval;
+				}
+			}
+			if( effect.type == ActionBattleEffectType.BUFF_ATK) character.currentAtk += effect.value;
+			if( effect.type == ActionBattleEffectType.DEBUFF_DEF) character.currentDef -= effect.value;
+			if( effect.duration <= 0.0) removei;
+		}
+		return result;
+	}
+
+	function initialize(options = null){
+		director.isRunning = true;
+		director.isBattleFinished = false;
+		director.controlledPlayerId = 1;
+		director.party.clear();
+		director.enemies.clear();
+		director.earnedRewards.clear();
+		director.frameEvents.clear();
+		director.lockOnTargetId = -1;
+		director.partyBurstGauge = 0.0;
+		director.isChainAttackMode = false;
+		director.chainStep = 0;
+		director.chainTimer = 0.0;
+
+		director.party .. createCharacter(1, ActionBattleCharacterClass.GUARDIAN, -2.0, 0.0, 44.0);
+		director.party .. createCharacter(2, ActionBattleCharacterClass.FIGHTER, 2.0, 0.0, 22.0);
+		director.party .. createCharacter(3, ActionBattleCharacterClass.ARCHER, -4.0, -3.0, 22.0);
+		director.party .. createCharacter(4, ActionBattleCharacterClass.CLERIC, 4.0, -3.0, 22.0);
+		normalizeAggro();
+
+		local enemyId = options?.enemyId ?? 100;
+		local enemyHp = options?.enemyHp ?? 2000.0;
+		director.enemies .. createEnemy(enemyId, 0.0, 15.0, enemyHp);
+		local controlledId = options?.controlledPlayerId;
+		if( controlledId) swapCharacter(controlledId);
+		return director;
+	}
+
+	function stop(){
+		director.isRunning = false;
+	}
+
+	function swapCharacter(nextId){
+		local p = findPartyMember(nextId);
+		if( p && p.hp > 0.0) director.controlledPlayerId = nextId;
+		return director.controlledPlayerId;
+	}
+
+	// ランナー側で衝突判定を終えた実移動量を戦闘シミュレーションへ反映する。
+	function moveControlled(dx, dz){
+		local p = getControlledPlayer();
+		if( !p || p.hp <= 0.0 || director.isBattleFinished) return false;
+		p.x += dx;
+		p.z += dz;
+		return true;
+	}
+
+	function addAggro(characterId, amount){
+		local p = findPartyMember(characterId);
+		if( p) p.aggroPoint += amount;
+		normalizeAggro();
+	}
+
+	function toggleLockOn(){
+		if( !length(director.enemies)) return -1;
+		director.lockOnTargetId = director.lockOnTargetId == -1 ? director.enemies[0].id : -1;
+		return director.lockOnTargetId;
+	}
+
+	function applyPoisonToPlayer(){
+		local p = getControlledPlayer();
+		if( !p) return false;
+		p.activeEffects .. {
+			type = ActionBattleEffectType.DOT_POISON,
+			name = "Poison",
+			duration = 10.0,
+			tickInterval = 1.0,
+			tickTimer = 1.0,
+			value = 15.0,
+		};
+		return true;
+	}
+
+	function update(dt, inputDodge = false, inputBurst = false){
+		if( !director.isRunning) return null;
+		director.frameEvents.clear();
+		local controlledPlayer = getControlledPlayer();
+		// 이전 프레임의 플래그를 신뢰하지 않고 현재 생존 상태로 매 프레임 다시 계산합니다.
+		director.isBattleFinished = !length(director.enemies) ||
+			(controlledPlayer && controlledPlayer.hp <= 0.0);
+		local events = {
+			tookDamage = false,
+			justDodge = false,
+			poisonTick = false,
+			regenTick = false,
+			chainStepStart = false,
+		};
+
+		if( director.isChainAttackMode){
+			director.chainTimer -= dt;
+			if( director.chainTimer <= 0.0){
+				++director.chainStep;
+				director.chainTimer = 2.0;
+				events.chainStepStart = true;
+				if( director.chainStep > 4){
+					director.isChainAttackMode = false;
+					director.chainStep = 0;
+					director.partyBurstGauge = 0.0;
+					if( length(director.enemies)) director.enemies[0].hp -= 1500.0;
+				}
+			}
+		}else{
+			if( inputBurst && director.partyBurstGauge >= director.maxBurstGauge && length(director.enemies)){
+				director.isChainAttackMode = true;
+				director.chainStep = 1;
+				director.chainTimer = 2.0;
+				events.chainStepStart = true;
+			}
+
+			foreach( enemy in director.enemies){
+				if( enemy.hp <= 0.0){
+					foreach( item in enemy.dropItems) director.earnedRewards .. item;
+					if( director.lockOnTargetId == enemy.id) director.lockOnTargetId = -1;
+					removei;
+				}
+			}
+			director.isBattleFinished = !length(director.enemies) ||
+				(controlledPlayer && controlledPlayer.hp <= 0.0);
+
+			if( !director.isBattleFinished){
+				if( length(director.enemies)) updateEnemyAI(dt, director.enemies[0]);
+				updatePartyAI(dt);
+			}
+
+			if( controlledPlayer && !director.isBattleFinished){
+				local statusEvents = processStatusEffects(dt, controlledPlayer);
+				events.poisonTick = statusEvents.poisonTick;
+				events.regenTick = statusEvents.regenTick;
+				local isStunned = controlledPlayer.activeEffects.find(
+					@( effect) effect.type == ActionBattleEffectType.STUN) != null;
+
+				if( !isStunned){
+					if( controlledPlayer.isDodging){
+						controlledPlayer.dodgeTimer -= dt;
+						if( controlledPlayer.dodgeTimer <= 0.0) controlledPlayer.isDodging = false;
+					}else{
+						controlledPlayer.currentStamina += 20.0 * dt;
+						if( controlledPlayer.currentStamina > controlledPlayer.maxStamina)
+							controlledPlayer.currentStamina = controlledPlayer.maxStamina;
+						if( inputDodge && controlledPlayer.currentStamina >= 50.0){
+							controlledPlayer.currentStamina -= 50.0;
+							controlledPlayer.isDodging = true;
+							controlledPlayer.dodgeTimer = 0.4;
+						}
+					}
+				}
+
+				if( length(director.enemies) && director.enemies[0].currentAttack.isActive){
+					local attack = director.enemies[0].currentAttack;
+					local dist = getDistance3D(controlledPlayer.x, controlledPlayer.y, controlledPlayer.z,
+						attack.x, attack.y, attack.z);
+					if( dist < controlledPlayer.radius + attack.radius){
+						if( controlledPlayer.isDodging && controlledPlayer.dodgeTimer > 0.3){
+							events.justDodge = true;
+							attack.isActive = false;
+							director.partyBurstGauge += 20.0;
+						}else if( !controlledPlayer.isDodging && !controlledPlayer.isDefending){
+							local finalDamage = attack.damage - controlledPlayer.currentDef;
+							if( finalDamage < 1.0) finalDamage = 1.0;
+							controlledPlayer.hp -= finalDamage;
+							events.tookDamage = true;
+							attack.isActive = false;
+							director.partyBurstGauge += 5.0;
+						}
+					}
+				}
+			}
+			director.isBattleFinished = !length(director.enemies) ||
+				(controlledPlayer && controlledPlayer.hp <= 0.0);
+			if( director.partyBurstGauge > director.maxBurstGauge)
+				director.partyBurstGauge = director.maxBurstGauge;
+		}
+
+		return buildResult(events);
+	}
+
+	function buildResult(events){
+		local controlledPlayer = getControlledPlayer();
+		local camPos = [0.0, 5.0, 0.0], lookAt = [0.0, 0.0, 0.0];
+		if( director.isChainAttackMode && director.chainStep >= 1 && director.chainStep <= 4){
+			local actor = director.party[director.chainStep - 1];
+			lookAt = [actor.x, actor.y + 1.0, actor.z];
+			camPos = [actor.x + 2.0, actor.y + 2.0, actor.z + 3.0];
+		}else if( controlledPlayer){
+			camPos = [controlledPlayer.x, controlledPlayer.y + 5.0, controlledPlayer.z - 5.0];
+			lookAt = [controlledPlayer.x, controlledPlayer.y, controlledPlayer.z];
+			if( director.lockOnTargetId != -1 && length(director.enemies)){
+				local enemy = director.enemies[0];
+				lookAt = [(controlledPlayer.x + enemy.x) / 2.0,
+					(controlledPlayer.y + enemy.y) / 2.0,
+					(controlledPlayer.z + enemy.z) / 2.0];
+				camPos = [controlledPlayer.x - 4.0, controlledPlayer.y + 5.0, controlledPlayer.z - 8.0];
+			}
+		}
+
+		local effectNames = [], partyAggro = [];
+		if( controlledPlayer){
+			foreach( effect in controlledPlayer.activeEffects) effectNames .. effect.name;
+		}
+		foreach( p in director.party) partyAggro .. p.aggroPercent;
+		local isStunned = controlledPlayer && controlledPlayer.activeEffects.find(
+			@( effect) effect.type == ActionBattleEffectType.STUN) != null;
+
+		return {
+			burstGauge = director.partyBurstGauge,
+			isChainAttackMode = director.isChainAttackMode,
+			chainStep = director.chainStep,
+			eventChainStepStart = events.chainStepStart,
+			isBattleFinished = director.isBattleFinished,
+			earnedRewards = director.earnedRewards,
+			hp = controlledPlayer?.hp ?? 0.0,
+			stamina = controlledPlayer?.currentStamina ?? 0.0,
+			isDodging = controlledPlayer?.isDodging ?? false,
+			controlledId = controlledPlayer?.id ?? -1,
+			isStunned = !!isStunned,
+			effectNames = effectNames,
+			eventTookDamage = events.tookDamage,
+			eventJustDodge = events.justDodge,
+			eventPoisonTick = events.poisonTick,
+			eventRegenTick = events.regenTick,
+			aiActions = director.frameEvents,
+			partyAggro = partyAggro,
+			enemyTargetId = length(director.enemies) ? director.enemies[0].targetPlayerId : -1,
+			enemyHp = length(director.enemies) ? director.enemies[0].hp : 0.0,
+			camPos = camPos,
+			lookAt = lookAt,
+		};
+	}
+}

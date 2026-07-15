@@ -146,7 +146,9 @@ local applydebugpref(){
 			dest = { mapid=cmd.mapid, pos=(8,null,8), },
 			//	以下バトル起動用の関数類。
 			startfunc = @( st, opt){	//	opt==cmd_自身
-				st.battle = skillid? SkillTestBattleRunner( st, {...opt, skillid=skillid}) : RPGMain.createBattleRunner( ::conf.setting.battletype, st, opt);
+				local battletype = opt["battletype"];
+				if( battletype==null || battletype<0) battletype = ::conf.setting.battletype;
+				st.battle = skillid? SkillTestBattleRunner( st, {...opt, skillid=skillid}) : RPGMain.createBattleRunner( battletype, st, opt);
 				st.battle.start( st);
 			},
 			//	バトル終了時のコールバック

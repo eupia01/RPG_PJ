@@ -1,0 +1,52 @@
+// RPGMain.sk (?먮뒗 ?꾨뱶 ?쒖뒪?쒖쓣 愿由ы븯??硫붿씤 ?ㅽ겕由쏀듃)
+
+// 而ㅼ뒪? ?좊뱶??濡쒕뱶 (?뺤옣???앸왂)
+// Native DLL ???project/plugin/actionbattle??Sakana 援ы쁽???ъ슜?⑸땲??
+
+local isActionBattleActive = false;
+
+// 1. 湲곗〈 ?꾪닾(?몄뭅?댄꽣) ?고쉶 濡쒖쭅
+function onEnemyEncounter(enemyData) {
+    // ---------------------------------------------------------
+    // [湲곗〈 肄붾뱶 ?고쉶] ?붾㈃ ?꾪솚 諛??댁젣 ?꾪닾 吏꾩엯 濡쒖쭅 鍮꾪솢?깊솕
+    // RPGSystem.startBattle(enemyData.id); 
+    // ---------------------------------------------------------
+    
+    // ???C++ ?뚮윭洹몄씤???≪뀡 諛고? ?쒖옉 ?⑥닔 ?몄텧
+    Native_StartActionBattle(player.id, enemyData.id);
+    isActionBattleActive = true;
+    
+    // ?꾪닾 UI(泥대젰諛? ?ㅽ궗 ?듭뒳濡??? ?쒖떆
+    UI_ShowActionBattleHUD(true); 
+}
+
+// 2. 硫붿씤 寃뚯엫 猷⑦봽 (留??꾨젅???ㅽ뻾??
+function update(dt) {
+    if (isActionBattleActive) {
+        // --- C++ ?뚮윭洹몄씤???곗궛??留↔린怨?寃곌낵 Table??諛쏆븘??---
+        local battleData = Native_UpdateActionBattle(dt);
+        
+        if (battleData != null) {
+            // C++?먯꽌 諛쏆븘???곗씠?곕줈 ?붾㈃(紐????낅뜲?댄듃
+            UI_UpdatePlayerHP(battleData.playerHp);
+            UI_UpdateEnemyHP(battleData.enemyHp);
+            
+            // C++?먯꽌 ?꾪닾 醫낅즺 ?먯젙???ъ쓣 寃쎌슦
+            if (battleData.isFinished) {
+                isActionBattleActive = false;
+                UI_ShowActionBattleHUD(false); // ?꾪닾 UI ?④?
+                
+                if (battleData.isVictory) {
+                    println("?≪뀡 ?꾪닾 ?밸━!");
+                    // 寃쏀뿕移??꾩씠???띾뱷 濡쒖쭅 泥섎━
+                } else {
+                    println("?뚮젅?댁뼱 ?щ쭩... 寃뚯엫 ?ㅻ쾭 泥섎━");
+                }
+            }
+        }
+    } else {
+        // 鍮꾩쟾???곹깭: ?됱긽???꾨뱶 ?대룞 諛??곹샇?묒슜 ?낅뜲?댄듃
+        RPGField.update(dt);
+    }
+}
+

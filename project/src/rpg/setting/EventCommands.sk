@@ -1672,6 +1672,14 @@ local encountg( mapid){
 	return ( mapid == e["mapid"]) ? e.data["encount"] : ::conf.map[mapid]["encount"];
 }
 
+// アクションバトル拡張用。イベントコマンド内の表記は日本語で統一する。
+local actionBattleTypeList = [
+	{ val=-1, lbl="プロジェクト設定に従う", },
+	{ val=0, lbl="ターン制", },
+	{ val=2, lbl="リアルタイム", },
+	{ val=3, lbl="アクションバトル", },
+];
+
 //	cmd_battle1 : バトル(グループ指定)
 //	
 eventcmd .. {
@@ -1738,6 +1746,7 @@ eventcmd .. {
 	props = @( cmd){
 		local e = ::skstudio.editor;
 		return [
+			{ pid="battletype", lbl="バトルシステム", type=LIST, list=actionBattleTypeList, defval=-1 },
 			{ pid="mapid", lbl="$T.lbl_battlemap", type=DATAID, datatype = ["map"] },
 			{ pid="enemies", lbl="$T.lbl_enemies", type=ENEMYGROUP, cnt="cnt6.ui", notrk=1},
 			{ pid="escape", lbl="$T.lbl_escapable", type=BOOL, defval = true, },
@@ -1749,7 +1758,7 @@ eventcmd .. {
 	
 	defval = @(){
 		local mapid = "M800";
-		return { mapid=mapid, losefunc=0, bgmid=null, keeprset=false, enemies=[{id="E000",x=0.0,z=0.0}],}
+		return { battletype=-1, mapid=mapid, losefunc=0, bgmid=null, keeprset=false, enemies=[{id="E000",x=0.0,z=0.0}],}
 	}
 	
 	cmdinfo = @( cmd){

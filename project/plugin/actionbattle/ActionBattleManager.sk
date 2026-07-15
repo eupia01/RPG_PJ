@@ -1,0 +1,149 @@
+// ActionBattleCore와 RPG-Cobo 런타임 사이의 얇은 관리 계층입니다.
+// 전역 update()를 만들지 않아 기존 RPGMain과 충돌하지 않습니다.
+
+import VirtualKeyCode;
+
+::ActionBattleManager <-
+{
+	active = false,
+	automatic = true,
+	lastResult = null,
+	keyState = {},
+	finishedNotified = false,
+
+	function toSeconds(dt){
+		// RPG-Cobo의 프레임 dt는 보통 ms이고, 기존 C++ 로직은 초 단위입니다.
+		return dt > 1.0 ? dt * 0.001 : dt;
+	}
+
+	function start(options = null, useAutomaticUpdate = true){
+		lastResult = null;
+		keyState = {};
+		finishedNotified = false;
+		automatic = useAutomaticUpdate;
+		active = true;
+		return ::ActionBattleCore.initialize(options);
+	}
+
+	function stop(){
+		active = false;
+		::ActionBattleCore.stop();
+	}
+
+	function isPressedOnce(key){
+		local now = skIsKeyPressed(key);
+		local old = keyState[key] || false;
+		if( key in keyState) keyState[key] = now;
+		else keyState[key] <- now;
+		return now && !old;
+	}
+
+	function processDebugInput(){
+		if( isPressedOnce(VK_1)){
+			::ActionBattleCore.addAggro(::ActionBattleCore.director.controlledPlayerId, 30.0);
+		}
+		if( isPressedOnce(VK_P)) ::ActionBattleCore.applyPoisonToPlayer();
+		return {
+			dodge = isPressedOnce(VK_Q),
+			burst = isPressedOnce(VK_V),
+		};
+	}
+
+	function update(dt, inputDodge = false, inputBurst = false){
+		if( !active) return lastResult;
+		lastResult = ::ActionBattleCore.update(toSeconds(dt), inputDodge, inputBurst);
+		if( lastResult?.isBattleFinished && !finishedNotified){
+			finishedNotified = true;
+			printf("[ActionBattle] Battle finished. rewards=%S\n", lastResult.earnedRewards);
+		}
+		return lastResult;
+	}
+
+	function updateAutomatic(dt){
+		if( !active || !automatic) return;
+		local input = processDebugInput();
+		update(dt, input.dodge, input.burst);
+	}
+
+	function getResult(){
+		return lastResult;
+	}
+}
+
+// 새 스크립트에서 사용하기 위한 명시적인 공개 API입니다.
+::ActionBattle_Start <- function(options = null){
+	return ::ActionBattleManager.start(options, true);
+}
+
+::ActionBattle_Stop <- function(){
+	::ActionBattleManager.stop();
+}
+
+::ActionBattle_GetResult <- function(){
+	return ::ActionBattleManager.getResult();
+}
+
+// RPG-Cobo의 메인 테이블에서 바로 호출할 수 있도록 연결합니다.
+if( ::["RPGMain"]){
+	::RPGMain.startActionBattle <- function(options = null){
+		return ::ActionBattle_Start(options);
+	}
+	::RPGMain.stopActionBattle <- function(){
+		::ActionBattle_Stop();
+	}
+	::RPGMain.getActionBattleResult <- function(){
+		return ::ActionBattle_GetResult();
+	}
+	::RPGMain.startActionBattleEncounter <- function(enemyData){
+		return ::ActionBattle_Start({
+			enemyId = enemyData?.id ?? 100,
+			enemyHp = enemyData?.hp ?? enemyData?.HP ?? 2000.0,
+			controlledPlayerId = 1,
+		});
+	}
+}
+
+// 기존 ActionBattleManager.sk가 사용하던 Native_* 호출과의 호환 계층입니다.
+::Native_InitBattleScene <- function(){
+	return ::ActionBattleManager.start(null, false);
+}
+
+::Native_UpdateBattleScene <- function(dt, inputDodge = false, inputBurst = false){
+	::ActionBattleManager.automatic = false;
+	return ::ActionBattleManager.update(dt, inputDodge, inputBurst);
+}
+
+::Native_ToggleLockOn <- function(){
+	return ::ActionBattleCore.toggleLockOn();
+}
+
+::Native_SwapCharacter <- function(id){
+	return ::ActionBattleCore.swapCharacter(id);
+}
+
+::Native_AddAggro <- function(id, amount){
+	::ActionBattleCore.addAggro(id, amount);
+}
+
+::Native_ApplyPoisonToPlayer <- function(){
+	return ::ActionBattleCore.applyPoisonToPlayer();
+}
+
+// 이동 전 RPGMain.sk 초안이 사용하던 이전 인터페이스도 지원합니다.
+::Native_StartActionBattle <- function(playerId, enemyId){
+	return ::ActionBattleManager.start({
+		controlledPlayerId = playerId,
+		enemyId = enemyId,
+	}, false);
+}
+
+::Native_UpdateActionBattle <- function(dt){
+	local result = ::ActionBattleManager.update(dt, false, false);
+	if( !result) return null;
+	return {
+		playerHp = result.hp,
+		enemyHp = result.enemyHp,
+		isFinished = result.isBattleFinished,
+		isVictory = result.isBattleFinished && result.hp > 0.0,
+	};
+}

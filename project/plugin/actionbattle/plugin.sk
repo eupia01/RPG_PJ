@@ -1,0 +1,37 @@
+// RPG-Cobo Action Battle game plugin
+
+local srcdir = dirname(callee().getSourceName());
+
+pluginfo <- {
+	name = {
+		"ko" : "액션 배틀",
+		"ja" : "アクションバトル",
+		"en" : "Action Battle",
+	},
+	auther = "eupia01",
+	ver = "0.1.0",
+	desc = {
+		"ko" : "Sakana 언어로 구현된 액션 전투 런타임입니다.",
+		"ja" : "Sakana言語で実装されたアクションバトルランタイムです。",
+		"en" : "Action battle runtime implemented in the Sakana language.",
+	},
+};
+
+function loadPlugin(args, opt){
+	// 에디터에서는 플러그인 관리자에 정보만 노출합니다.
+	if( ::["SKStudio"]) return true;
+
+	::runsk(srcdir .. "/ActionBattleCore.sk");
+	::runsk(srcdir .. "/ActionBattleManager.sk");
+	::runsk(srcdir .. "/ActionBattleRunner.sk");
+
+	// ActionBattle_Start()로 시작된 전투는 루트 UI 프레임과 함께 자동 갱신됩니다.
+	setInterval(@(dt) ::ActionBattleManager.updateAutomatic(dt), 1);
+	printf("[ActionBattle] Sakana runtime loaded.\n");
+	return true;
+}
+
+// 게임 패키징 시 이 플러그인의 스크립트를 포함합니다.
+function doPakckagePath(path){
+	return true;
+}
