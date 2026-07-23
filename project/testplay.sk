@@ -4,7 +4,8 @@
 local args = ::arguments, i;
 
 //	言語選択。workspaceから設定取ってきちゃうかな～
-local ws = decodeJSON( FileRef( ".sakana.ws")?.load() || "{}");
+local wsfile = FileRef( ".sakana.ws");
+local ws = decodeJSON( wsfile.exists() ? wsfile.load() : "{}");
 local sysset = loadconf( "/data/setting.json");
 local lt = chooseLanguage( ws["debuglang"] || sysset.projlang);
 ::lang = Language( lt);

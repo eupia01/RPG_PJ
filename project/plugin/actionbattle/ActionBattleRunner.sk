@@ -3,6 +3,28 @@
 import VirtualKeyCode;
 import ModifiersMask;
 
+// 모델의 본 위치가 아닌 로컬 바운딩 박스의 정중앙을 화면 좌표로 투영한다.
+class ActionBattleLockView extends RPG3DPopupView
+{
+	function updateFunc(dt){
+		if( !rp3d) return true;
+		if( !rp3d.alive){
+			removeFromParent();
+			return false;
+		}
+
+		local cam = parent.renderer.camera;
+		local b = rp3d.bnd;
+		local p = Vector3D(b.x, b.y, b.z).transform(rp3d.mat);
+		local w = p.transform(cam.viewmat).transformw(cam.prjmat);
+		pos(p.x, p.y, 0.0).scale(0.5/w, -0.5/w, 1.0).add(0.5, 0.5, 0.0).scale(parent.bnd.w, parent.bnd.h, 1.0).add(toffs);
+		matdirty = true;
+		layerflags |= 1;
+		repaint();
+		return true;
+	}
+}
+
 // 操作キャラクターの位置を滑らかに追従するアクションバトル専用カメラ。
 class ActionBattleCamerawork extends RPGCamerawork
 {
@@ -118,13 +140,14 @@ class ActionBattleRunner extends BattleRunnerBase
 		rp3d.tgtview = tgtview;
 		rp3d.anime2({id="stand"});
 
-		// アクションバトルのロックオン専用アイコン。3Dモデル上端へ追従する。
-		local lockicon = ::loadSKView("/resource/ui/pop_search.ui", RPG3DPopupView);
+		// アクションバトルのロックオン専用アイコン。
+		// 画面上の固定オフセットではなく、3Dモデルのバウンディングボックス中央を追従する。
+		local lockicon = ::loadSKView("/resource/ui/pop_search.ui", ActionBattleLockView);
 		lockicon.name = "actionbattle_lock_"..ec.dataid;
 		lockicon.setTarget(rp3d);
-		lockicon.setTargetPoint(0);
 		lockicon.setValue("lbl", RichText("[+12]\uf2c0[+0]"));
-		lockicon.toffs = Vector3D(0.0, -36.0, 0.0);
+		// Material Icons 글리프의 시각 중심이 약간 오른쪽이라 6px 왼쪽으로 보정한다.
+		lockicon.toffs = Vector3D(-6.0, 0.0, 0.0);
 		lockicon.setVisible(false);
 		stage.view3d.addChild(lockicon);
 		lockIcons .. { target=rp3d, icon=lockicon };
