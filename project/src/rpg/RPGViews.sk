@@ -120,7 +120,7 @@ class EventPicView extends SKView
 	cmdfunc = null;				//	モーション用コマンド
 	
 	constructor(){
-		setPicID( null);
+		sp = Sprite( null);
 		enabled = false;
 	}
 
@@ -130,7 +130,7 @@ class EventPicView extends SKView
 		}
 	}
 
-	static emptypic = { pic="/skstudio/img/palette.png", scale=1.0, cntpos=[0.5,0.5]};
+	static emptypic = { pic="/resource/icon/appicon.png", scale=1.0, cntpos=[0.5,0.5]};
 
 	function setPicID( pi){
 		picid = pi;
@@ -142,13 +142,14 @@ class EventPicView extends SKView
 		}else{
 			aniu = aniv = 1;
 		}
-		local w = tex.width / aniu, h = tex.height / aniv;
+		local w = (tex["width"]||64) / aniu, h = (tex["height"]||64) / aniv;
 		sp = Sprite( tex);
 		sp.setSubBounds( Rect2D( 0, 0, w, h));
 		sp.bnd.set( 0, 0, w, h);
 		sp.blend = pc["blend"] ?? SK_PMAMIX;
-		sp.bnd.scale( pc.scale, pc.scale);
-		bnd.set( -(w*pc.cntpos[0])|0, -(h*pc.cntpos[0])|0, w, h).scale( pc.scale, pc.scale);
+		local sc = pc["scale"] ?? 1.0;
+		sp.bnd.scale( sc, sc);
+		bnd.set( -(w*pc["cntpos"][0])|0, -(h*pc["cntpos"][1])|0, w, h).scale( sc, sc);
 		matdirty = true;
 		aniid = null;
 		removeUpdateFunc( @( o) o.getName() == "picanifunc");	//	実行中のアニメは中断。。。
@@ -191,6 +192,7 @@ class EventPicView extends SKView
 		local self = this;
 		local p0 = clone pos, p1 = Vector3D( cmd.pos[0], cmd.pos[1], 0.0);
 		local s0 = clone scale, s1 = Vector3D( cmd.scale * 0.01);
+		if( cmd["flipx"]) s1.x *= -1.0;
 		local r0 = clone rot, r1 = Vector3D( 0, 0, cmd.rot * Math.DTOR);
 		local c0 = spcolor, c1 = cmd["col"]??0xffffffff;
 		local fade = cmd.fade+0.0;
