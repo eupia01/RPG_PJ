@@ -8,6 +8,7 @@
 		"#1#":{
 			"baseui":"/resource/ui/dialog_choices2.ui",
 			"ja":{"desc":"","name":"選択ダイアログ(小)","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		},
 		"#2#":{
@@ -47,6 +48,7 @@
 		"#1#":{
 			"baseui":"/resource/ui/info_toplr.ui",
 			"ja":{"desc":"","name":"左右情報","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		},
 		"#2#":{
@@ -64,12 +66,14 @@
 		"#0#":{
 			"baseui":"/resource/ui/menu_main.ui",
 			"ja":{"desc":"","name":"メインメニュー","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		},
 		"#1#":{
 			"baseui":"/resource/ui/menu_item.ui",
 			"en":{"desc":"","name":"","useidx":-1},
 			"ja":{"desc":"","name":"アイテム／スキルメニュー","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		},
 		"#2#":{
@@ -102,6 +106,7 @@
 		"#1#":{
 			"baseui":"/resource/ui/message_log.ui",
 			"ja":{"desc":"","name":"ログメッセージ","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		}
 	},
@@ -110,11 +115,13 @@
 			"baseui":"/resource/ui/title.ui",
 			"en":{"desc":"","name":"Title screen","useidx":-1},
 			"ja":{"desc":"","name":"タイトル画面","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		},
 		"#1#":{
 			"baseui":"/resource/ui/splash.ui",
 			"ja":{"desc":"","name":"スプラッシュ画面","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		},
 		"#2#":{
@@ -136,16 +143,24 @@
 			"baseui":"/resource/ui/virtualpad.ui",
 			"en":{"desc":"","name":"","useidx":-1},
 			"ja":{"desc":"","name":"バーチャルパッド","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		},
 		"#8#":{
 			"baseui":"/resource/ui/rpgroot.ui",
 			"ja":{"desc":"","name":"ゲームルートUI","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		},
 		"#9#":{
 			"baseui":"/resource/ui/rpgroot_deck.ui",
 			"ja":{"desc":"","name":"ゲームルートUI(SteamDeckl)","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
+			"uilist":[]
+		},
+		"#10#":{
+			"baseui":"/resource/ui/actionbattleui.ui",
+			"ja":{"desc":"","name":"アクションバトルUI","useidx":-1},
 			"uilist":[]
 		}
 	}

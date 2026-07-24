@@ -188,6 +188,19 @@
 		"encntrate":0.0,
 		"encount":[
 			{
+				"area":"GgAIAAj/AAAA/wAAAP8AAAD5AAAA+QAAAPkAAAD/AAAA/wAAAA==",
+				"battletype":3,
+				"bgmid":"MU018",
+				"enemies":[
+					{"id":"E000","x":0.0,"z":-0.0}
+				],
+				"escape":true,
+				"filterbits":127,
+				"gid":3,
+				"mapid":"M900",
+				"rate":50
+			},
+			{
 				"area":"GgAIAAj/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAA==",
 				"battletype":-1,
 				"bgmid":"MU018",
@@ -217,19 +230,6 @@
 				"filterbits":127,
 				"gid":2,
 				"mapid":"M804",
-				"rate":50
-			},
-			{
-				"area":"GgAIAAj/AAAA/wAAAP8AAAD5AAAA+QAAAPkAAAD/AAAA/wAAAA==",
-				"battletype":3,
-				"bgmid":"MU018",
-				"enemies":[
-					{"id":"E000","x":0.0,"z":-0.0}
-				],
-				"escape":true,
-				"filterbits":127,
-				"gid":3,
-				"mapid":"M900",
 				"rate":50
 			}
 		],

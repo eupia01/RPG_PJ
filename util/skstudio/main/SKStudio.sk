@@ -644,6 +644,7 @@ class SKStudio extends SKView
 				printf( "An exception occured during createEditor: %S\n", path);
 				printexception( ex);
 				local ed = createEmptyEditor( path, true);
+				if( !ed) return null;
 				ed.name = "editor_empty";
 				ed.filepath = path;
 				return ed;

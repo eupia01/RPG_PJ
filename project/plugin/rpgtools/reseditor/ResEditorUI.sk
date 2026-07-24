@@ -577,6 +577,10 @@ class ResEditorUI extends EditorViewBase
 			if( cmd["lock"]){	//	baseui
 				if( !Dialogs.confirm( {msg="$T.confirm_editbaseui"})) break;
 			}
+			// 외부에서 새 UI 파일을 추가한 직후에는 런타임 리소스 트리에 아직
+			// 등록되지 않았을 수 있으므로, 에디터를 열기 전에 부모 디렉터리를 갱신한다.
+			local dirpath = uipath.substring( 0, uipath.lastIndexOf( "/"));
+			skstudio.fileview.refreshDir( dirpath);
 			skstudio.openEditor( uipath);
 			break;
 		case "change":

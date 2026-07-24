@@ -121,6 +121,20 @@ class ActionBattleRunner extends BattleRunnerBase
 	lockOrder = null;
 	lockIndex = -1;
 	lockIcons = null;
+	lockInfoView = null;
+
+	// 액션배틀 전용 UI를 배틀 장면의 하단 UI 레이어에 표시한다.
+	function setupBattleUI(){
+		battleui = ::RPGMain.showView({
+			uipath = "actionbattleui.ui"
+			name = "battleui"
+			layer = "stageui"
+			pos = { bottom = 0 }
+		});
+		battleui.findChild("infog")?.setVisible(false);
+		syncMemberListUI();
+		syncEnemyListUI();
+	}
 
 	// 通常の2Dエネミーモデルの代わりにCV033ボクセルキャラクターを生成する。
 	function addBattleEnemy(ec){
@@ -159,8 +173,10 @@ class ActionBattleRunner extends BattleRunnerBase
 		ended = false;
 		elapsed = 0.0;
 		lockIcons = [];
+		lockInfoView = null;
 		RPGMain.buttonhelp("battle");
 		setupCharas();
+		setupBattleUI();
 
 		local enemyList = battledata["enemies"] || [];
 		local enemy = enemyList[0];
@@ -241,6 +257,28 @@ class ActionBattleRunner extends BattleRunnerBase
 		return targets;
 	}
 
+	function showLockInfo(target){
+		local monsterName = target.rpgobj.data?.name ?? target.rpgobj.dataid;
+		if( lockInfoView){
+			lockInfoView.bindValue("lbl", RichText(monsterName));
+			return;
+		}
+		lockInfoView = ::RPGMain.showView({
+			uipath = "actionbattleui_info_top.ui"
+			name = "actionbattle_lock_info"
+			layer = "info"
+			pos = { top = 32 }
+			binds = { lbl = RichText(monsterName) }
+			action = "show"
+		});
+	}
+
+	function hideLockInfo(){
+		if( !lockInfoView) return;
+		lockInfoView.actionAndDie("hide");
+		lockInfoView = null;
+	}
+
 	function setTargetLock(target){
 		foreach( v in chara3ds){
 			if( enemies.contains(v.rpgobj)){
@@ -252,11 +290,14 @@ class ActionBattleRunner extends BattleRunnerBase
 		lockedEnemy3D = target;
 		followCamera?.setLockTarget(target);
 		if( target){
+			showLockInfo(target);
 			// ロックオン補間中だけ弱いズームブラーを掛け、320msで解除する。
 			stage.screenfx.screenEffectOn({
 				sfxid="raster1", color=-1, num=1, pow=2.0, time=0, uv=(0.5,0.5)
 			});
 			stage.screenfx.screenEffectOff({sfxbits=2, time=320});
+		}else{
+			hideLockInfo();
 		}
 		::ActionBattleCore.director.lockOnTargetId = target ? target.rpgobj.dataid : -1;
 		if( target){
