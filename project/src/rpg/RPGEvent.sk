@@ -531,7 +531,7 @@ class RPGEventRunner
 	}
 	
 	static tmplmap = {
-		"name":1, "text":1, "desc":1, "msg":1, "title":1, "texts":1, "text0":1, "text1":1, "text2":1, "text3":1, "text4":1, "text5":1, "text6":1, "text7":1, 
+		"name":1, "text":1, "desc":1, "msg":1, "title":1, "texts":1, "text0":1, "text1":1, "text2":1, "text3":1, "text4":1, "text5":1, "text6":1, "text7":1, "lbl":1,
 	};
 
 	function replaceTemplate( cmd){
@@ -560,8 +560,9 @@ class RPGEventRunner
 	//	
 	function showUI( cmd){
 		local _cmd = replaceTemplate( cmd);
+		if( _cmd != cmd) _cmd = clone _cmd;
+		_cmd.caller <- this;
 		if( _cmd["who"]){
-			if( _cmd != cmd) _cmd = clone _cmd;
 			_cmd.rp3d <- getWho3D( _cmd.who);
 		}
 		local p = null;
@@ -718,8 +719,20 @@ class RPGEventRunner
 
 	//	アニメーション再生
 	function startAnime( cmd){
-		local rp3d = cmd.who["rp3d"] || (cmd.who=="player" ? stage.player3d : (stage.getEvent( cmd.who)["rp3d"] || rp3d));
-		rp3d?.anime2( cmd.ani);
+		local rp3d = getWho3D( cmd["who"]);
+		if( rp3d){
+			local al = rp3d.anime2( cmd.ani);
+			if( al){
+				local al0 = rp3d.animlayers.layers[0];
+				if( al0) al0.locked = 0;	//	古いアニメーションのロックを解除
+				if( al["loop"]){
+					al.locked = 1;	//	ループのアニメはイベント終了までロック。
+					_setstopfunc( "anime"..rp3d, @(){ al.locked = 0; });
+				}else{
+					al.locked = @() al.animating;	//	非ループのアニメはアニメーション中はロック。終了したらロック解除
+				}
+			}
+		}
 	}
 
 	//	向き合う。
@@ -761,7 +774,7 @@ class RPGEventRunner
 
 	//	キャラを移動
 	function moveChara( cmd){
-		local rp3d = cmd.who["rp3d"] || (cmd.who==1 ? stage.player3d : (stage.getEvent( cmd.who)["rp3d"] || rp3d));
+		local rp3d = getWho3D( cmd.who);// cmd.who["rp3d"] || (cmd.who==1 ? stage.player3d : (stage.getEvent( cmd.who)["rp3d"] || rp3d));
 		if( rp3d){
 			local vec;
 			if( typeof( cmd.pos) <= SS_STRING){	//	数値が入っている場合はZ方向への移動とみなす
@@ -774,7 +787,8 @@ class RPGEventRunner
 			case 1: d = rp3d.dir; break;
 			case 2: d = rpgstage.camdir; break;
 			case 3:
-				d = Math.atan2( this.rp3d.pos.x-stage.player3d.pos.x, -(this.rp3d.pos.z-stage.player3d.pos.z)) * (rp3d==this.rp3d?-1:1);
+				local fc3d = rp3d==stage.player3d ? this.rp3d : stage.player3d;
+				d = Math.atan2( rp3d.pos.x-fc3d.pos.x, -(rp3d.pos.z-fc3d.pos.z)) * -1.0;
 				break;
 			}
 			if( d) vec.rotate( q_1.setHPB( d, 0, 0));
@@ -790,8 +804,10 @@ class RPGEventRunner
 	}
 	//	キャラを回転
 	function rotateChara( cmd){
-		local rp3d = cmd.who["rp3d"] || (cmd.who==1 ? stage.player3d : (stage.getEvent( cmd.who)["rp3d"] || rp3d));
+		local rp3d = getWho3D( cmd.who);
 		if( rp3d){
+			local fc3d = rp3d==stage.player3d ? this.rp3d : stage.player3d;
+			cmd = { ...cmd, fc3d=fc3d, };
 			rp3d.modifyRotate( cmd);
 			if( cmd["wait"] && cmd["fade"]){
 				sleep( cmd.fade);
@@ -1215,7 +1231,7 @@ class RPGStageEventRunner extends RPGEventRunner
 		}catch( ex){
 			printf( "EventRunner ERROR!!!\n");
 			printexception( ex);
-			RPGMain.showUI( { key="message_log", text="\uf800 EventRunner ERROR!!! Check a log file."});
+			::rootview.postErrorEvent( {type="updateFuncs", error=ex, msg = "\uf800 EventRunner ERROR!!! Check a log file."});
 			sleep( 1000);
 		}
 		if( rpgstage.mainevent==this) rpgstage.mainevent = null;
@@ -1381,7 +1397,7 @@ class RPGMacroEventRunner extends RPGEventRunner
 		for(;;){
 			mode = 1;
 			try{
-				if( eventTriggerable() && ::reqchk( data.reqs, this)){
+				if( eventTriggerable() && ::reqchk( data["runreqs"], this)){
 					return run_running();
 				}
 			}catch( ex){
@@ -1401,7 +1417,10 @@ class RPGMacroEventRunner extends RPGEventRunner
 		finishEventRunning();
 		mode = 0;
 		suspend();
-		// return run_scout();	//	scoutモードには移行しない（ない）。このまま実行終了。
+		if( data["runrepeat"]){
+			return run_scout();	//	繰り返し実行する場合は再びスカウトモードに戻る
+		}
+		//	scoutモードには移行しない（ない）。このまま実行終了。
 	}
 	
 	function eventTriggerable(){

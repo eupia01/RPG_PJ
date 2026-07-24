@@ -585,6 +585,8 @@ function menuBuffSkillFunc( skill, src, dsts){
 //	・マクロ実行中はスレッドはブロック。
 function menuMacroSkillFunc( skill, src, dsts){
 	local wvar = clone RPGEventRunner.iniwvar;
+	local warg = skill["warg"];
+	if( warg != null && warg != undefined) wvar.W = warg;	//	W 代入
 	local m = ::rpgstage.startMacro( skill.macroid_menu, false, wvar);
 	while( m["mode"] == 2){
 		suspend();
@@ -815,7 +817,7 @@ RPGSystem.skilltype .. {
 			}
 		},
 		spdrateprop,
-		{ pid="warg", lbl="$T.lbl_macroarg: W", type=VARIABLE, varbits=2|4|8|16, constbits=1|2|4, datatype="all", nullable=1, defval=null },
+		{ pid="warg", lbl="$T.lbl_macroarg: W", type=VARIABLE, varbits=2|4|8|16, constbits=1|2|4|8|16, datatype="all", nullable=1, defval=null },
 		//	
 		efxhead,
 		aimaniprop,

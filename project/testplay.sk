@@ -63,7 +63,7 @@ runsk( "/load.sk");
 if( ws["debugtouch"]) GPUI.emuosname <- "Android";		//	タッチデバッグの時はAndroidってことにする
 ::soundmanager.setBGMVolume( clientconf.sound.bgmvol * 0.008);	//	BGMはちょっと小さめに。。。
 ::soundmanager.setSEVolume( clientconf.sound.sevol * 0.012);	//	SEは大き目。。。
-
+::renderhint.set( ClientConfig.renderhints[clientconf["render"]["quality"]]);	//	保存されたレンダリング品質を設定
 
 RPGMain.setupUI();
 ::rootview.setValue( "apptitle", conf.setting.title);
@@ -235,9 +235,11 @@ if( prof){
 
 //	使用したシェーダーを記録。gamemainのpreloaShaders()で読み込む。
 if( recfx){
-	local tecbits = {};
+	local tecmap = {};
 	local f = FileRef( skGetCodebase() .. "/resource/skfxload.json");
-	if( f.exists()) tecbits = decodeJSON( f.load());	//	前回の結果を上書き。消えたシェーダーが残り続ける問題あり。
+	if( f.exists()) tecmap = decodeJSON( f.load());	//	前回の結果を上書き。消えたシェーダーが残り続ける問題あり。
+	local apilv = skGetAPILevel();
+	local tecbits = tecmap[apilv] || (tecmap[apilv]<-{});	//	tecbitsはapilvごとに分ける。OpenGL ES 2.0と3.0でシェーダーのコンパイル結果が違うため。
 	foreach( efx in skFXGetEffects()){
 		foreach( tec in efx){
 			local tecname = tec.name, tb = tecbits[tecname] || [], bitsnum = 0;
@@ -247,6 +249,7 @@ if( recfx){
 				foreach( bits in ss.getCompiledShaderBits()){
 					if( sb.indexOf( bits) < 0) sb .. bits;
 				}
+				sb.sort();
 				bitsnum += length( sb);
 			}
 			if( bitsnum){
@@ -254,7 +257,7 @@ if( recfx){
 			}
 		}
 	}
-	local bb = encodeJSON( tecbits, 5, ByteBuffer());
+	local bb = encodeJSON( tecmap, 5, ByteBuffer());
 	bb.pos = 0;
 	f.save( bb);
 }

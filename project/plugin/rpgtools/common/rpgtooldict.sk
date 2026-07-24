@@ -744,6 +744,7 @@
 	"lbl_input_script"					: {"ja":"スクリプト", "en":"Script"}
 	"lbl_input_var"						: {"ja":"変数の選択", "en":"Select Variable"}
 	"lbl_input_dataid"					: {"ja":"データID", "en":"Data ID"}
+	"lbl_input_random"					: {"ja":"乱数", "en":"Random"}
 	"lbl_lvcurve"						: {"ja":"レベルカーブ", "en":"Lv Curve"}
 	"lbl_battleai"						: {"ja":"バトルAI", "en":"Battle AI"}
 	"lbl_contturns"						: {"ja":"継続ターン", "en":"Continuous Turns"}
@@ -833,6 +834,7 @@
 	"setting_playermodel"				: {"ja":"プレイヤーの表示モデル", "en":"Player Model"}
 	"setting_ctrmode"					: {"ja":"操作可能状態", "en":"Controllable State"}
 	"setting_walkspd"					: {"ja":"歩行の速度", "en":"Walking Speed"}
+	"setting_jumph"						: {"ja":"ジャンプの高さ", "en":"Jump Height"}
 	"setting_menuopenable"				: {"ja":"メニュー開閉可能", "en":"Menu Open Enabled"}
 	"setting_randomencount"				: {"ja":"ランダムエンカウント", "en":"Radom Encounter"}
 	"setting_saveable"					: {"ja":"セーブ可能", "en":"Save Enabled"}
@@ -919,6 +921,7 @@
 	"lbl_runmode"						: {"ja":"実行モード", "en":"Run Mode"}
 	"lbl_runatmenu"						: {"ja":"メニュー時にも実行", "en":"Run at Menu"}
 	"lbl_runreqs"						: {"ja":"実行条件", "en":"Requirements to run"}
+	"lbl_runrepeat"						: {"ja":"繰り返し実行", "en":"Repeat run"}
 	"lbl_pagereqs"						: {"ja":"ページ選択条件", "en":"Requirements"}
 	"lbl_pagetest"						: {"ja":"ページのテスト", "en":"Page Test"}
 	"lbl_addcmd"						: {"ja":"コマンド挿入", "en":"Insert Command"}
@@ -930,6 +933,7 @@
 	"lbl_pararun"						: {"ja":"並列実行", "en":"Parallel Run"}
 	"lbl_link_var"						: {"ja":"変数とリンク", "en":"Link to Variable"}
 	"lbl_unlink_var"					: {"ja":"変数のリンクを解除", "en":"Unlink to Variable"}
+	"lbl_dontlink_var"					: {"ja":"変数にリンクしない", "en":"Do not link to Variable"}
 	"lbl_errorop"						: {"ja":"エラー時の処理", "en":"Operation on Error"}
 	"lbl_op"							: {"ja":"操作", "en":"Operation"}
 	"lbl_remap"							: {"ja":"マップの再配置", "en":"Restore Map"}
@@ -1053,6 +1057,9 @@
 	"dlg_sndimport"						: {"ja":"サウンドのインポート", "en":"Import Sound"}
 	"pop_sndimport"						: {"ja":"効果音ファイルをインポートしました", "en":"Imported a Sound file"}
 	"pop_bgmimport"						: {"ja":"BGMファイルをインポートしました", "en":"Imported a BGM file"}
+	"pop_imgimport"						: {"ja":"イメージをインポートしました", "en":"Imported an Image file"}
+	"confirm_importimg"					: {"ja":"イメージをインポートしますか？", "en":"Do you want to import an image?"}
+	"check_convert_webp"				: {"ja":"WebPに変換(推奨)", "en":"Convert to WebP (recommended)"}
 
 	"lbl_baseui"						: {"ja":"ベースとなるUI", "en":"Base UI"}
 	"lbl_langui"						: {"ja":"使用するUIの選択(言語ごと)", "en":"Select UI to use (by language)"}

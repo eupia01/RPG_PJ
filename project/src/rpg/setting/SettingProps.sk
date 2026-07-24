@@ -61,6 +61,18 @@ settingprops .. {
 
 settingprops .. {
 	part = "basic",
+	proptype = "status",
+	pid = "jumph",
+	lbl = "$T.setting_jumph",
+	type = SCALAR,
+	ui = "bar",
+	range = (0.0,10.0),
+	q = 10
+	defval = 2.0,
+};
+
+settingprops .. {
+	part = "basic",
 	pid = "jxptype",
 	lbl = "$T.setting_jxptype",
 	type = LIST,
@@ -289,6 +301,16 @@ settingprops .. {
 	defval = 3
 };
 
+settingprops .. {
+	part = "ui",
+	proptype = "status",
+	pid = "menu_exitgame",
+	lbl = @() (T.format_view % T.exitgame),
+	type = LIST,
+	list = RPGProperties.uivisiblelist,
+	defval = 3
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 //	ステージ設定
 //	以下のプロパティはステージの保存時に保存される。また、mapedit=trueの場合はマップエディタで初期設定を設定可能。
@@ -313,6 +335,10 @@ stageprops .. {
 	type=LIST,
 	list = rendersetlist,
 	defval="pbr_df",
+
+	func = @( stage, val){
+		stage.changeRenderSetting( val);
+	}
 };
 
 local bgtypelist = [
@@ -345,7 +371,7 @@ local bgpropdef(){
 		}
 		setprop = @( prop, data, val){
 			local ed = ::skstudio.editor;
-			if( ed instanceof MapEditor){
+			if( (ed instanceof MapEditor) && !ed.modaledit){	//	u-m
 				ed.canvas.setBackground( data);
 			}
 		}
@@ -376,6 +402,10 @@ stageprops .. {
 	type=PROPERTYLIST,
 	defval={ type="skybox", },
 	propdef = bgpropdef
+
+	func = @( stage, val){
+		stage.view3d.renderer.bgpass = stage.createBackground( val);
+	}
 };
 
 /*
@@ -417,7 +447,7 @@ local weatherpropdef(){
 		}
 		setprop = @( prop, data, val){
 			local ed = ::skstudio.editor;
-			if( ed instanceof MapEditor){
+			if( (ed instanceof MapEditor) && !ed.modaledit){	//	u-m
 				ed.canvas.refreshLinkedWeather( data);
 			}
 		}
@@ -441,6 +471,10 @@ stageprops .. {
 	type = PROPERTYLIST,
 	propdef = weatherpropdef,
 	defval = {type=null},
+
+	func = @( stage, val){
+		stage.view3d.renderer.fadeWeather( val, 500);
+	}
 };
 
 stageprops .. {
@@ -451,6 +485,10 @@ stageprops .. {
 	mapedit=true, pid="reverbid", lbl="$T.reverb", type=LIST,
 	list=@() ::conf._resource.snd._env.reverbs.map( @( v)({ lbl="$T.reverb_"..v.id, icon="\ue049", val=v.id, })),
 	defval="PLAIN"
+
+	func = @( stage, val){
+		stage.scn.sk3dsound.setReverbID( val);
+	}
 };
 
 stageprops .. {
@@ -458,14 +496,22 @@ stageprops .. {
 	lbl = "$T.setting_playervisible"
 	type = BOOL
 	defval = true
+
+	func = @( stage, val){
+		stage.setPlayerVisible( val);
+	}
 };
 
 stageprops .. {
 	pid = "playermodel"
 	lbl = "$T.setting_playermodel"
-	type = RESID
-	restype = ["chara_etc","chara_vox"]
+	type = DATAID
+	datatype = ["player"]
 	defval = null	//	null=先頭
+
+	func = @( stage, val){
+		stage.changePlayer3D( val);
+	}
 };
 
 stageprops .. {

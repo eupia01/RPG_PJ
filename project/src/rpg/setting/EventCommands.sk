@@ -77,12 +77,12 @@ local defmapid(){
 	return mapid;
 }
 
-local proplbl( props, pid){
+function proplbl( props, pid){
 	return props.find( @( v) v.pid==pid)["lbl"] || "";
 }
 
 //	
-local propstr( props, cmd, pid){
+function propstr( props, cmd, pid){
 	if( cmd["_var"][pid]) return varstr( cmd._var[pid]);
 	local prop = props.find( @( v) v.pid==pid);
 	return getPropertyText( prop, cmd);
@@ -155,7 +155,6 @@ eventcmd .. {
 	name = "$T.cmd_if"
 	icon = "\ueb26"
 	color = color0
-	subblocks = true
 
 	props = [
 		reqsprop
@@ -196,7 +195,6 @@ eventcmd .. {
 	name = "$T.cmd_loop"
 	icon = "\ue9d6"
 	color = color0
-	subblocks = true
 	
 	props = [reqsprop]
 
@@ -280,7 +278,6 @@ eventcmd .. {
 	name = "$T.cmd_iterate"
 	icon = "\ue240"
 	color = color0
-	subblocks = true
 	
 	props = [
 		{ pid="itervar", lbl="$T.cmd_iterate_itervar", type=VARIABLE, varbits=31, constbits=0, },
@@ -485,7 +482,7 @@ eventcmd .. {
 	props = [
 		{ pid="lvar", lbl="$T.lbl_lvar", type=VARIABLE, varbits=1|2|4, constbits=0 }		//	代入可能な左辺値＝ワーク、イベント、グローバル
 		{ pid="op",   lbl="$T.lbl_arithop", type=LIST, list=compoplist }		//	
-		{ pid="rvar", lbl="$T.lbl_rvar", type=VARIABLE, varbits=31, constbits=15, datatype="all" }		//	全て
+		{ pid="rvar", lbl="$T.lbl_rvar", type=VARIABLE, varbits=31, constbits=31, datatype="all" }		//	全て
 	]
 
 	defval = { lvar="W", op="=", rvar=0 }
@@ -530,7 +527,7 @@ eventcmd .. {
 			a .. { pid="idx", lbl="$T.lbl_index", type=SCALAR, range=(0,1000), variable=1, }
 		}
 		if( (#("add","ins","set")).contains( cmd.op) ){
-			a .. { pid="rvar", lbl="$T.lbl_rvar", type=VARIABLE, varbits=31, constbits=15, datatype="all" }		//	全て
+			a .. { pid="rvar", lbl="$T.lbl_rvar", type=VARIABLE, varbits=31, constbits=31, datatype="all" }		//	全て
 		}
 		if( (#("get","len")).contains( cmd.op) ){
 			a .. { pid="tvar", lbl="$T.cmd_macro_retvar", type=VARIABLE, varbits=1|2|4, constbits=0 }
@@ -595,7 +592,7 @@ eventcmd .. {
 			a .. { pid="key", lbl="$T.lbl_key", type=STRING, variable=1, }
 		}
 		if( cmd.op == "ins"){
-			a .. { pid="rvar", lbl="$T.lbl_rvar", type=VARIABLE, varbits=31, constbits=15, datatype="all" }		//	全て
+			a .. { pid="rvar", lbl="$T.lbl_rvar", type=VARIABLE, varbits=31, constbits=31, datatype="all" }		//	全て
 		}
 		if( cmd.op == "get" ){
 			a .. { pid="tvar", lbl="$T.cmd_macro_retvar", type=VARIABLE, varbits=1|2|4, constbits=0 }
@@ -662,6 +659,7 @@ local settinginfo( cmd, props){
 	local lbl = fget( prop, "lbl") ?? cmd.pid;
 	prop.pid = "val";
 	local val = getPropertyText( prop, cmd);
+	if( typeof( val) == SS_TABLE) val = ::lang( val);
 	return {
 		info = sprintf( "%S = %S", lbl, encodeESC( string( val)));
 	}
@@ -778,7 +776,7 @@ eventcmd .. {
 		{ pid="charaid", lbl="$T.side_dbview_player", type=DATAID, datatype="player", variable=1, hide=@( pl) pl.getParam( "cmdtgt")!=TGT_PARTY_SINGLE }	//	↑で個人の場合の対象プレイヤー。データIDもしくはワーク、イベント、グローバル変数
 		{ pid="pid", lbl="HP $T.lbl_op", type=LIST, list=hpmppidlist, }
 		hpmpprop
-		{ pid="val", lbl="$T.lbl_var", type=VARIABLE, varbits=1|2|4|8|16, constbits=1|8 },
+		{ pid="val", lbl="$T.lbl_value", type=VARIABLE, varbits=1|2|4|8|16, constbits=2|8|16 },
 		{ pid="hp1", lbl="$T.lbl_hp1", type=BOOL, variable=1, hide=@( pl) pl.getParam( "pid")!="HP"}
 	]
 
@@ -1270,6 +1268,7 @@ eventcmd .. {
 				{ pid="pos", lbl="$T.lbl_position", type=VEC2, range=[-1280,2560], variable=1 },
 				{ pid="scale", lbl="$T.lbl_scale", type=SCALAR, range=[0,1000], ui="bar", barrange=(0,400,10), variable=1 },
 				{ pid="rot", lbl="$T.lbl_rotation", type=SCALAR, range=[-3600,3600], ui="bar", barrange=(-360,360,5), variable=1 },
+				{ pid="flipx", lbl="$T.lbl_flipx", type=BOOL, defval=false, variable=1, },
 				{ pid="col", lbl="$T.lbl_color", type=RGBA, defval=0xffffffff, variable=1, }
 			];
 		}
@@ -1280,7 +1279,7 @@ eventcmd .. {
 	}
 	
 	defval = {
-		idx=0, picid="PC000", pos=[640,360], scale=100, rot=0, op=0, fade=0, wait=true, easing=0, aniid=null
+		idx=0, picid="PC000", pos=[640,360], scale=100, rot=0, op=0, fade=0, flipx=false, wait=true, easing=0, aniid=null
 	}
 	
 	cmdinfo = @( cmd){
@@ -1350,7 +1349,7 @@ eventcmd .. {
 	
 	cmdinfo = @( cmd){
 		local uidef = RPGSystem.ui[cmd.key];
-		local info = uidef["lbl"] || "???";
+		local info = lang( uidef["lbl"]) || "???";
 		if( "op" in cmd){
 			local props = fget( uidef, "props", uidef, cmd);
 			info = sprintf( "%S → %S", info, propstr( props, cmd, "op"));
@@ -1437,7 +1436,7 @@ eventcmd .. {
 			switch( cmd["valtype"]){
 			case 0: a .. { lbl="$T.lbl_text", pid="text", type=MESSAGE, }; break;
 			case 1: a .. { lbl="$T.lbl_imgpath", pid="path", type=PATH, }; break;
-			case 2: a .. { lbl="$T.lbl_var", pid="rvar", type=VARIABLE, varbits=1|2|4|8|16, constbits=8 }; break;
+			case 2: a .. { lbl="$T.lbl_value", pid="rvar", type=VARIABLE, varbits=1|2|4|8|16, constbits=8 }; break;
 			}
 			break;
 		}
