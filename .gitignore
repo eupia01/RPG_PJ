@@ -50,3 +50,6 @@ rpgcobo.ver
 /bat
 /private
 /work/deficon
+
+# Local Blender MCP tools, logs, and generated assets
+/MCP/
