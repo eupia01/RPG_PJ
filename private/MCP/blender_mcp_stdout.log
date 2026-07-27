@@ -1,0 +1,61 @@
+Server thread started
+BlenderMCP server started on localhost:9876
+BlenderMCP addon registered
+Error accepting connection: [WinError 10038] 소켓 이외의 개체에 작업을 시도했습니다
+Server thread stopped
+BlenderMCP server stopped
+BlenderMCP addon unregistered
+Server thread started
+BlenderMCP server started on localhost:9876
+BlenderMCP addon registered
+Server is already running
+05:18.375  render           | Saved: 'C:\Users\AIPUE\Documents\RPG_PJ\rounded_wood_chest_preview.png'
+08:59.672  blend            | Saved session recovery to "C:\Users\AIPUE\AppData\Local\Temp\quit.blend"
+Connected to client: ('127.0.0.1', 10055)
+Client handler started
+Client disconnected
+Client handler stopped
+Connected to client: ('127.0.0.1', 10073)
+Client handler started
+Client disconnected
+Client handler stopped
+Connected to client: ('127.0.0.1', 13878)
+Client handler started
+Connected to client: ('127.0.0.1', 12234)
+Client handler started
+Connected to client: ('127.0.0.1', 12268)
+Client handler started
+Error receiving data: [WinError 10054] 현재 연결은 원격 호스트에 의해 강제로 끊겼습니다
+Client handler stopped
+Executing handler for get_scene_info
+Getting scene info...
+Scene info collected: 3 objects
+Handler execution complete
+Executing handler for execute_code
+Handler execution complete
+Executing handler for execute_code
+Handler execution complete
+Executing handler for execute_code
+Handler execution complete
+Executing handler for execute_code
+Error in handler: Code execution error: bpy_struct: item.attr = val: enum "BLENDER_EEVEE_NEXT" not found in ('BLENDER_EEVEE', 'BLENDER_WORKBENCH', 'CYCLES')
+Client disconnected
+Client handler stopped
+Connected to client: ('127.0.0.1', 12724)
+Client handler started
+Executing handler for execute_code
+Handler execution complete
+Executing handler for get_scene_info
+Getting scene info...
+Scene info collected: 10 objects
+Handler execution complete
+Executing handler for execute_code
+Handler execution complete
+Executing handler for execute_code
+Handler execution complete
+Error accepting connection: [WinError 10038] 소켓 이외의 개체에 작업을 시도했습니다
+Server thread stopped
+BlenderMCP server stopped
+BlenderMCP addon unregistered
+
+Blender quit

@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "C:\Users\AIPUE\AppData\Roaming\Blender Foundation\Blender\5.2\scripts\addons\blender_mcp_addon.py", line 537, in execute_code
+    exec(code, namespace)
+    ~~~~^^^^^^^^^^^^^^^^^
+  File "<string>", line 37, in <module>
+TypeError: bpy_struct: item.attr = val: enum "BLENDER_EEVEE_NEXT" not found in ('BLENDER_EEVEE', 'BLENDER_WORKBENCH', 'CYCLES')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\AIPUE\AppData\Roaming\Blender Foundation\Blender\5.2\scripts\addons\blender_mcp_addon.py", line 329, in _execute_command_internal
+    result = handler(**params)
+  File "C:\Users\AIPUE\AppData\Roaming\Blender Foundation\Blender\5.2\scripts\addons\blender_mcp_addon.py", line 542, in execute_code
+    raise Exception(f"Code execution error: {str(e)}")
+Exception: Code execution error: bpy_struct: item.attr = val: enum "BLENDER_EEVEE_NEXT" not found in ('BLENDER_EEVEE', 'BLENDER_WORKBENCH', 'CYCLES')

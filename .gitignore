@@ -48,5 +48,12 @@ rpgcobo.ver
 
 #work
 /bat
-/private
 /work/deficon
+
+# Local Blender MCP tools, logs, and generated assets
+/MCP/
+
+# Track all private project data in Git.
+# Contest submissions exclude this directory separately in ContestActivity.sk.
+!/private/
+!/private/**
