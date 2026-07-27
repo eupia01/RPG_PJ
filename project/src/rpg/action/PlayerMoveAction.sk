@@ -411,13 +411,15 @@ class PlayerMoveController
 		// stats .. buttonstate( CTRL_MENU, kbbuttons( bkmap[BTN_X]));
 		// stats .. axisstate( CTRL_MOVE, kbaxis( VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT));
 
-		local bkmap = { ...ClientConfig.def_keybtnmap, ...clientconf["keyboard"]};
+		local ka = clientconf.keyboard_action;
+		local ga = clientconf.gamepad_action;
 
-		stats .. buttonstate( CTRL_SEARCH, any( gpbutton( BTN_A), kbbuttons( bkmap[BTN_A])) );
-		stats .. buttonstate( CTRL_JUMP, any( gpbutton( BTN_B), kbbuttons( bkmap[BTN_B])) );
-		stats .. buttonstate( CTRL_MENU, any( gpbutton( BTN_X), kbbuttons( bkmap[BTN_X])) );
+		stats .. buttonstate( CTRL_SEARCH, any( gpbutton( ga.confirm), kbbutton( ka.confirm)) );
+		stats .. buttonstate( CTRL_JUMP, any( gpbutton( ga.cancel), kbbutton( ka.cancel)) );
+		stats .. buttonstate( CTRL_MENU, any( gpbutton( ga.menu), kbbutton( ka.menu)) );
 		stats .. axisstate( CTRL_MOVE, any(
-			gpaxis( "axis0", "axis1", BTN_UP, BTN_LEFT, BTN_DOWN, BTN_RIGHT), kbaxis( VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT)
+			gpaxis( "axis0", "axis1", ga.move_up, ga.move_left, ga.move_down, ga.move_right),
+			kbaxis( ka.move_up, ka.move_left, ka.move_down, ka.move_right)
 		));
 	}
 	

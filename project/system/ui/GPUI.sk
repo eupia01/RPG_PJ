@@ -385,6 +385,7 @@ class GPUI
 	gpkeepalive = false;			//	bool : ゲーム機でtrue
 	gpstat = 0;						//	GamepadStateID : 変化するとrootviewにイベントとして伝えられる。
 	gamepad = null;					//	Gamepad|null : 接続されたゲームパッド。
+	gamepadvbmaplist = null;
 	gpchecktime = 0;				//	
 	gpautoupdate = true;			//	bool
 	unsupportgpmap = null;			//	サポートされないゲームパッドが接続したらここに追加
@@ -397,6 +398,7 @@ class GPUI
 
 	constructor(){
 		::gpui <- this;
+		gamepadvbmaplist = deepclone( GPUIGamepadDevice.defaultvbmaplist);
 		local gg = GPUIGroup();
 		gg.setGPUIView( ::rootview);
 		gpuimap = GPUIMap( ::rootview);
@@ -745,16 +747,21 @@ class GPUI
 
 	//	[BTN_A] = [VK_A, VK_SPACE] ... のマップを渡す。vkvbmapとは逆
 	function setButtonKeyMap( bkmap){
-		local t = {
-			[VK_LEFT] = BTN_LEFT,
-			[VK_UP] = BTN_UP,
-			[VK_RIGHT] = BTN_RIGHT,
-			[VK_DOWN] = BTN_DOWN,
-		};
+		local t = {};
 		foreach( vb, vka in bkmap){
 			foreach( vk in vka) t[vk] <- vb;
 		}
 		GPUI.vkvbmap <- t;
+	}
+
+	function setButtonGamepadMap( gpmap){
+		gamepadvbmaplist = GPUIGamepadDevice.defaultvbmaplist.map( @( v){
+			local r = clone v;
+			local devkey = gpmap ? fget( gpmap, v.vb) : null;
+			if( devkey!=null) r.devkey = devkey;
+			return r;
+		});
+		createGPUIDevice();
 	}
 
 	function isButtonDown( vb){
@@ -853,13 +860,13 @@ class GPUI
 	function createGPUIDevice(){
 		local vpad = ::["virtualpad"];	//	グローバルにあるか。強引だが
 		if( gpstat == GAMEPAD_ENABLED){
-			gpdevice = GPUIGamepadDevice( gamepad, GPUIGamepadDevice.defaultvbmaplist);
+			gpdevice = GPUIGamepadDevice( gamepad, gamepadvbmaplist);
 			if( vpad) vpad.setVisible( false);
 		}else{
 			gpdevice = null;
 			if( vpad && !(::uifeature & UI_KEYBOARD)){
 				vpad.setVisible( true);
-				vpdevice = GPUIGamepadDevice( vpad, GPUIGamepadDevice.defaultvbmaplist);
+				vpdevice = GPUIGamepadDevice( vpad, gamepadvbmaplist);
 			}
 		}
 	}

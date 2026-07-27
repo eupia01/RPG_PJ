@@ -420,6 +420,21 @@ local quaconf = {		//	描画品質。5段階
 
 //	コンフィグ設定のための機能実装。
 //	ラベルの設定、選択時の挙動
+local confirmConfigChange(){
+	return RPGMain.showUI( {
+		key = "dialog_confirm"
+		msg = "변경하시겠습니까?"
+		text0 = "예"
+		text1 = "아니오"
+	});
+}
+
+local hasConnectedGamepad(){
+	if( !::["gpui"]) return false;
+	local gp = ::gpui["gamepad"];
+	return !!(gp && gp["connected"]);
+}
+
 local confimplmap = {
 	choice = {
 		binds = @( conf){
@@ -432,7 +447,7 @@ local confimplmap = {
 		},
 		action = @( iv, conf){
 			local list = fget( conf, "list");
-			local val = ::getField( ::clientconf, conf.pid);
+			local val = fget( conf, "get") ?? ::getField( ::clientconf, conf.pid);
 			local idx = list.findi( @( v) v.val==val);
 			if( idx < 0) idx = 0;
 			local sel = RPGMain.showUI( {
@@ -445,6 +460,8 @@ local confimplmap = {
 				focus = "item"..idx
 			});
 			if( sel >= 0){
+				if( list[sel].val==val) return false;
+				if( !confirmConfigChange()) return false;
 				if( conf["set"]){
 					return conf.set( list[sel].val);
 				}else{
@@ -452,6 +469,105 @@ local confimplmap = {
 					return true;
 				}
 			}
+		},
+	},
+	keybind = {
+		binds = @( conf){
+			local keyname( list, val, fallback){
+				local item = list.find( @( v) v.val==val);
+				return item ? item.lbl : fallback..val;
+			}
+			local fn = @(){
+				local keyboard = "키보드 : "..keyname( conf.keylist, conf.getkey(), "Key ");
+				local gamepad = hasConnectedGamepad()
+					? "게임패드 : "..keyname( conf.padlist, conf.getpad(), "Button ")
+					: "게임패드 : 연결 안 됨";
+				// configitem.ui의 오른쪽 값 영역에 두 입력 필드를 나란히 표시한다.
+				// RichText의 [] 태그 파서와 충돌하지 않도록 일반 문자열로 반환한다.
+				return keyboard.."        "..gamepad;
+			};
+			return { key=conf.lbl, mode=0, lbl=fn, _name="keybind_"..conf.action, conf=conf};
+		},
+		action = @( iv, conf){
+			local gamepadavailable = hasConnectedGamepad();
+			local device = RPGMain.showUI( {
+				key = "dialog_choices"
+				uipath = "dialog_choices2.ui"
+				list = gamepadavailable ? ["키보드", "게임패드"] : ["키보드"]
+				place = iv
+				backop = 2
+				pos = { left=-14, right=-14 }
+				focus = "item0"
+			});
+			if( device < 0) return false;
+			local oldc = gpui.backupCursor();
+			local result = ptr( null);
+			local capturetime = skGetTime() + 250;
+			local keyevent = @( e){
+				if( e.id!=KEY_PRESSED) return;
+				if( skGetTime()<capturetime) return;
+				if( device==0){
+					result << e.keycode;
+					e.consume();
+				}else if( e.keycode==VK_ESCAPE){
+					result << -1;
+					e.consume();
+				}
+			};
+			::rootview.addPostEventListener( KEY_EVENT, keyevent);
+
+			local view = RPGMain.showView({
+				uipath = "dialog_confirm.ui"
+				layer = "message"
+				action = "show"
+				modal = true
+				place = iv
+				binds = {
+					msg = RichText( device==0
+						? "설정할 키보드 키를 눌러 주세요."
+						: "설정할 게임패드 버튼을 눌러 주세요.\n[+0](Esc: 취소)")
+					LIST = [{ lbl="입력을 기다리는 중…", _name="item0", idx=0 }]
+				}
+				focus = "item0"
+			});
+			local padready = ptr( false);
+			RPGMain.uiLoop( {
+				"action" : @( e){},
+				"back" : @( e){},
+				"idle" : @( e){
+					if( ~result!=null) return ~result;
+					if( device==1){
+						if( !hasConnectedGamepad()){
+							result << -1;
+							return -1;
+						}
+						local gpdev = ::gpui.getGPUIDevice();
+						local gp = gpdev ? fget( gpdev, "gp") : null;
+						local mask = gp ? gp.buttonmask : 0;
+						if( !~padready){
+							if( mask==0) padready << true;
+						}else if( mask){
+							for( local i=0;i<32;i++){
+								if( mask & (1<<i)){
+									result << i;
+									return i;
+								}
+							}
+						}
+					}
+				},
+			});
+			::rootview.removeEventListener( KEY_EVENT, keyevent);
+			view.actionAndDie( "hide");
+			view.waitAction();
+			gpui.restoreCursor( oldc);
+
+			local val = ~result;
+			if( val==null || val<0) return false;
+			local oldval = device==0 ? conf.getkey() : conf.getpad();
+			if( val==oldval) return false;
+			if( !confirmConfigChange()) return false;
+			return device==0 ? conf.setkey( val) : conf.setpad( val);
 		},
 	},
 	slider = {
@@ -465,7 +581,8 @@ local confimplmap = {
 		action = @( iv, conf){
 			local oldc = gpui.backupCursor();
 			playSound( "SE005");
-			local vptr = ptr( ::getField( ::clientconf, conf.pid) || 0);
+			local oldval = ::getField( ::clientconf, conf.pid) || 0;
+			local vptr = ptr( oldval);
 			local view = RPGMain.showView({
 				uipath = "menu_config_slider.ui"
 				name = "menu_config_slider"
@@ -518,9 +635,97 @@ local confimplmap = {
 			playSound( "SE001");
 			view.actionAndDie( "hide").waitAction();
 			gpui.restoreCursor( oldc);
+			local newval = ~vptr;
+			if( newval==oldval) return false;
+			if( confirmConfigChange()) return true;
+			if( conf["set"]){
+				conf.set( oldval);
+			}else{
+				::setField( ::clientconf, conf.pid, oldval);
+			}
+			return false;
 		}
 	},
 }
+
+local keyboardkeylist = [
+	{lbl="↑",val=VK_UP}, {lbl="↓",val=VK_DOWN}, {lbl="←",val=VK_LEFT}, {lbl="→",val=VK_RIGHT},
+	{lbl="W",val=VK_W}, {lbl="A",val=VK_A}, {lbl="S",val=VK_S}, {lbl="D",val=VK_D},
+	{lbl="Q",val=VK_Q}, {lbl="E",val=VK_E}, {lbl="Z",val=VK_Z}, {lbl="X",val=VK_X},
+	{lbl="C",val=VK_C}, {lbl="V",val=VK_V}, {lbl="Space",val=VK_SPACE},
+	{lbl="Enter",val=VK_ENTER}, {lbl="Esc",val=VK_ESCAPE}, {lbl="Tab",val=VK_TAB},
+	{lbl="Shift",val=VK_SHIFT}, {lbl="Ctrl",val=VK_CONTROL},
+];
+local gamepadkeylist = [
+	{lbl="D-Pad ↑",val=BTN_UP}, {lbl="D-Pad ↓",val=BTN_DOWN},
+	{lbl="D-Pad ←",val=BTN_LEFT}, {lbl="D-Pad →",val=BTN_RIGHT},
+	{lbl="A",val=BTN_A}, {lbl="B",val=BTN_B}, {lbl="X",val=BTN_X}, {lbl="Y",val=BTN_Y},
+	{lbl="LB",val=BTN_LB}, {lbl="RB",val=BTN_RB},
+	{lbl="LT",val=BTN_ZL}, {lbl="RT",val=BTN_ZR},
+	{lbl="L Stick",val=BTN_LS}, {lbl="R Stick",val=BTN_RS},
+	{lbl="Start",val=BTN_START},
+];
+local actionvbmap = {
+	move_up=BTN_UP, move_down=BTN_DOWN, move_left=BTN_LEFT, move_right=BTN_RIGHT,
+	confirm=BTN_A, cancel=BTN_B, menu=BTN_X, subaction=BTN_Y,
+	page_left=BTN_LB, page_right=BTN_RB, start=BTN_START,
+};
+local refreshPlayerControls(){
+	if( !::["rpgstage"] || !::rpgstage["player3d"]) return;
+	local action = ::rpgstage.player3d["mainaction"];
+	local ctr = action ? action["ctr"] : null;
+	if( !ctr) return;
+	local active = ctr.active;
+	ctr.setup();
+	ctr.active = !active;
+	ctr.setActive( active);
+}
+local setkeybind( action, val){
+	::clientconf.keyboard_action[action] = val;
+	local vb = fget( actionvbmap, action);
+	if( vb!=undefined) ::clientconf.keyboard_menu[vb] <- [val];
+	if( ::["gpui"]){
+		local bkmap = { ...ClientConfig.def_keybtnmap, ...::clientconf.keyboard_menu};
+		::gpui.setButtonKeyMap( bkmap);
+	}
+	refreshPlayerControls();
+	return true;
+}
+local setpadbind( action, val){
+	::clientconf.gamepad_action[action] = val;
+	local vb = fget( actionvbmap, action);
+	if( vb!=undefined) ::clientconf.gamepad_menu[vb] <- val;
+	if( ::["gpui"]) ::gpui.setButtonGamepadMap( ::clientconf.gamepad_menu);
+	refreshPlayerControls();
+	return true;
+}
+local keybindconf( action, lbl){
+	return {
+		type="keybind", action=action, lbl=lbl,
+		desc="왼쪽은 키보드, 오른쪽은 게임패드 설정입니다.",
+		keylist=keyboardkeylist, padlist=gamepadkeylist,
+		getkey=@() ::clientconf.keyboard_action[action],
+		getpad=@() ::clientconf.gamepad_action[action],
+		setkey=@( val) setkeybind( action, val),
+		setpad=@( val) setpadbind( action, val),
+	};
+}
+local keybindconfs = [
+	keybindconf("move_up", "이동 위"),
+	keybindconf("move_down", "이동 아래"),
+	keybindconf("move_left", "이동 왼쪽"),
+	keybindconf("move_right", "이동 오른쪽"),
+	keybindconf("confirm", "결정 / 상호작용"),
+	keybindconf("cancel", "취소 / 점프"),
+	keybindconf("menu", "메뉴"),
+	keybindconf("subaction", "보조 액션"),
+	keybindconf("page_left", "이전 탭"),
+	keybindconf("page_right", "다음 탭"),
+	keybindconf("start", "시작 / 일시정지"),
+	keybindconf("lockon", "락온"),
+	keybindconf("dodge", "회피"),
+	keybindconf("burst", "버스트"),
+];
 
 
 RPGSystem.ui ..
@@ -534,6 +739,7 @@ RPGSystem.ui ..
 	configtabs = [
 		{ lbl="$T.config_game", list=[ cmdconf, battlespdconf, btnhelpconf, bgmvolconf, sevolconf, langconf], }
 		{ lbl="$T.config_video", list=[ fullconf, winresoconf, scresoconf, quaconf, ], }
+		{ lbl="키 설정", list=keybindconfs, }
 	];
 
 	props = [

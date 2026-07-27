@@ -310,7 +310,7 @@ class ActionBattleRunner extends BattleRunnerBase
 
 	// TAB: 距離の近い順に敵を切り替え、最後の次はロックを解除する。
 	function updateTargetLock(){
-		if( !::ActionBattleManager.isPressedOnce(VK_TAB)) return;
+		if( !::ActionBattleManager.isActionPressedOnce("lockon")) return;
 
 		if( !lockedEnemy3D){
 			lockOrder = getLockTargetsByDistance();
@@ -337,8 +337,10 @@ class ActionBattleRunner extends BattleRunnerBase
 	function updateControlledMovement(dt){
 		if( !controlled3D || ended) return;
 
-		local turn = (skIsKeyPressed(VK_D) ? 1.0 : 0.0) - (skIsKeyPressed(VK_A) ? 1.0 : 0.0);
-		local forward = (skIsKeyPressed(VK_W) ? 1.0 : 0.0) - (skIsKeyPressed(VK_S) ? 1.0 : 0.0);
+		local turn = (::ActionBattleManager.isActionPressed("move_right") ? 1.0 : 0.0)
+			- (::ActionBattleManager.isActionPressed("move_left") ? 1.0 : 0.0);
+		local forward = (::ActionBattleManager.isActionPressed("move_up") ? 1.0 : 0.0)
+			- (::ActionBattleManager.isActionPressed("move_down") ? 1.0 : 0.0);
 		local dtsec = dt * 0.001;
 		local movevec;
 

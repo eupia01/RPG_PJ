@@ -52,12 +52,32 @@ class ClientConfig
 			usevirtualpad = 1,			//	他デバイスの接続が無ければバーチャルパッドを使用
 		},
 		keyboard_menu = {				//	キーマップは変化のあるもののみ定義。
+			[BTN_UP] = [VK_UP], [BTN_DOWN] = [VK_DOWN],
+			[BTN_LEFT] = [VK_LEFT], [BTN_RIGHT] = [VK_RIGHT],
+			[BTN_A] = [VK_SPACE], [BTN_B] = [VK_ESCAPE],
+			[BTN_X] = [VK_C], [BTN_Y] = [VK_V],
+			[BTN_LB] = [VK_Q], [BTN_RB] = [VK_E],
 		},
 		keyboard_action = {
+			move_up = VK_UP, move_down = VK_DOWN,
+			move_left = VK_LEFT, move_right = VK_RIGHT,
+			confirm = VK_SPACE, cancel = VK_ESCAPE, menu = VK_C,
+			subaction = VK_V, page_left = VK_Q, page_right = VK_E, start = VK_ENTER,
+			lockon = VK_TAB, dodge = VK_Q, burst = VK_V,
 		},
 		gamepad_menu = {
+			[BTN_UP] = BTN_UP, [BTN_DOWN] = BTN_DOWN,
+			[BTN_LEFT] = BTN_LEFT, [BTN_RIGHT] = BTN_RIGHT,
+			[BTN_A] = BTN_A, [BTN_B] = BTN_B,
+			[BTN_X] = BTN_X, [BTN_Y] = BTN_Y,
+			[BTN_LB] = BTN_LB, [BTN_RB] = BTN_RB,
 		},
 		gamepad_action = {
+			move_up = BTN_UP, move_down = BTN_DOWN,
+			move_left = BTN_LEFT, move_right = BTN_RIGHT,
+			confirm = BTN_A, cancel = BTN_B, menu = BTN_X,
+			subaction = BTN_Y, page_left = BTN_LB, page_right = BTN_RB, start = BTN_START,
+			lockon = BTN_RB, dodge = BTN_B, burst = BTN_Y,
 		},
 	};
 
@@ -132,7 +152,15 @@ class ClientConfig
 		local f = FileRef( ::savedir, "client.json");
 		if( f.exists()){
 			local t = decodeJSON( f.load());
-			return t;
+			local merge( dst, src){
+				foreach( k, v in src){
+					local dv = fget( dst, k);
+					if( typeof( v)==SS_TABLE && typeof( dv)==SS_TABLE) merge( dv, v);
+					else dst[k] <- deepclone( v);
+				}
+				return dst;
+			}
+			return merge( new(), t);
 		}
 		return new();
 	}
