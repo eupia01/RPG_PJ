@@ -168,10 +168,11 @@ class RPGStage
 		//	SK3DBlockWorld、コリジョン生成
 		bw3d = SK3DBlockWorld( bw);
 		bw3d.setVisibleFaceMask( map.vs);
+		bw3d.setGSelectorID( 1);	//	ステージにセレクタIDを指定。ピクセル単位のオブジェクト識別に使用する
 		scn.addObject( bw3d);
 		local bci = BlockColiderInterface( bw);
 		bci.setFlagMask( BLK_SOLID|BLK_PLANT|BLK_BARRIOR|BLK_SOLIDFB);
-		bci.setFinMode( 1|2);		//	barrior | water
+		bci.setFinMode( 1 | (stat.statmap["canenter_water"]?0:2) | (stat.statmap["canenter_hole"]?0:4));		//	barrior | water | hole
 		bci.setBarriorMap( bw.bmp);
 		local bcshp = b3Shape.createCustomConcave( bci);
 		bwcol = b3Body( 0, bcshp, bw3d.mat, G_STAGE, G_VIEW|G_CHARA|G_OBJECT);
@@ -566,7 +567,7 @@ class RPGStage
 	function raiseEncounter(){
 		local a = []
 		local ratesum = 0.0;
-		local px = Math.clamp( player3d.pos.x / bw.w, 0.0, 0.999), pz = Math.clamp( player3d.pos.z / bw.d, 0.0, 0.999);
+		local px = Math.clamp( player3d.pos.x / bw.w * 2.0, 0.0, 0.999), pz = Math.clamp( player3d.pos.z / bw.d * 2.0, 0.0, 0.999);
 		foreach( v in map.encount){
 			if( !v.rate) continue;
 			local bb = decodeBASE64( v.area, ByteBuffer());

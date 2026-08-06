@@ -20,7 +20,7 @@ reqchk .. {
 		constbits = 0, varbits = 1|2|4|8|16
 	}
 	rvar = {
-		constbits = 1|2|4|8|16, varbits = 1|2|4|8|16|32
+		constbits = 1|2|4|8|16, varbits = 1|2|4|8|16|32, datatype = "all"
 	}
 
 	func = ::varcmp
@@ -106,8 +106,8 @@ reqchk .. {
 	}
 	
 	func = @( req, self){
-		local pid = ::getvar( req.rvar, self);
-		return !!::rpgstat.mapstat[mapid];
+		local mapid = ::getvar( req.rvar, self);
+		return !!::rpgstat.stagemap[mapid];
 	}
 }
 
@@ -306,10 +306,11 @@ charainfodef .. {
 	calc = @( pc, data) !!pc.isCommandable()
 }
 
+charainfodef .. { key = "ID", lbl = "$T.lbl_input_dataid", calc = @( pc, data) pc["dataid"] }
 charainfodef .. { key = "HP", lbl = "$T.HP", calc = @( pc, data) int( pc["HP"]) }
 charainfodef .. { key = "MP", lbl = "$T.MP", calc = @( pc, data) int( pc["MP"]) }
-charainfodef .. { key = "HP(％)", lbl = "$T.HP", calc = @( pc, data) int( pc.hprate()) }
-charainfodef .. { key = "MP(％)", lbl = "$T.MP", calc = @( pc, data) int( pc.mprate()) }
+charainfodef .. { key = "HPR", lbl = "$T.HP(％)", calc = @( pc, data) int( pc.hprate()) }
+charainfodef .. { key = "MPR", lbl = "$T.MP(％)", calc = @( pc, data) int( pc.mprate()) }
 
 //	スコアパラメータの一覧取得
 local statlistfunc(){

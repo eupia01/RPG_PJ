@@ -24,7 +24,10 @@
 
 ::translationkeys <- {
 	"name":1, "text":1, "desc":1, "msg":1, "title":1, "texts":1, "text0":1, "text1":1, "text2":1, "text3":1, "text4":1, "text5":1, "text6":1, "text7":1, 
+	"searchtext":1,
 };
+
+local skipstr = "*$\t";
 
 function defaultTranslationRule( t, i, v, langcode){
 	//	_から始まるフィールド名は無視される
@@ -32,7 +35,7 @@ function defaultTranslationRule( t, i, v, langcode){
 	switch( typeof( v)){
 	case SS_STRING:
 		if( ::translationkeys[i] && !(i in t["_var"])){	//	_varで置き換えるプロパティは無視
-			if( v!="" && v[0] != '*' && v[0] != '$') return v;
+			if( v!="" && !skipstr.contains( v[0])) return v;
 		}
 		break;
 	case SS_TABLE:
@@ -547,7 +550,7 @@ function getModifierKeyName( str){
 //	jsonを通して
 
 function putClipboard( id, data){
-	local cbdata = encodeJSON( { type="skstudio", id=id, data=data });
+	local cbdata = encodeJSON( { type="skstudio", id=id, data=data }, 1);
 	skPutClipboardData( cbdata);
 }
 

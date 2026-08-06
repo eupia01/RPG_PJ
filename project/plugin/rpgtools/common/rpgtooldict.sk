@@ -422,6 +422,7 @@
 	"cmd_memberop"						: {"ja":"メンバーの交代", "en":"Member Change"}
 	"cmd_jobop"							: {"ja":"ジョブの操作", "en":"Job Operation"}
 	"cmd_condop"						: {"ja":"コンディションの操作", "en":"Condition Operation"}
+	"cmd_charainfo"						: {"ja":"キャラ情報取得", "en":"Get Chara Info"}
 
 	"cmd_showmsg"						: {"ja":"メッセージ", "en":"Message"}
 	"cmd_choices"						: {"ja":"選択肢", "en":"Choices"}
@@ -495,6 +496,7 @@
 	"cmd_memberop_tips"					: {"ja":"パーティメンバーを加入、離脱します。", "en":""}
 	"cmd_jobop_tips"					: {"ja":"プレイヤーのジョブを変更します。", "en":""}
 	"cmd_condop_tips"					: {"ja":"プレイヤーのコンディションを付与、解除します。", "en":""}
+	"cmd_charainfo_tips"				: {"ja":"キャラクターの情報を取得します。", "en":""}
 
 	"cmd_showmsg_tips"					: {"ja":"会話ウィンドウを表示します。", "en":""}
 	"cmd_choices_tips"					: {"ja":"選択肢を表示し、結果によって処理を分岐します。", "en":""}
@@ -841,6 +843,8 @@
 	"setting_weather"					: {"ja":"天気", "en":"Weather"}
 	"setting_exitmap"					: {"ja":"脱出先マップ", "en":"MapExit Destination"}
 	"setting_mapexitable"				: {"ja":"マップ脱出有効", "en":"MapExit Enabled"}
+	"setting_canenter_water"			: {"ja":"水に進入可能", "en":"Can Enter Water"}
+	"setting_canenter_hole"				: {"ja":"穴に進入可能", "en":"Can Enter Hole"}
 	
 	"setting_jxptype_auto"				: {"ja":"自動分配", "en":"Auto"}
 	"setting_jxptype_manual"			: {"ja":"手動で割り振り", "en":"Manual"}
@@ -930,6 +934,7 @@
 	"lbl_noreq"							: {"ja":"条件なし", "en":"None"}
 	"lbl_appearreqs"					: {"ja":"登場条件", "en":"Requirements to appear"}
 	"lbl_pagememo"						: {"ja":"ページのメモ", "en":"Page Memo"}
+	"lbl_searchtext"					: {"ja":"調べるテキスト", "en":"Search Text"}
 	"lbl_pararun"						: {"ja":"並列実行", "en":"Parallel Run"}
 	"lbl_link_var"						: {"ja":"変数とリンク", "en":"Link to Variable"}
 	"lbl_unlink_var"					: {"ja":"変数のリンクを解除", "en":"Unlink to Variable"}
@@ -1016,6 +1021,7 @@
 	"side_res_uimap"					: {"ja":"UI", "en":"UI"}
 	"side_res_chara_etc"				: {"ja":"キャラ一般", "en":"Chara Etc"}
 
+	"lbl_voxel"							: {"ja":"ボクセル", "en":"Voxel"}
 	"lbl_editvox"						: {"ja":"ボクセルを編集", "en":"Edit Voxel"}
 	"lbl_editmot"						: {"ja":"モーションを編集", "en":"Edit Motion"}
 	"lbl_resedit"						: {"ja":"リソースの編集", "en":"Resource Edit"}
@@ -1087,6 +1093,8 @@
 	"pop_import_noimage"				: {"ja":"インポートする画像が見つかりません。", "en":"The image to import is not found."}
 	"tmpl_import_icons"					: {"ja":"$v 個のアイコンが読み込まれました", "en":"$v icons have been loaded."}
 	"pop_ttsgen_faulure"				: {"ja":"ボイスの生成が失敗しました。", "en":"Voice generation failed."}
+	"pop_vox_copied"					: {"ja":"ボクセルファイルが複製されました。", "en":"The voxel file has been copied."}
+	"pop_mot_copied"					: {"ja":"モーションファイルが複製されました。", "en":"The motion files have been copied."}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	//	マップサイドビュー
@@ -1111,6 +1119,8 @@
 		"en":"Do you want to delete this map group? \nThe maps inside will be moved to Uncategorized.\n\n[W]Caution: This operation cannot be undone."
 	}
 
+	"lbl_copyevents"					: {"ja":"イベントのコピー", "en":"Copy events"}
+
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	//	マップエディター
 	
@@ -1130,6 +1140,13 @@
 	"lbl_placeportaldoor"				: {"ja":"ポータルドアに変換", "en":"To Portal Door"}
 	"lbl_tomapasset"					: {"ja":"アセットに登録","en":"Register to Assets"}
 	"lbl_tocustomevent"					: {"ja":"カスタムイベントに変換", "en":"To Custom Event"}
+
+	"lbl_blocks"						: {"ja":"ブロック", "en":"Blocks"}
+	"lbl_abschk"						: {"ja":"高さを指定", "en":"Absolute"}
+	"lbl_planechk"						: {"ja":"同一平面", "en":"Same Plane"}
+	"lbl_blkchk"						: {"ja":"同一ブロック", "en":"Same Block"}
+	"lbl_waterchk"						: {"ja":"水を分離", "en":"Water Group"}
+	"lbl_repchk"						: {"ja":"ブロックを置き換える", "en":"Replace Blocks"}
 	
 	//	マップエディター用メニュー
 	"editor_map_menu_edit_mapsize"		: {"ja":"マップのサイズ変更", "en":"Resize Map"}
@@ -1160,7 +1177,7 @@
 	"editor_map_tool_asset"				: {"ja":"アセットツール", "en":"Asset Tool"}
 	"editor_map_tool_event"				: {"ja":"イベントツール", "en":"Event Tool"}
 
-	"lbl_mapgen"						: {"ja":"マップ生成", "en":"Generate Map"}
+	"lbl_mapgen"						: {"ja":"マップ自動生成", "en":"Generate Map"}
 	"lbl_encountgroup"					: {"ja":"エンカウントグループ", "en":"Encounting Group"}
 	"lbl_battletest"					: {"ja":"バトルのテスト", "en":"Battle Test"}
 	"lbl_encountarea"					: {"ja":"エンカウントの範囲", "en":"Encounting Area"}
@@ -1184,6 +1201,7 @@
 	"lbl_map_selfblk"					: {"ja":"フリーブロックの選択", "en":"Select FreeBlock"}
 	"lbl_map_mode"						: {"ja":"モード", "en":"Mode"}
 	"lbl_map_pen"						: {"ja":"ペンタイプ", "en":"Pen type"}
+	"lbl_pen"							: {"ja":"ペン", "en":"Pen"}
 	"lbl_map_from"						: {"ja":"開始位置", "en":"From"}
 	"lbl_map_to"						: {"ja":"終了位置", "en":"To"}
 	"lbl_map_offset"					: {"ja":"オフセット", "en":"Offset"}
@@ -1357,9 +1375,14 @@
 	"ui_dialog_choices"					: {"ja":"選択ダイアログ", "en":"Selection Dialog"}
 	"ui_dialog_confirm"					: {"ja":"確認ダイアログ", "en":"Confirm Dialog"}
 	"ui_dialog_selchara"				: {"ja":"キャラ選択ダイアログ", "en":"Chara Selection Dialog"}
+	"ui_dialog_selitem"					: {"ja":"アイテム選択ダイアログ", "en":"Item Selection Dialog"}
 	"ui_dialog_buyitem"					: {"ja":"アイテム売買ダイアログ", "en":"Item buy/sell Dialog"}
 	//	store
-	"ui_store_item"						: {"ja":"アイテムショップ", "en":"Item Shop"}
+	"ui_store_item"						: {"ja":"ストア表示「アイテムショップ」", "en":"Show 'Item Shop' Store"}
+	"ui_store_choices"					: {"ja":"ストア表示「選択肢」", "en":"Show 'Choices' Store"}
 	"ui_store_sellitem"					: {"ja":"アイテムの売却", "en":"Sell Item"}
 	
+	"lbl_anyone"						: {"ja":"誰でも", "en":"Anyone"}
+	"lbl_only_alives"					: {"ja":"生者のみ", "en":"Only alives"}
+	"lbl_only_deads"					: {"ja":"死者のみ", "en":"Only deads"}
 });

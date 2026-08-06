@@ -145,6 +145,7 @@ class QueryVarAccessor
 		prefix ??= t["prefix"];
 		type ??= t["type"];
 		key0 = prefix .. dbchar;
+		getfunc = t.getfunc;
 	}
 
 	function makevar( key){
@@ -155,7 +156,7 @@ class QueryVarAccessor
 		local dataid = key.substring( 4);
 		local v = ::conf[dbname][dataid];
 		if( !v) return undefined;
-		return getfunc( key);
+		return getfunc;//( key);
 	}
 
 	//	ツール用。一覧表示するためのリストを表示。
@@ -219,31 +220,31 @@ class SystemVarAccessor
 			}
 		},
 		{
-			key = "AVELV", name = "$T.lbl_level_avg", type = VAR_INT, read = true,
+			key = "AVELV", name = "$T.lbl_level_avg", type = VAR_INT, readonly = true,
 			func = @( key, val=undefined){
 				local a = ::rpgstat.members.filter( @( v) !!v);
 				return (a.reduce( @( v, x) v.LV+x, 0.0) / length( a) + 0.5) | 0;
 			}
 		},
 		{
-			key = "MAXLV", name = "$T.lbl_level_max", type = VAR_INT, read = true,
+			key = "MAXLV", name = "$T.lbl_level_max", type = VAR_INT, readonly = true,
 			func = @( key, val=undefined){
 				local a = ::rpgstat.members.filter( @( v) v);
 				return a.reduce( @( v, x) Math.max( v.LV, x), 0);
 			}
 		},
 		{
-			key = "MAPID", name = "$T.dlg_newmap_mapid", type = VAR_STRING, read = true,
+			key = "MAPID", name = "$T.dlg_newmap_mapid", type = VAR_STRING, readonly = true,
 			func = @( key, val=undefined){
 				return ::rpgstage["mapid"] || "";
 			}
 		},
 		{
-			key = "SYSTIME", name = "$T.lbl_systime", type = VAR_INT, read = true,
+			key = "SYSTIME", name = "$T.lbl_systime", type = VAR_INT, readonly = true,
 			func = @( key, val=undefined){ return skGetTime(); }
 		},
 		{
-			key = "RND99", name = "$T.lbl_random(0-99)", type = VAR_INT, read = true,
+			key = "RND99", name = "$T.lbl_random(0-99)", type = VAR_INT, readonly = true,
 			func = @( key, val=undefined){ return ::rnd.nexti( 0, 100); }
 		},
 		makesvar({
@@ -262,7 +263,7 @@ class SystemVarAccessor
 			key = "SHOWTIMER", name = "$T.svar_showtimer", type = VAR_ANY, defval = null,
 		}),
 		makesvar({
-			key = "RESULT", name = "$T.lbl_result($T.lbl_battle)", type = VAR_ANY, defval = 0,
+			key = "RESULT", name = "$T.lbl_result($T.lbl_battle,UI)", type = VAR_ANY, defval = 0,
 		}),
 		makesvar({
 			key = "ERROR", name = "$T.lbl_error", type = VAR_INT, defval = 0,
@@ -274,33 +275,33 @@ class SystemVarAccessor
 			key = "ENCOUNTER", name = "$T.svar_encounter", type = VAR_FLOAT, defval = 0.0,
 		}),
 		{
-			key = "INBATTLE", name = "$T.svar_inbattle", type = VAR_BOOL, read = true,
+			key = "INBATTLE", name = "$T.svar_inbattle", type = VAR_BOOL, readonly = true,
 			func = @( key, val=undefined){ return !!::rpgstage.battle; }
 		},
 		{
-			key = "ESCAPABLE", name = "$T.lbl_escapable", type = VAR_BOOL, read = true,
+			key = "ESCAPABLE", name = "$T.lbl_escapable", type = VAR_BOOL, readonly = true,
 			func = @( key, val=undefined){ return !!::rpgstage.battle["battledata"]["escape"]; }
 		},
 		{
-			key = "UIFOCUS", name = "UI $T.lbl_focus", type = VAR_STRING, read = true,
+			key = "UIFOCUS", name = "UI $T.lbl_focus", type = VAR_STRING, readonly = true,
 			func = @( key, val=undefined){
 				return ::gpui.gpuitarget["view"]["name"] || "";
 			}
 		},
 		{
-			key = "ATKCHR", name = "$T.svar_atkchara", type = VAR_ANY, read = true,
+			key = "ATKCHR", name = "$T.svar_atkchara", type = VAR_ANY, readonly = true,
 			func = @( key, val=undefined) makeobjref( ::rpgstage["battle"]["atkchr"]);
 		},
 		{
-			key = "DEFCHR", name = "$T.svar_defchara", type = VAR_ANY, read = true,
+			key = "DEFCHR", name = "$T.svar_defchara", type = VAR_ANY, readonly = true,
 			func = @( key, val=undefined) makeobjref( ::rpgstage["battle"]["defchr"]);
 		},
 		{
-			key = "MEMBERS", name = "$T.svar_party", type = VAR_ANY, read = true,
+			key = "MEMBERS", name = "$T.svar_party", type = VAR_ANY, readonly = true,
 			func = @( key, val=undefined) ::rpgstat.members.map( @( v) makeobjref( v)),
 		},
 		{
-			key = "ENEMIES", name = "$T.svar_enemies", type = VAR_ANY, read = true,
+			key = "ENEMIES", name = "$T.svar_enemies", type = VAR_ANY, readonly = true,
 			func = @( key, val=undefined) ::rpgstage.battle["enemies"]?.map( @( v) makeobjref( v)) || null,
 		},
 	]);
@@ -324,7 +325,7 @@ class SystemVarAccessor
 	function info( key){
 		local v = varmap[key];
 		if( !v) return null;
-		return { key:key, name:v.name, type:v.type, }
+		return { key:key, name:v.name, type:v.type, readonly=v["readonly"]||false, }
 	}
 }
 
@@ -409,14 +410,18 @@ RPGSystem.varaccs .. SystemVarAccessor();
 RPGSystem.varaccs .. QueryVarAccessor({
 	name: "$T.qvar_item",
 	dbname = "item",
-	getfunc = @( dataid) ::rpgstat.countItems( dataid, true),	//	装備品も合わせたカウント
+	getfunc = @( varname){
+		local dataid = varname.substring( 4);
+		local n = ::rpgstat.countItems( dataid, true);	//	装備品も合わせたカウント
+		return n;
+	}
 });
 RPGSystem.varaccs .. QueryVarAccessor({
 	name: "$T.qvar_enemy",
 	dbname = "enemy",
-	getfunc = @( dataid){
+	getfunc = @( varname){
 		local v = ::rpgstat.globals.collection[dataid];
-		return v ? v.num : 0;
+		return v["num"] || 0;
 	},
 });
 RPGSystem.varaccs .. ButtonVarAccessor();
