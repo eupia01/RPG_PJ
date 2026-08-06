@@ -123,6 +123,83 @@ class ActionBattleRunner extends BattleRunnerBase
 	lockIcons = null;
 	lockInfoView = null;
 
+	function bindActionBattleMember( player){
+		local data = ::bindMemberList(player);
+		data["mhp"] <- data.maxhp;
+		data["mmp"] <- data.maxmp;
+		data["level.P"] <- data.lv;
+		data["level.p"] <- data.lv;
+		data["cha_preview"] <- player;
+
+		// HP/MP 비율을 UI 애니메이션의 0(empty)~10(full) 프레임으로 변환한다.
+		local hpframe = @() player.MAXHP>0
+			? Math.clamp(Math.iceil(player.HP*10.0/player.MAXHP), 0, 10)
+			: 0;
+		local mpframe = @() player.MAXMP>0
+			? Math.clamp(Math.iceil(player.MP*10.0/player.MAXMP), 0, 10)
+			: 0;
+		data["_white_HP"] <- hpframe;
+		data["_white_MP"] <- mpframe;
+		data["HP_BAR"] <- hpframe;
+		data["MP_BAR"] <- mpframe;
+		data["MP_BAR\\"] <- mpframe;
+		return data;
+	}
+
+	function lockActionBattleMemberLayout( view){
+		// 멤버 카드는 실행 중 크기를 변경하지 않으므로 에디터의 고정 좌표를 유지한다.
+		view.stretchalign = 0;
+		view.alignpos = null;
+		view.stretchsize = null;
+		view.bindrect = null;
+		foreach( child in view.children){
+			lockActionBattleMemberLayout(child);
+		}
+	}
+
+	function bindActionBattleMemberSlot( listname, player){
+		local slot = battleui.findChild(listname);
+		if( !slot) return;
+		if( !player){
+			slot.setVisible(false);
+			return;
+		}
+
+		// RPGListView의 런타임 행 스트레치를 사용하지 않고, 편집한 멤버 UI를
+		// 슬롯 위치에 원본 크기 그대로 배치한다.
+		local parent = slot.parent;
+		local layer = parent.children.indexOf(slot);
+		local memberui = ::loadSKView("/resource/ui/actionbattleui_member.ui");
+		memberui.name = listname;
+		lockActionBattleMemberLayout(memberui);
+		memberui.pos.set(
+			slot.pos.x + slot.bnd.x + (slot.bnd.w-memberui.bnd.w)*0.5 - memberui.bnd.x,
+			slot.pos.y + slot.bnd.y + (slot.bnd.h-memberui.bnd.h)*0.5 - memberui.bnd.y,
+			slot.pos.z
+		);
+		local charapreview = memberui.findChild("cha_preview");
+		if( charapreview){
+			// pbr_draft shares the stage target, which causes stale depth when
+			// its background is disabled and black UI when a transparent
+			// background is drawn into the active target. pbr_fw owns a color
+			// and depth buffer, so it can be composited transparently.
+			charapreview.renderer.setEnvironment(
+				::RenderSettings.getEnvironment("pbr_fw")
+			);
+			charapreview.renderer.bgpass.enabled = false;
+		}
+		local data = bindActionBattleMember(player);
+		memberui.bindValues(data);
+		// CharaPreview owns a separate animated 3D scene.
+		if( charapreview && charapreview.rp3d){
+			charapreview.rp3d.rpgobj = player;
+			charapreview.rp3d.anime2({ id = "stand" });
+			charapreview.rp3d.updateMotion(0, true);
+			charapreview.rp3d.updatePartsVisibles();
+		}
+		parent.setChild(layer, memberui);
+	}
+
 	// 액션배틀 전용 UI를 배틀 장면의 하단 UI 레이어에 표시한다.
 	function setupBattleUI(){
 		battleui = ::RPGMain.showView({
@@ -131,9 +208,22 @@ class ActionBattleRunner extends BattleRunnerBase
 			layer = "stageui"
 			pos = { bottom = 0 }
 		});
+		battleui.setVisible(true);
 		battleui.findChild("infog")?.setVisible(false);
-		syncMemberListUI();
-		syncEnemyListUI();
+
+		// 세 명 파티 HUD: 조작 리더는 중앙, 나머지 멤버는 좌우에 배치한다.
+		local sideMembers = [];
+		foreach( member in members){
+			if( member && member != controlledMember) sideMembers .. member;
+		}
+		bindActionBattleMemberSlot("left_member", sideMembers.len()>0 ? sideMembers[0] : null);
+		bindActionBattleMemberSlot("main_member", controlledMember);
+		bindActionBattleMemberSlot("right_member", sideMembers.len()>1 ? sideMembers[1] : null);
+
+		battleui.findChild("enemylist")?.setVisible(false);
+		battleui.findChild("cmdlist")?.setVisible(false);
+		battleui.findChild("skilllist")?.setVisible(false);
+		battleui.findChild("descpop")?.setVisible(false);
 	}
 
 	// 通常の2Dエネミーモデルの代わりにCV033ボクセルキャラクターを生成する。
@@ -176,7 +266,6 @@ class ActionBattleRunner extends BattleRunnerBase
 		lockInfoView = null;
 		RPGMain.buttonhelp("battle");
 		setupCharas();
-		setupBattleUI();
 
 		local enemyList = battledata["enemies"] || [];
 		local enemy = enemyList[0];
@@ -188,6 +277,7 @@ class ActionBattleRunner extends BattleRunnerBase
 		controlledMember = partyLeader;
 		controlled3D = getChara3D( partyLeader);
 		controlledCoreId = controlledPlayerId;
+		setupBattleUI();
 		isMoving = false;
 		followCamera = ActionBattleCamerawork(controlled3D);
 		cameraDragActive = false;
@@ -310,7 +400,7 @@ class ActionBattleRunner extends BattleRunnerBase
 
 	// TAB: 距離の近い順に敵を切り替え、最後の次はロックを解除する。
 	function updateTargetLock(){
-		if( !::ActionBattleManager.isPressedOnce(VK_TAB)) return;
+		if( !::ActionBattleManager.isActionPressedOnce("lockon")) return;
 
 		if( !lockedEnemy3D){
 			lockOrder = getLockTargetsByDistance();
@@ -337,8 +427,10 @@ class ActionBattleRunner extends BattleRunnerBase
 	function updateControlledMovement(dt){
 		if( !controlled3D || ended) return;
 
-		local turn = (skIsKeyPressed(VK_D) ? 1.0 : 0.0) - (skIsKeyPressed(VK_A) ? 1.0 : 0.0);
-		local forward = (skIsKeyPressed(VK_W) ? 1.0 : 0.0) - (skIsKeyPressed(VK_S) ? 1.0 : 0.0);
+		local turn = (::ActionBattleManager.isActionPressed("move_right") ? 1.0 : 0.0)
+			- (::ActionBattleManager.isActionPressed("move_left") ? 1.0 : 0.0);
+		local forward = (::ActionBattleManager.isActionPressed("move_up") ? 1.0 : 0.0)
+			- (::ActionBattleManager.isActionPressed("move_down") ? 1.0 : 0.0);
 		local dtsec = dt * 0.001;
 		local movevec;
 

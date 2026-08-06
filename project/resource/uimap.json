@@ -36,6 +36,7 @@
 		"#0#":{
 			"baseui":"/resource/ui/misc_waitclick.ui",
 			"ja":{"desc":"","name":"","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		}
 	},
@@ -79,21 +80,25 @@
 		"#2#":{
 			"baseui":"/resource/ui/menu_equip.ui",
 			"ja":{"desc":"","name":"装備メニュー","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		},
 		"#3#":{
 			"baseui":"/resource/ui/menu_job.ui",
 			"ja":{"desc":"","name":"ジョブメニュー","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		},
 		"#4#":{
 			"baseui":"/resource/ui/menu_saveload.ui",
 			"ja":{"desc":"","name":"セーブ／ロードメニュー","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		},
 		"#5#":{
 			"baseui":"/resource/ui/menu_config.ui",
 			"ja":{"desc":"","name":"コンフィグメニュー","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		}
 	},
@@ -127,11 +132,13 @@
 		"#2#":{
 			"baseui":"/resource/ui/gameover.ui",
 			"ja":{"desc":"","name":"ゲームオーバー画面","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		},
 		"#4#":{
 			"baseui":"/resource/ui/battleui.ui",
 			"ja":{"desc":"","name":"ターンバトルUI","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		},
 		"#6#":{
@@ -161,6 +168,13 @@
 		"#10#":{
 			"baseui":"/resource/ui/actionbattleui.ui",
 			"ja":{"desc":"","name":"アクションバトルUI","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
+			"uilist":[]
+		},
+		"#11#":{
+			"baseui":"/resource/ui/actionbattleui_member.ui",
+			"ja":{"desc":"","name":"アクションバトルmember","useidx":-1},
+			"ko":{"desc":"","name":"","useidx":-1},
 			"uilist":[]
 		}
 	}

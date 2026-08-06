@@ -38,14 +38,41 @@ import VirtualKeyCode;
 		return now && !old;
 	}
 
+	function isActionPressed(action){
+		local ka = ::clientconf.keyboard_action;
+		if( skIsKeyPressed(ka[action])) return true;
+		local dev = ::["gpui"] ? ::gpui.getGPUIDevice() : null;
+		local gp = dev ? fget( dev, "gp") : null;
+		if( !gp) return false;
+		// Keep the left stick available for movement in addition to the
+		// user-selected D-pad/physical buttons.
+		switch( action){
+		case "move_up": if( (gp["axis1"]||0.0)>0.3) return true; break;
+		case "move_down": if( (gp["axis1"]||0.0) < -0.3) return true; break;
+		case "move_left": if( (gp["axis0"]||0.0) < -0.3) return true; break;
+		case "move_right": if( (gp["axis0"]||0.0)>0.3) return true; break;
+		}
+		local btn = ::clientconf.gamepad_action[action];
+		return !!(gp.buttonmask & (1<<btn));
+	}
+
+	function isActionPressedOnce(action){
+		local now = isActionPressed(action);
+		local statekey = "action_"..action;
+		local old = keyState[statekey] || false;
+		if( statekey in keyState) keyState[statekey] = now;
+		else keyState[statekey] <- now;
+		return now && !old;
+	}
+
 	function processDebugInput(){
 		if( isPressedOnce(VK_1)){
 			::ActionBattleCore.addAggro(::ActionBattleCore.director.controlledPlayerId, 30.0);
 		}
 		if( isPressedOnce(VK_P)) ::ActionBattleCore.applyPoisonToPlayer();
 		return {
-			dodge = isPressedOnce(VK_Q),
-			burst = isPressedOnce(VK_V),
+			dodge = isActionPressedOnce("dodge"),
+			burst = isActionPressedOnce("burst"),
 		};
 	}
 

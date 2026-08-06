@@ -3,6 +3,7 @@
 		"background.skybox":[[],[],[],[2097152]],
 		"decal.def":[[258],[],[]],
 		"defaults.zblur":[[256,2097408]],
+		"enemy.def":[[2293760],[2302208],[],[],[],[]],
 		"pbr.deferlighting":[[2109440]],
 		"pbr.gblur":[[2097152]],
 		"pbrsprite.coc":[[2097152]],
@@ -18,7 +19,7 @@
 		"spritefx.shine":[[256]],
 		"spritefx.strokeblur":[[256,768]],
 		"spritefx.zoomblur":[[2097408]],
-		"vox.basic":[[768,1792],[],[9984],[],[],[],[0]]
+		"vox.basic":[[768,1792],[],[9984],[],[0],[],[0]]
 	},
 	"background.decal":[[],[],[3145728,2097152,0]],
 	"background.skybox":[[],[],[],[3145728,2097152]],
